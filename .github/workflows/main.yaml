@@ -16,5 +16,6 @@ jobs:
         mkdir -p database
         touch database/database.sqlite
         php artisan migrate
+        php artisan vendor:publish --tag=public --force
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       run: vendor/bin/phpunit
