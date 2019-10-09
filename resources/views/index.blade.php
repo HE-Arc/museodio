@@ -31,7 +31,7 @@
   var mainMap = null;
 
   function initMap() {
-    mainMap = L.map('map').setView([lat, lon], 17);
+    mainMap = L.map('map').setView([lat, lon], 10);
     L.tileLayer('https://tile.osm.ch/switzerland/{z}/{x}/{y}.png', {
       attribution: '',
       zoomControl: true,
@@ -40,11 +40,28 @@
     }).addTo(mainMap);
 
     mainMap.zoomControl.setPosition('topright');
+
+    displayCurrentUserPosition();
   }
-  window.onload = function(){
-    initMap();
-  };
-  </script>
-  <script src="{{asset('vendor\leaflet\leaflet\leaflet.js')}}" charset="utf-8"></script>
+
+  function displayCurrentUserPosition(){
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(getPosition);
+    }
+  }
+
+  function getPosition(position){
+    var userLat = position.coords.latitude;
+    var userLon = position.coords.longitude;
+
+    mainMap.setView(new L.LatLng(userLat, userLon), 13);
+
+  }
+
+window.onload = function(){
+  initMap();
+};
+</script>
+<script src="{{asset('vendor\leaflet\leaflet\leaflet.js')}}" charset="utf-8"></script>
 </body>
 </html>
