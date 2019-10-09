@@ -15,10 +15,12 @@ class CreateAudioNotesTable extends Migration
     {
         Schema::create('audio_notes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('user_id');
             $table->decimal('lat', 10, 7);
             $table->decimal('long', 10, 7);
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
