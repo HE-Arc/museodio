@@ -1,0 +1,14 @@
+#map{
+  min-height: 100%;
+}
+
+html, body {
+        height: 100%;
+        margin: 0;
+    }
+
+.header{
+  position: absolute;
+  z-index: 9999999;
+  margin: 20px;
+}
