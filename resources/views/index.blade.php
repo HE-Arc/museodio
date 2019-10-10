@@ -10,6 +10,8 @@
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
   <link rel="stylesheet" href="{{asset('vendor\leaflet\leaflet\leaflet.css')}}">
   <link rel="stylesheet" href="{{asset('css/museodio.css')}}">
+  <link rel="stylesheet" href="{{asset('css/materialize-css/materialize.css')}}">
+  <script src="{{asset('js/materialize-css/materialize.js')}}" charset="utf-8"></script>
 
 </head>
 <body>
@@ -17,6 +19,7 @@
   <div class="header">
     {{-- TODO : Transform this into a section --}}
     <h1>Museodio</h1>
+    <a class="waves-effect waves-light btn">button</a>
   </div>
 
   <div id="map">
