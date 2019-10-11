@@ -10,5 +10,20 @@ html, body {
 .header{
   position: absolute;
   z-index: 9999999;
-  margin: 20px;
+  margin-top: 10px;
+  width: 97%;
+}
+
+.header-container{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.mus-title{
+  margin-left: 10px;
+}
+
+.main-nav-bar{
+  background-color: #6ab04c;
 }
