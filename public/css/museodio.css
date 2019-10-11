@@ -25,5 +25,17 @@ html, body {
 }
 
 .main-nav-bar{
-  background-color: #6ab04c;
+  background-color: #30336b;;
+}
+
+.action-buttons-color{
+  background-color: #686de0 !important;
+}
+
+.test-modal-color{
+  background-color: #130f40 !important;
+}
+
+h1, h2, h3, h4, h5, h6, p, a, input {
+ color: white;
 }
