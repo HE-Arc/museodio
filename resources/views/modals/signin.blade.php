@@ -1,6 +1,6 @@
 <div id="loginModal" class="modal modal-color">
   <div class="modal-content">
-    <h2>Register</h2>
+    <h2>Sign in</h2>
     <div class="row">
       <form method="POST" id="registerForm" target="TODEFINE" class="col s12">
         <div class="row">

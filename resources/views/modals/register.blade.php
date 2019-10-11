@@ -1,16 +1,17 @@
-<div id="loginModal" class="modal modal-color">
+<div id="registerModal" class="modal modal-color">
   <div class="modal-content">
     <h2>Register</h2>
     <div class="row">
-      <form method="POST" id="registerForm" target="TODEFINE" class="col s12">
+      <form method="POST" id="registerForm" action="{{route('register')}}" class="col s12">
+        @csrf
         <div class="row">
           <div class="input-field col s6">
-            <input id="first_name" type="text" class="validate">
-            <label for="first_name">First Name</label>
+            <input id="firstname" type="text" class="validate" required autocomplete="firstname" autofocus>
+            <label for="firstname">First Name</label>
           </div>
           <div class="input-field col s6">
-            <input id="last_name" type="text" class="validate">
-            <label for="last_name">Last Name</label>
+            <input id="lastname" type="text" class="validate">
+            <label for="lastname">Last Name</label>
           </div>
         </div>
         <div class="row">
