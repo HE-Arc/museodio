@@ -16,7 +16,7 @@ class UpdateUserTableNames extends Migration
     Schema::table('users', function (Blueprint $table) {
       $table->renameColumn('name', 'firstname');
 
-      $table->string('lastname')->after('firstname');
+      $table->string('lastname')->after('name')->default('');
     });
   }
 
