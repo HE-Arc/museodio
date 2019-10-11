@@ -59,7 +59,7 @@
           </div>
           <div class="row">
             <div class="input-field col s12">
-              <input id="password" type="password" class="validate">
+              <input id="conf_password" type="password" class="validate">
               <label for="password">Confirm password</label>
             </div>
           </div>
@@ -86,7 +86,7 @@
 
   function initMap() {
     mainMap = L.map('map').setView([lat, lon], 10);
-    L.tileLayer('https://tile.osm.ch/switzerland/{z}/{x}/{y}.png', {
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '',
       zoomControl: true,
       minZoom: 1,
