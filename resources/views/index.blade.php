@@ -17,66 +17,13 @@
 </head>
 <body>
 
-  <div class="header-container">
-    <div class="header">
-      {{-- TODO : Transform this into a section --}}
-      <nav class="main-nav-bar">
-        <div class="nav-wrapper">
-          <a href="#!" class="brand-logo mus-title">Museodio</a>
-          <ul class="right hide-on-med-and-down">
-            <li><a class="waves-effect waves-light btn modal-trigger action-buttons-color" href="#loginModal">Register <i class="material-icons right">person_add</i></a></li>
-            <li><a class="waves-effect waves-light btn action-buttons-color">Sign in <i class="material-icons right">input</i></a></li>
-          </ul>
-        </div>
-      </nav>
-    </div>
-  </div>
+  @include('header')
 
 
   <div id="map"></div>
 
-
-  <div id="loginModal" class="modal test-modal-color">
-    <div class="modal-content">
-      <h2>Register</h2>
-      <div class="row">
-        <form class="col s12">
-          <div class="row">
-            <div class="input-field col s6">
-              <input id="first_name" type="text" class="validate">
-              <label for="first_name">First Name</label>
-            </div>
-            <div class="input-field col s6">
-              <input id="last_name" type="text" class="validate">
-              <label for="last_name">Last Name</label>
-            </div>
-          </div>
-          <div class="row">
-            <div class="input-field col s12">
-              <input id="password" type="password" class="validate">
-              <label for="password">Password</label>
-            </div>
-          </div>
-          <div class="row">
-            <div class="input-field col s12">
-              <input id="conf_password" type="password" class="validate">
-              <label for="password">Confirm password</label>
-            </div>
-          </div>
-          <div class="row">
-            <div class="input-field col s12">
-              <input id="email" type="email" class="validate">
-              <label for="email">Email</label>
-            </div>
-          </div>
-        </form>
-      </div>
-
-    </div>
-    <div class="modal-footer test-modal-color">
-      <a href="#!" class="modal-close waves-effect waves-green btn action-buttons-color">Agree</a>
-    </div>
-  </div>
+  @include('modals.register')
+  @include('modals.signin')
 
   <script type="text/javascript">
 
