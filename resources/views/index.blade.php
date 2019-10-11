@@ -24,8 +24,7 @@
         <div class="nav-wrapper">
           <a href="#!" class="brand-logo mus-title">Museodio</a>
           <ul class="right hide-on-med-and-down">
-            <li><a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a></li>
-            <li><a class="waves-effect waves-light btn">Register <i class="material-icons right">person_add</i></a></li>
+            <li><a class="waves-effect waves-light btn modal-trigger" href="#loginModal">Register <i class="material-icons right">person_add</i></a></li>
             <li><a class="waves-effect waves-light btn">Sign in <i class="material-icons right">input</i></a></li>
           </ul>
         </div>
@@ -39,11 +38,43 @@
 
   <div id="loginModal" class="modal">
     <div class="modal-content">
-      <h4>Modal Header</h4>
-      <p>A bunch of text</p>
+      <h2>Register</h2>
+      <div class="row">
+        <form class="col s12">
+          <div class="row">
+            <div class="input-field col s6">
+              <input id="first_name" type="text" class="validate">
+              <label for="first_name">First Name</label>
+            </div>
+            <div class="input-field col s6">
+              <input id="last_name" type="text" class="validate">
+              <label for="last_name">Last Name</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="password" type="password" class="validate">
+              <label for="password">Password</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="password" type="password" class="validate">
+              <label for="password">Confirm password</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="email" type="email" class="validate">
+              <label for="email">Email</label>
+            </div>
+          </div>
+        </form>
+      </div>
+
     </div>
     <div class="modal-footer">
-      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+      <a href="#!" class="modal-close waves-effect waves-green btn">Agree</a>
     </div>
   </div>
 
