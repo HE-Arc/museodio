@@ -1,6 +1,11 @@
 name: Continuous Integration Laravel 6
 on: [push]
 jobs:
+  setup-mysql-server:
+    steps:
+
+
+
   laravel-tests:
     runs-on: ubuntu-latest
     steps:
@@ -11,6 +16,20 @@ jobs:
       run: composer install --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
     - name: Generate key
       run: php artisan key:generate
+      
+    - name: Setup MySQL server
+      uses: mirromutth/mysql-action@v1.1
+      with:
+        host port: 3800
+        container port: 3307
+        character set server: 'utf8'
+        collation server: 'utf8_general_ci'
+        mysql version: '8.0'
+        mysql database: 'museodio'
+        mysql root password: ${{ secrets.MYSQL_ROOT_PW }}
+        mysql user: 'museodio'
+        mysql password: ${{ secrets.MYSQL_DB_PW }}
+
     - name: Create DB and schemas
       run: |
         mkdir -p database
