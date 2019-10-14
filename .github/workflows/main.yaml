@@ -11,9 +11,6 @@ jobs:
       run: composer install --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
     - name: Generate key
       run: php artisan key:generate
-    - name: Export ENV variable from secrets
-      run: |
-        export DB_PASSWORD=${{ secrets.MYSQL_DB_PW }}
     - name: Setup MySQL server
       uses: mirromutth/mysql-action@v1.1
       with:
@@ -25,7 +22,7 @@ jobs:
         mysql database: 'museodio'
         mysql root password: ${{ secrets.MYSQL_ROOT_PW }}
         mysql user: 'museodio'
-        mysql password: ${{ secrets.MYSQL_DB_PW }}
+        mysql password: 'museodio'
     - name: Create DB and schemas
       run: |
         mkdir -p database
