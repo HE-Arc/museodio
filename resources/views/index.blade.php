@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="{{asset('css/materialize-css/materialize.css')}}">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <script src="{{asset('js/materialize-css/materialize.js')}}" charset="utf-8"></script>
+  <script src="{{asset('js/fetchUtil.js')}}" charset="utf-8"></script>
 
 </head>
 <body>
@@ -79,12 +80,9 @@
   </div>
 
   <script type="text/javascript">
-
-  var lat = 46.9973;
-  var lon = 6.9378;
   var mainMap = null;
 
-  function initMap() {
+  function initMap(lat = 46.9973, lon = 6.9378) {
     mainMap = L.map('map').setView([lat, lon], 10);
     L.tileLayer('https://tile.osm.ch/switzerland/{z}/{x}/{y}.png', {
       attribution: '',
@@ -109,12 +107,22 @@
     var userLon = position.coords.longitude;
 
     mainMap.setView(new L.LatLng(userLat, userLon), 13);
+  }
 
+  async function displayAudioNotes() {
+    const audioNotes = await fetchAudioNotes();
+    for(let audioNote of audioNotes) {
+      L.marker([audioNote.latitude, audioNote.longitude])
+        .addTo(mainMap)
+        .bindPopup(`Auteur : ${audioNote.owner}`)
+        .openPopup();
+    }
   }
 
   window.onload = function(){
     initMap();
     M.AutoInit();
+    displayAudioNotes();
   };
 </script>
 <script src="{{asset('vendor\leaflet\leaflet\leaflet.js')}}" charset="utf-8"></script>
