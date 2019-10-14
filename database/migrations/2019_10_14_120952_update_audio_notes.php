@@ -15,13 +15,14 @@ class UpdateAudioNotes extends Migration
     {
       Schema::table('audio_notes', function (Blueprint $table) {
         $table->renameColumn('lat', 'latitude');
-        $table->double('latitude', 15, 8)->change();
       });
 
       Schema::table('audio_notes', function(Blueprint $table) {
         $table->renameColumn('long', 'longitude');
-        $table->double('longitude', 15, 8)->change();
       });
+
+      DB::statement('AlTER TABLE audio_notes MODIFY latitude DOUBLE');
+      DB::statement('AlTER TABLE audio_notes MODIFY longitude DOUBLE');
     }
 
     /**
