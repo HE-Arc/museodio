@@ -21,8 +21,8 @@ class UpdateAudioNotes extends Migration
         $table->renameColumn('long', 'longitude');
       });
 
-      DB::statement('alter table audio_notes modify latitude DOUBLE(15,2)');
-      DB::statement('alter table audio_notes modify longitude DOUBLE(15,2)');
+      DB::statement('AlTER TABLE audio_notes MODIFY latitude DOUBLE;');
+      DB::statement('AlTER TABLE audio_notes MODIFY longitude DOUBLE;');
     }
 
     /**
