@@ -15,6 +15,9 @@ class UpdateAudioNotes extends Migration
     {
       Schema::table('audio_notes', function (Blueprint $table) {
         $table->renameColumn('lat', 'latitude');
+      });
+
+      Schema::table('audio_notes', function(Blueprint $table) {
         $table->renameColumn('long', 'longitude');
       });
 
