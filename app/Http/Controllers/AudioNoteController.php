@@ -11,7 +11,9 @@ class AudioNoteController extends Controller
 
   public function index()
   {
-    return AudioNote::all();
+    return AudioNote::join('users', 'audio_notes.user_id', '=', 'users.id')
+      ->select('users.firstName', 'users.lastName', 'audio_notes.longitude', 'audio_notes.latitude')
+      ->get();
   }
 
   public function showNearAudioNotes(Request $request)

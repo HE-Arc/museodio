@@ -114,7 +114,7 @@
     for(let audioNote of audioNotes) {
       L.marker([audioNote.latitude, audioNote.longitude])
         .addTo(mainMap)
-        .bindPopup(`Auteur : ${audioNote.owner}`)
+        .bindPopup(`Auteur : ${audioNote.firstName} ${audioNote.lastName}`)
         .openPopup();
     }
   }
