@@ -1,11 +1,6 @@
 name: Continuous Integration Laravel 6
 on: [push]
 jobs:
-  setup-mysql-server:
-    steps:
-
-
-
   laravel-tests:
     runs-on: ubuntu-latest
     steps:
