@@ -111,10 +111,23 @@
 
   async function displayAudioNotes() {
     const audioNotes = await fetchAudioNotes();
+    
+    const playIcon = L.icon({
+      iconUrl: 'img/baseline_play_circle_outline_black_18dp.png',
+
+      iconSize:     [30, 30],
+      iconAnchor:   [20, 80],
+      shadowAnchor: [4, 62],
+      popupAnchor:  [-3, -76]
+    });
+
     for(let audioNote of audioNotes) {
-      L.marker([audioNote.latitude, audioNote.longitude])
+      let customPopup = `<h4>${audioNote.firstName} ${audioNote.lastName}</h4> <br>`
+      customPopup += "<audio controls></audio>"
+
+      L.marker([audioNote.latitude, audioNote.longitude], {icon: playIcon})
         .addTo(mainMap)
-        .bindPopup(`Auteur : ${audioNote.firstName} ${audioNote.lastName}`)
+        .bindPopup(customPopup)
         .openPopup();
     }
   }
