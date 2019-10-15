@@ -1,7 +1,7 @@
 # Museodio
 ## How to setup development environment
 
-Firstly, clone the project using the method your choice. Then, you need to copy .env.example to .env and modify it accordingly to your setup.
+Firstly, clone the project using the method of your choice. Then, you need to copy .env.example to .env and modify it accordingly to your setup.
 
 `cp .env.example .env`
 
@@ -18,6 +18,16 @@ php artisan vendor:publish --tag=public --force
 Next step is to create the database. To do so, please type :
 ```
 php artisan migrate
+```
+
+This step is optional but recommended, it allows to seed the tables with random values.
+```
+php artisan db:seed
+```
+
+At last serve the project
+```
+php artisan serve
 ```
 
 Normally, you should be able to see your project at http://yourURL/public/
