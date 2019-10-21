@@ -22,3 +22,4 @@ Route::get('/audio-notes', 'AudioNoteController@index')->middleware('auth:api');
 Route::get('/audio-notes/{longitude}/{latitude}/{outer_radius}', 'AudioNoteController@showNearAudioNotes');
 
 Route::post('register', 'Auth\RegisterController@register');
+Route::post('login', 'Auth\LoginController@login');
