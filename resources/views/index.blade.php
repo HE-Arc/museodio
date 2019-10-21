@@ -13,6 +13,9 @@
   <link rel="stylesheet" href="{{asset('css/materialize-css/materialize.css')}}">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <script src="{{asset('js/materialize-css/materialize.js')}}" charset="utf-8"></script>
+  <script type="text/javascript">
+    let APP_URL = "{{ env('APP_URL') }}";
+  </script>
   <script src="{{asset('js/fetchUtil.js')}}" charset="utf-8"></script>
 
 </head>
@@ -58,7 +61,7 @@
 
   async function displayAudioNotes() {
     const audioNotes = await fetchAudioNotes();
-    
+
     const playIcon = L.icon({
       iconUrl: 'img/baseline_play_circle_outline_black_18dp.png',
 
