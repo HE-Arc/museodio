@@ -2,6 +2,13 @@
   min-height: 100%;
 }
 
+body{
+  --main-bg-color: #30336b;
+  --main-button-color: #686de0;
+  --main-modal-color: #130f40;
+  --main-text-color: white;
+}
+
 html, body {
         height: 100%;
         margin: 0;
@@ -25,17 +32,25 @@ html, body {
 }
 
 .main-nav-bar{
-  background-color: #30336b;;
+  background-color: var(--main-bg-color);
 }
 
 .action-buttons-color{
-  background-color: #686de0 !important;
+  background-color: var(--main-button-color) !important;
 }
 
 .modal-color{
-  background-color: #130f40 !important;
+  background-color: var(--main-modal-color) !important;
+}
+
+.leaflet-popup-content-wrapper{
+  background-color: var(--main-bg-color);
+}
+
+.leaflet-popup-tip{
+  background-color: var(--main-bg-color);
 }
 
 h1, h2, h3, h4, h5, h6, p, a {
- color: white;
+ color: var(--main-text-color);
 }

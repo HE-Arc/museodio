@@ -12,11 +12,6 @@
   <link rel="stylesheet" href="{{asset('css/museodio.css')}}">
   <link rel="stylesheet" href="{{asset('css/materialize-css/materialize.css')}}">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <script src="{{asset('js/materialize-css/materialize.js')}}" charset="utf-8"></script>
-  <script type="text/javascript">
-    let APP_URL = "{{ env('APP_URL') }}";
-  </script>
-  <script src="{{asset('js/fetchUtil.js')}}" charset="utf-8"></script>
 
 </head>
 <body>
@@ -38,7 +33,7 @@
       attribution: '',
       zoomControl: true,
       minZoom: 1,
-      maxZoom: 20
+      maxZoom: 19 //Max zoom before OSM gives 404s
     }).addTo(mainMap);
 
     mainMap.zoomControl.setPosition('bottomleft');
@@ -88,6 +83,12 @@
     displayAudioNotes();
   };
 </script>
+
 <script src="{{asset('vendor\leaflet\leaflet\leaflet.js')}}" charset="utf-8"></script>
+<script src="{{asset('js/materialize-css/materialize.js')}}" charset="utf-8"></script>
+<script type="text/javascript">
+  let APP_URL = "{{ env('APP_URL') }}";
+</script>
+<script src="{{asset('js/fetchUtil.js')}}" charset="utf-8"></script>
 </body>
 </html>

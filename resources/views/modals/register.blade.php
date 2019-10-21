@@ -36,7 +36,7 @@
     </div>
   </div>
   <div class="modal-footer modal-color">
-    <a href="#!" class="waves-effect waves-green btn action-buttons-color" onclick="document.getElementById('registerForm').submit();">Register</a>
+    <a href="#!" class="waves-effect waves-green btn action-buttons-color" onclick="submitRegistration();">Register</a>
   </div>
   <div class="header-container">
     <div class="progress header" style="width: 97%;">
