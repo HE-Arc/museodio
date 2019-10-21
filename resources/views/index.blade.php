@@ -115,10 +115,10 @@
     const playIcon = L.icon({
       iconUrl: 'img/baseline_play_circle_outline_black_18dp.png',
 
-      iconSize:     [30, 30],
-      iconAnchor:   [20, 80],
-      shadowAnchor: [4, 62],
-      popupAnchor:  [-3, -76]
+      iconSize:     [36, 36],
+      iconAnchor:   [18, 0],
+      shadowAnchor: [0, 0],
+      popupAnchor:  [0, 0]
     });
 
     for(let audioNote of audioNotes) {
