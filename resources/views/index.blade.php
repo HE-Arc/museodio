@@ -116,9 +116,9 @@
       iconUrl: 'img/baseline_play_circle_outline_black_18dp.png',
 
       iconSize:     [36, 36],
-      iconAnchor:   [18, 0],
+      iconAnchor:   [18, 36],
       shadowAnchor: [0, 0],
-      popupAnchor:  [0, 0]
+      popupAnchor:  [0, -36]
     });
 
     for(let audioNote of audioNotes) {
