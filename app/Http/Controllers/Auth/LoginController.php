@@ -9,11 +9,10 @@ use Illuminate\Support\Facades\Auth;
 class LoginController extends Controller
 {
   /**
-  * login api
+  * Login for API
   *
   * @return \Illuminate\Http\Response
   */
-
   public function login(){
     if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){
       $user = Auth::user();
