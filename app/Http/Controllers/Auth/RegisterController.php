@@ -7,6 +7,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
@@ -30,7 +31,7 @@ class RegisterController extends Controller
       ]);
 
       if($validator->fails()){
-        return response()->json(['error' => $validator->errors()], 401);
+        return response()->json(['error' => $validator->errors()], 200);
       }
 
       $user = User::create([
@@ -40,8 +41,10 @@ class RegisterController extends Controller
           'password' => Hash::make($request['password']),
       ]);
 
-      $token = $user->createToken('Museodio')->accessToken;
-      return response()->json(['success' => $token]);
+      // $token = $user->createToken('Museodio')->accessToken;
+      // return response()->json(['success' => $token]);
+
+      return \App::call('App\Http\Controllers\Auth\LoginController@login');
     }
 
 

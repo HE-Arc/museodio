@@ -2,7 +2,7 @@
   <div class="modal-content">
     <h2>Sign in</h2>
     <div class="row">
-      <form method="POST" id="registerForm" target="TODEFINE" class="col s12">
+      <form method="POST" id="registerForm" target="" class="col s12">
         <div class="row">
           <div class="input-field col s6">
             <input id="first_name" type="text" class="validate">
@@ -21,7 +21,7 @@
         </div>
         <div class="row">
           <div class="input-field col s12">
-            <input id="conf_password" type="password" class="validate">
+            <input id="password_confirmation" type="password" class="validate">
             <label for="password">Confirm password</label>
           </div>
         </div>
@@ -35,7 +35,7 @@
     </div>
   </div>
   <div class="modal-footer modal-color">
-    <a href="#!" class="waves-effect waves-green btn action-buttons-color" onclick="document.getElementById('registerForm').submit();">Register</a>
+    <a href="#!" class="waves-effect waves-green btn action-buttons-color" onclick="submitLogin();">Register</a>
   </div>
   <div class="header-container">
     <div class="progress header" style="width: 97%;">

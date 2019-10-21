@@ -2,34 +2,34 @@
   <div class="modal-content">
     <h2>Register</h2>
     <div class="row">
-      <form method="POST" id="registerForm" action="{{route('register')}}" class="col s12">
+      <form method="POST" id="registerForm" action="" class="col s12">
         @csrf
         <div class="row">
           <div class="input-field col s6">
-            <input id="firstname" type="text" class="validate" required autocomplete="firstname" autofocus>
-            <label for="firstname">First Name</label>
+            <input id="reg_firstName" type="text" class="validate" required autocomplete="firstname" autofocus>
+            <label for="reg_firstName">First Name</label>
           </div>
           <div class="input-field col s6">
-            <input id="lastname" type="text" class="validate">
-            <label for="lastname">Last Name</label>
+            <input id="reg_lastName" type="text" class="validate">
+            <label for="reg_lastName">Last Name</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s12">
-            <input id="password" type="password" class="validate">
-            <label for="password">Password</label>
+            <input id="reg_password" type="password" class="validate">
+            <label for="reg_password">Password</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s12">
-            <input id="conf_password" type="password" class="validate">
-            <label for="password">Confirm password</label>
+            <input id="reg_passwordConfirmation" type="password" class="validate">
+            <label for="reg_passwordConfirmation">Confirm password</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s12">
-            <input id="email" type="email" class="validate">
-            <label for="email">Email</label>
+            <input id="reg_email" type="email" class="validate">
+            <label for="reg_email">Email</label>
           </div>
         </div>
       </form>

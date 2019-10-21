@@ -90,5 +90,7 @@
   let APP_URL = "{{ env('APP_URL') }}";
 </script>
 <script src="{{asset('js/fetchUtil.js')}}" charset="utf-8"></script>
+<script src="{{asset('js/modalSubmit.js')}}" charset="utf-8"></script>
+<script src="{{asset('js/jQuery.js')}}" charset="utf-8"></script>
 </body>
 </html>
