@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="{{asset('vendor\leaflet\leaflet\leaflet.css')}}">
   <link rel="stylesheet" href="{{asset('css/museodio.css')}}">
   <link rel="stylesheet" href="{{asset('css/materialize-css/materialize.css')}}">
+  <link rel="stylesheet" href="{{asset('css/materialize-css/MProgress.css')}}">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 </head>
@@ -92,5 +93,6 @@
 <script src="{{asset('js/fetchUtil.js')}}" charset="utf-8"></script>
 <script src="{{asset('js/modalSubmit.js')}}" charset="utf-8"></script>
 <script src="{{asset('js/jQuery.js')}}" charset="utf-8"></script>
+<script src="{{asset('js/MProgress.js')}}" charset="utf-8"></script>
 </body>
 </html>

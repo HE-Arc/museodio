@@ -39,7 +39,7 @@
     <a href="#!" class="waves-effect waves-green btn action-buttons-color" onclick="submitRegistration();">Register</a>
   </div>
   <div class="header-container">
-    <div class="progress header" style="width: 97%;">
+    <div id="registerProgressBar" class="progress header" style="width: 97%;">
       <div class="indeterminate"></div>
     </div>
   </div>
