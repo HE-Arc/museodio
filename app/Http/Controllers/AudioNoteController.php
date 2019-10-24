@@ -7,13 +7,27 @@ use App\AudioNote;
 
 class AudioNoteController extends Controller
 {
-  private $inner_radius = 0;
+  private $INNER_RADIUS = 0;
+  private $UPLOAD_FOLDER = "/uploads/";
 
   public function index()
   {
     return AudioNote::join('users', 'audio_notes.user_id', '=', 'users.id')
       ->select('users.firstName', 'users.lastName', 'audio_notes.longitude', 'audio_notes.latitude')
       ->get();
+  }
+
+  public function save(Request $request)
+  {
+    $audio = $request->file('audio');
+
+    // TODO : AUTH::user
+    $username = "jonas";
+    $fileName = $username . "_" . date("Y_m_d_H_i_s") . "." . $audio->getClientOriginalExtension();
+
+    $audio->move(base_path($this->UPLOAD_FOLDER), $fileName);
+
+    return response()->json("Successfuly uploaded file", 200);
   }
 
   public function showNearAudioNotes(Request $request)
@@ -27,7 +41,7 @@ class AudioNoteController extends Controller
     $query = AudioNote::geofence(
       $request->latitude,
       $request->longitude,
-      $this->inner_radius,
+      $this->INNER_RADIUS,
       $request->outer_radius
     );
 

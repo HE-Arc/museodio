@@ -36,7 +36,6 @@
 
   <div id="map"></div>
 
-
   <div id="loginModal" class="modal">
     <div class="modal-content">
       <h2>Register</h2>
@@ -111,7 +110,7 @@
 
   async function displayAudioNotes() {
     const audioNotes = await fetchAudioNotes();
-    
+
     const playIcon = L.icon({
       iconUrl: 'img/baseline_play_circle_outline_black_18dp.png',
 

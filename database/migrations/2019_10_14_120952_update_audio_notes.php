@@ -32,12 +32,12 @@ class UpdateAudioNotes extends Migration
      */
     public function down()
     {
-      Schema::table('audio_notes', function (Blueprint $table) {
-        $table->renameColumn('latitude', 'lat');
-        $table->renameColumn('longitude', 'long');
-
-        $table->decimal('lat', 10, 7)->change();
-        $table->decimal('long', 10, 7)->change();
-      });
+      // Schema::table('audio_notes', function (Blueprint $table) {
+      //   $table->renameColumn('latitude', 'lat');
+      //   $table->renameColumn('longitude', 'long');
+      //
+      //   $table->decimal('lat', 10, 7)->change();
+      //   $table->decimal('long', 10, 7)->change();
+      // });
     }
 }

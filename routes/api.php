@@ -17,6 +17,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
   return $request->user();
 });
 
-Route::get('/audio-notes/', 'AudioNoteController@index');
+Route::get('/audio-notes', 'AudioNoteController@index');
+
+Route::post('/audio-notes/save', 'AudioNoteController@save');
 
 Route::get('/audio-notes/{longitude}/{latitude}/{outer_radius}', 'AudioNoteController@showNearAudioNotes');
