@@ -20,6 +20,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
   return $request->user();
 });
 
+Route::get('/logout', 'Auth\LoginController@logout')->middleware('auth:api');
+
 Route::get('/audio-notes/', 'AudioNoteController@index');
 
 Route::get('/audio-notes/{longitude}/{latitude}/{outer_radius}', 'AudioNoteController@showNearAudioNotes');

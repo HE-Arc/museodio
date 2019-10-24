@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -31,8 +32,17 @@ class LoginController extends Controller
       $cookie['samesite']);;
     }
     else{
-      return response()->json(['error'=>'Unauthorised'], 401);
+      return response()->json(['error'=>'Sorry, unknown username or password.'], 200);
     }
+  }
+
+  public function logout(Request $request){
+
+    $user = $request->user()->token();
+    $user->revoke();
+    $cookie = \Cookie::forget('_token');
+
+    return response()->json(["success"=>"Successfully logged out."])->withCookie($cookie);
   }
 
 

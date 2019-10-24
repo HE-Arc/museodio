@@ -34,13 +34,15 @@
         </div>
       </form>
     </div>
+    <div class="header-container">
+      <div  class="header-container">
+        <div id="registerProgressBar" style="width: 97%;">
+          <p></p>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="modal-footer modal-color">
-    <a href="#!" class="waves-effect waves-green btn action-buttons-color" onclick="submitRegistration();">Register</a>
-  </div>
-  <div class="header-container">
-    <div id="registerProgressBar" class="progress header" style="width: 97%;">
-      <div class="indeterminate"></div>
-    </div>
+    <a href="#!" id="registerButton" class="waves-effect waves-green btn action-buttons-color" onclick="submitRegistration();">Register</a>
   </div>
 </div>

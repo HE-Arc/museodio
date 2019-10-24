@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Http\Request;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,9 +13,24 @@
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/dashboard', function () {
+  $user = Auth::user();
+  return $user->token();
+  return view('index', ['user'=> $user]);
+})->middleware('auth:api');
+
+
+Route::get('/', function (Request $request) {
+
+  if($request->hasCookie('_token')){
+    return redirect('/dashboard');
+  }
+
+  return view('index');
+
+})->name("/");
+
+
 
 Auth::routes();
 

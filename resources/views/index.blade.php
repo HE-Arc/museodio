@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="{{asset('vendor\leaflet\leaflet\leaflet.css')}}">
   <link rel="stylesheet" href="{{asset('css/museodio.css')}}">
   <link rel="stylesheet" href="{{asset('css/materialize-css/materialize.css')}}">
-  <link rel="stylesheet" href="{{asset('css/materialize-css/MProgress.css')}}">
+  <link rel="stylesheet" href="{{asset('css/MProgress.css')}}">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 </head>
@@ -81,6 +81,7 @@
   window.onload = function(){
     initMap();
     M.AutoInit();
+    modalSubmitAutoInit();
     displayAudioNotes();
   };
 </script>

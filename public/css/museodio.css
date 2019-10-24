@@ -7,6 +7,8 @@ body{
   --main-button-color: #686de0;
   --main-modal-color: #130f40;
   --main-text-color: white;
+  --error-color: #eb4d4b;
+  --success-color: #6ab04c;
 }
 
 html, body {
@@ -49,6 +51,14 @@ html, body {
 
 .leaflet-popup-tip{
   background-color: var(--main-bg-color);
+}
+
+.toast-error{
+  background-color: var(--error-color) !important;
+}
+
+.toast-success{
+  background-color: var(--success-color) !important;
 }
 
 input{
