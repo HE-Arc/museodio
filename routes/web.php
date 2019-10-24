@@ -15,7 +15,6 @@ use Illuminate\Http\Request;
 
 Route::get('/dashboard', function () {
   $user = Auth::user();
-  return $user->token();
   return view('index', ['user'=> $user]);
 })->middleware('auth:api');
 
