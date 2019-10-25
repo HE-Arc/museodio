@@ -38,6 +38,7 @@ jobs:
   auto-deploy:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/add-continuous-deployment'
+    needs: laravel-tests
     steps:
       - name: ls -a via ssh
         uses: garygrossgarten/github-action-ssh@release
