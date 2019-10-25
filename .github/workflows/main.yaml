@@ -38,7 +38,7 @@ jobs:
     if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/add-continuous-deployment'
     needs: laravel-tests
     steps:
-      - name: ls -a via ssh
+      - name: Connection to SRVZ
         uses: garygrossgarten/github-action-ssh@release
         with:
           command: ls -a
