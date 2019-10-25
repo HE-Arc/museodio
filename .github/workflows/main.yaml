@@ -37,7 +37,7 @@ jobs:
       run: echo ${{ github.ref }}
   auto-deploy:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/head/add-continuous-deployment' || github.ref == 'refs/head/add-continuous-deployment'
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/add-continuous-deployment'
     steps:
       - name: ls -a via ssh
         uses: garygrossgarten/github-action-ssh@release
