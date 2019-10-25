@@ -33,9 +33,11 @@ jobs:
         php artisan passport:install
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       run: vendor/bin/phpunit
+    - name: Test GitHub Ref
+      run: echo ${{ github.ref }}
   auto-deploy:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/head/master' || github.ref == 'refs/head/add-continuous-deployment'
+    if: github.ref == 'refs/head/add-continuous-deployment' || github.ref == 'refs/head/add-continuous-deployment'
     steps:
       - name: ls -a via ssh
         uses: garygrossgarten/github-action-ssh@release
