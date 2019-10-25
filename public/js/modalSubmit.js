@@ -18,6 +18,35 @@ function modalSubmitAutoInit(){
   })
 }
 
+async function submitLogin(){
+  toggleButton("loginButton");
+  toggleLoginProgressBar();
+
+  payload = {
+    email:                  $("#log_email").val(),
+    password:               $("#log_password").val()
+  };
+
+  sendData(payload, "/api/login", async function(response){
+      if(response.ok){
+        response.json().then(async function(json){
+          if(json.hasOwnProperty('error')){
+            displayErrors(json);
+          }
+          else{
+            M.toast({html: "Successfully logged in.", classes: "toast-success"});
+            toggleLoginProgressBar();
+            await sleep(2000);
+            location.reload();
+          }
+        })
+      }
+      else{
+        M.toast({html: 'An error occured while trying to perform this action. Please try again.', classes: 'toast-error'});
+      }
+  });
+}
+
 
 async function submitRegistration(){
 
@@ -32,19 +61,13 @@ async function submitRegistration(){
     email:                  $("#reg_email").val()
   };
 
-  sendData(payload, async function(response){
+  sendData(payload, "/api/register", async function(response){
 
     if(response.ok){
       response.json().then(async function(json){
 
         if(json.hasOwnProperty('error')){
-          jsonErrors = json['error'];
-          for (var key in jsonErrors) {
-            if (jsonErrors.hasOwnProperty(key)) {
-              console.log(key + " -> " + jsonErrors[key]);
-              M.toast({html: jsonErrors[key], classes: 'toast-error'});
-            }
-          }
+          displayErrors(json);
         }
         else{
           M.toast({html: "Successfully registered.", classes: 'toast-success'});
@@ -62,6 +85,18 @@ async function submitRegistration(){
     toggleRegisterProgressBar();
   });
 }
+
+async function displayErrors(json){
+  jsonErrors = json['error'];
+  console.log(jsonErrors);
+  for (var key in jsonErrors) {
+    if (jsonErrors.hasOwnProperty(key)) {
+      console.log(key + " -> " + jsonErrors[key]);
+      M.toast({html: jsonErrors[key], classes: 'toast-error'});
+    }
+  }
+}
+
 
 async function test(){
   let options = {
@@ -81,7 +116,7 @@ async function test(){
   })
 }
 
-async function sendData(payload, callback){
+async function sendData(payload, route, callback){
 
   let options = {
     method: "POST",
@@ -90,7 +125,7 @@ async function sendData(payload, callback){
     body: new URLSearchParams(payload).toString()
   }
 
-  fetch(APP_URL + "/api/register", options)
+  fetch(APP_URL + route, options)
   .then(function(response){
     callback(response);
   })
@@ -114,6 +149,15 @@ function toggleRegisterProgressBar(){
   }
   else{
     registerProgressBar.start();
+  }
+}
+
+function toggleLoginProgressBar(){
+  if(loginProgressBar.status == 0.08){
+    loginProgressBar.end();
+  }
+  else{
+    loginProgressBar.start();
   }
 }
 

@@ -32,7 +32,7 @@ class LoginController extends Controller
       $cookie['samesite']);;
     }
     else{
-      return response()->json(['error'=>'Sorry, unknown username or password.'], 200);
+      return response()->json(['error'=>['error' => 'Sorry, unknown username or password.']], 200);
     }
   }
 

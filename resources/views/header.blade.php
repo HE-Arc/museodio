@@ -8,6 +8,9 @@
           <li><a class="waves-effect waves-light btn modal-trigger action-buttons-color" href="#registerModal">Register <i class="material-icons right">person_add</i></a></li>
           <li><a class="waves-effect waves-light btn modal-trigger action-buttons-color" href="#loginModal">Sign in <i class="material-icons right">input</i></a></li>
           @endunless
+          @unless (!Auth::check())
+          <p>Welcome, {{ $user->firstname }}</p>
+          @endunless
         </ul>
       </div>
     </nav>

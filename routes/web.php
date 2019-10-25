@@ -18,17 +18,13 @@ Route::get('/dashboard', function () {
   return view('index', ['user'=> $user]);
 })->middleware('auth:api');
 
-
 Route::get('/', function (Request $request) {
-
   if($request->hasCookie('_token')){
     return redirect('/dashboard');
   }
-
   return view('index');
 
 })->name("/");
-
 
 
 Auth::routes();

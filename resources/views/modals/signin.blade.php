@@ -5,41 +5,25 @@
       <form method="POST" id="registerForm" target="" class="col s12">
         <div class="row">
           <div class="input-field col s6">
-            <input id="first_name" type="text" class="validate">
-            <label for="first_name">First Name</label>
+            <input id="log_email" type="email" class="validate">
+            <label for="log_email">Email</label>
           </div>
           <div class="input-field col s6">
-            <input id="last_name" type="text" class="validate">
-            <label for="last_name">Last Name</label>
-          </div>
-        </div>
-        <div class="row">
-          <div class="input-field col s12">
-            <input id="password" type="password" class="validate">
-            <label for="password">Password</label>
-          </div>
-        </div>
-        <div class="row">
-          <div class="input-field col s12">
-            <input id="password_confirmation" type="password" class="validate">
-            <label for="password">Confirm password</label>
-          </div>
-        </div>
-        <div class="row">
-          <div class="input-field col s12">
-            <input id="email" type="email" class="validate">
-            <label for="email">Email</label>
+            <input id="log_password" type="password" class="validate">
+            <label for="log_password">Password</label>
           </div>
         </div>
       </form>
     </div>
+    <div class="header-container">
+      <div  class="header-container">
+        <div id="loginProgressBar" style="width: 97%;">
+          <p></p>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="modal-footer modal-color">
-    <a href="#!" class="waves-effect waves-green btn action-buttons-color" onclick="submitLogin();">Register</a>
-  </div>
-  <div class="header-container">
-    <div class="progress header" style="width: 97%;">
-      <div class="indeterminate"></div>
-    </div>
+    <a href="#!" id="loginButton" class="waves-effect waves-green btn action-buttons-color" onclick="submitLogin();">Register</a>
   </div>
 </div>
