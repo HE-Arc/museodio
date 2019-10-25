@@ -34,6 +34,7 @@ jobs:
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       run: vendor/bin/phpunit
   auto-deploy:
+    runs-on: ubuntu-latest
     if: github.ref == 'refs/head/master'
     steps:
       - name: ls -a via ssh
