@@ -35,7 +35,7 @@ jobs:
       run: vendor/bin/phpunit
   auto-deploy:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/head/master'
+    if: github.ref == 'refs/head/master' || github.ref == 'refs/head/add-continuous-deployment'
     steps:
       - name: ls -a via ssh
         uses: garygrossgarten/github-action-ssh@release
