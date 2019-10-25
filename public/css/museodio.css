@@ -2,6 +2,15 @@
   min-height: 100%;
 }
 
+body{
+  --main-bg-color: #30336b;
+  --main-button-color: #686de0;
+  --main-modal-color: #130f40;
+  --main-text-color: white;
+  --error-color: #eb4d4b;
+  --success-color: #6ab04c;
+}
+
 html, body {
         height: 100%;
         margin: 0;
@@ -25,5 +34,37 @@ html, body {
 }
 
 .main-nav-bar{
-  background-color: #6ab04c;
+  background-color: var(--main-bg-color);
+}
+
+.action-buttons-color{
+  background-color: var(--main-button-color) !important;
+}
+
+.modal-color{
+  background-color: var(--main-modal-color) !important;
+}
+
+.leaflet-popup-content-wrapper{
+  background-color: var(--main-bg-color);
+}
+
+.leaflet-popup-tip{
+  background-color: var(--main-bg-color);
+}
+
+.toast-error{
+  background-color: var(--error-color) !important;
+}
+
+.toast-success{
+  background-color: var(--success-color) !important;
+}
+
+input{
+  color: var(--main-text-color)
+}
+
+h1, h2, h3, h4, h5, h6, p, a {
+ color: var(--main-text-color);
 }

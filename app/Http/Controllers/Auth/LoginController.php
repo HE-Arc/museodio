@@ -4,36 +4,60 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
+  /**
+  * Login for API
+  *
+  * @return \Illuminate\Http\Response
+  */
+  public function login(){
 
-    use AuthenticatesUsers;
+    if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){
+      $user = Auth::user();
+      $success['token'] =  $user->createToken('Museodio')->accessToken;
+      $cookie = $this->getCookieDetails($success['token']);
 
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('guest')->except('logout');
+      return response()->json(['success' => $success], 200)->cookie($cookie['name'],
+      $cookie['value'],
+      $cookie['minutes'],
+      $cookie['path'],
+      $cookie['domain'],
+      $cookie['secure'],
+      $cookie['httponly'],
+      $cookie['samesite']);;
     }
+    else{
+      return response()->json(['error'=>['error' => 'Sorry, unknown username or password.']], 200);
+    }
+  }
+
+  public function logout(Request $request){
+
+    $user = $request->user()->token();
+    $user->revoke();
+    $cookie = \Cookie::forget('_token');
+
+    return response()->json(["success"=>"Successfully logged out."])->withCookie($cookie);
+  }
+
+
+  private function getCookieDetails($token)
+  {
+    return [
+      'name' => '_token',
+      'value' => $token,
+      'minutes' => 1440,
+      'path' => null,
+      'domain' => null,
+      // 'secure' => true, // for production
+      'secure' => null, // for localhost
+      'httponly' => true,
+      'samesite' => true,
+    ];
+  }
 }
