@@ -25,6 +25,11 @@ This step is optional but recommended, it allows to seed the tables with random 
 php artisan db:seed
 ```
 
+You need then to install Passport, which will create clients for token generation
+```
+php artisan passport:install
+```
+
 At last serve the project
 ```
 php artisan serve
