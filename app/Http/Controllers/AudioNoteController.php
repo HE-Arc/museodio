@@ -58,7 +58,7 @@ class AudioNoteController extends Controller
 
     return $query->join('users', 'audio_notes.user_id', '=', 'users.id')
       ->addSelect('users.firstName', 'users.lastName', 'audio_notes.longitude', 'audio_notes.latitude', 'audio_notes.file_name')
-      ->get();;
+      ->get();
   }
 
   public function download(Request $request)
