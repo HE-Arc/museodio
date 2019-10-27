@@ -19,6 +19,7 @@ class AudioNoteController extends Controller
 
   public function save(Request $request)
   {
+    // TODO : location, latitude
     $audio = $request->file('audio');
 
     // TODO : AUTH::user
