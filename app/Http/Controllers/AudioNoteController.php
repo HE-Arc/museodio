@@ -13,13 +13,15 @@ class AudioNoteController extends Controller
   public function index()
   {
     return AudioNote::join('users', 'audio_notes.user_id', '=', 'users.id')
-      ->select('users.firstName', 'users.lastName', 'audio_notes.longitude', 'audio_notes.latitude')
+      ->select('users.firstName', 'users.lastName', 'audio_notes.longitude', 'audio_notes.latitude', 'audio_notes.file_name')
       ->get();
   }
 
   public function save(Request $request)
   {
-    // TODO : location, latitude
+    // TODO : validate parameters
+    $latitude = $request->latitude;
+    $longitude = $request->longitude;
     $audio = $request->file('audio');
 
     // TODO : AUTH::user
@@ -27,6 +29,14 @@ class AudioNoteController extends Controller
     $fileName = $username . "_" . date("Y_m_d_H_i_s") . "." . $audio->getClientOriginalExtension();
 
     $audio->move(base_path($this->UPLOAD_FOLDER), $fileName);
+
+    $audioNote = new AudioNote();
+    $audioNote->user_id = 1; // TODO : Get user ID
+    $audioNote->latitude = $latitude;
+    $audioNote->longitude = $longitude;
+    $audioNote->file_name = $fileName;
+
+    $audioNote->save();
 
     return response()->json("Successfuly uploaded file", 200);
   }
@@ -48,4 +58,14 @@ class AudioNoteController extends Controller
 
     return response()->json($query->get(), 200);
   }
+
+  public function download(Request $request)
+  {
+    // TODO validate access rights
+    $fileName = $request->file_name;
+    $filePath = base_path(substr($this->UPLOAD_FOLDER, 1) . $fileName);
+
+    return response()->download($filePath);
+  }
+
 }
