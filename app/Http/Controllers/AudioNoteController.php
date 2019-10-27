@@ -56,7 +56,9 @@ class AudioNoteController extends Controller
       $request->outer_radius
     );
 
-    return response()->json($query->get(), 200);
+    return $query->join('users', 'audio_notes.user_id', '=', 'users.id')
+      ->addSelect('users.firstName', 'users.lastName', 'audio_notes.longitude', 'audio_notes.latitude', 'audio_notes.file_name')
+      ->get();;
   }
 
   public function download(Request $request)
