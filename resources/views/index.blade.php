@@ -26,7 +26,7 @@
   @include('modals.signin')
 
   <div class="fixed-action-btn">
-  <a class="btn-floating btn-large action-buttons-color">
+  <a class="btn-floating btn-large action-buttons-color waves-effect waves-circle waves-light">
     <i class="large material-icons">add</i>
   </a>
 </div>
