@@ -62,14 +62,15 @@
       iconUrl: 'img/baseline_play_circle_outline_black_18dp.png',
 
       iconSize:     [36, 36],
-      iconAnchor:   [18, 36],
+      iconAnchor:   [18, 18],
       shadowAnchor: [0, 0],
-      popupAnchor:  [0, -36]
+      popupAnchor:  [0, -18]
     });
 
     for(let audioNote of audioNotes) {
-      let customPopup = `<h4>${audioNote.firstName} ${audioNote.lastName}</h4> <br>`
-      customPopup += "<audio controls></audio>"
+      // TODO src : set complete URL
+      let customPopup = `<h4>${audioNote.firstName} ${audioNote.lastName}</h4> <br>`;
+      customPopup += `<audio controls src="api/audio-notes/download/${encodeURI(audioNote.file_name)}" preload="none"></audio>`;
 
       L.marker([audioNote.latitude, audioNote.longitude], {icon: playIcon})
         .addTo(mainMap)
