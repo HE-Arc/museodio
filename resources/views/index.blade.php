@@ -42,6 +42,13 @@
     displayCurrentUserPosition();
   }
 
+  function closeAllModals(){
+    $('.modal.open').each(function(modal){
+      var instance = M.Modal.getInstance(this);
+      instance.close();
+    });
+  }
+
   function displayCurrentUserPosition(){
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(getPosition);
