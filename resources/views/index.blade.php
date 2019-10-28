@@ -25,6 +25,12 @@
   @include('modals.register')
   @include('modals.signin')
 
+  <div class="fixed-action-btn">
+  <a class="btn-floating btn-large action-buttons-color">
+    <i class="large material-icons">add</i>
+  </a>
+</div>
+
   <script type="text/javascript">
   var mainMap = null;
 
@@ -82,7 +88,6 @@
       L.marker([audioNote.latitude, audioNote.longitude], {icon: playIcon})
         .addTo(mainMap)
         .bindPopup(customPopup)
-        .openPopup();
     }
   }
 
