@@ -20,6 +20,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
   return $request->user();
 });
 
+Route::get('/users/search/{query_name}', 'UserController@searchUsers');
+
 Route::get('/audio-notes/', 'AudioNoteController@index');
 
 Route::middleware('auth:api')->post('/audio-notes/save', 'AudioNoteController@save');
