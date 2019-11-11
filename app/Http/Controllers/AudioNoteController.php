@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use App\AudioNote;
 use Auth;
 
@@ -71,8 +72,10 @@ class AudioNoteController extends Controller
 
     $fileName = $request->file_name;
     $filePath = storage_path('app/audio/' . $fileName);
+    $response = new BinaryFileResponse($filePath);
 
-    return response()->download($filePath);
+    BinaryFileResponse::trustXSendfileTypeHeader();
+    return $response;
   }
 
 }
