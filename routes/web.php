@@ -23,7 +23,6 @@ Route::get('/', function (Request $request) {
     return redirect('/dashboard');
   }
   return view('index');
-
 })->name("/");
 
 

@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'firstname', 'lastname', 'email', 'password',
+        'id','firstname', 'lastname', 'email', 'password',
     ];
 
     /**
@@ -37,4 +37,20 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    //TODO
+    public static function getUserById($id)
+    {
+        $user = User::findOrFail($id);
+        return $user;
+    }
+
+    public function friend1()
+    {
+        $this->belongsTo('App\Friends','user_id_1');
+    }
+    public function friend2()
+    {
+        $this->belongsTo('App\Friends','user_id_2');
+    }
 }
