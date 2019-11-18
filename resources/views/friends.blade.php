@@ -2,7 +2,7 @@
 <div>Friends</div>
 <br>
 <div>
-    @foreach ($fr as $f)
+    @foreach ($friends as $f)
         @if($f->isAccepted)
             <div>
                 {{$f->id}} - {{$f->firstname}} {{$f->lastname}}
@@ -19,7 +19,7 @@
 </div>
 <br>
 <div>
-    @foreach ($nofr as $f)
+    @foreach ($nofriends as $f)
         <div>
             {{$f->id}} - {{$f->firstname}} {{$f->lastname}}
             ------- <button>Demander</button>

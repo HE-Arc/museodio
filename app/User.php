@@ -45,12 +45,4 @@ class User extends Authenticatable
         return $user;
     }
 
-    public function friend1()
-    {
-        $this->belongsTo('App\Friends','user_id_1');
-    }
-    public function friend2()
-    {
-        $this->belongsTo('App\Friends','user_id_2');
-    }
 }

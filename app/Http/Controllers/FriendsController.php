@@ -47,7 +47,7 @@ class FriendsController extends Controller
 
       }
 
-      return view('friends')->with('friends',Friends::getAllFriends($idUser))->with('users',Friends::getAllNoFriends($idUser))->with('fr',$usersFriends)->with('nofr',$usersNoFriends);
+      return view('friends')->with('friends',$usersFriends)->with('nofriends',$usersNoFriends);
   }
 
   public function save(Request $request)
