@@ -13,7 +13,6 @@ class FriendsController extends Controller
   public function index()
   {
       //TODO
-      //return view('friends')->with('users', User::all())->with('friends',Friends::all());
       // $idUser = Auth::id();
       $idUser = 1;
 
@@ -46,7 +45,14 @@ class FriendsController extends Controller
 
       }
 
-      return view('friends')->with('friends',$usersFriends)->with('nofriends',$usersNoFriends);
+      //return view('friends')->with('friends',$usersFriends)->with('nofriends',$usersNoFriends);
+      return response()->json([
+          "success" => [
+              "friends" => $usersFriends,
+              "noFriends" => $usersNoFriends
+          ]
+      ]
+  );
   }
 
   public function store(Request $request)
@@ -57,20 +63,14 @@ class FriendsController extends Controller
           'id' => 'required|numeric',
       ]);
 
-     // var_dump($request->id);
+     $friend=new Friends();
 
+      $friends->user_id_1=1;
+      $friends->user_id_2=$id;
+      $friends->isAccepted = false;
+      $friends->save();
 
-
-
-      // $user_id_1 = $request->user_id_1;
-      // $user_id_2 = $request->user_id_2;
-      // $friends = new Friends();
-      // $friends->user_id_1=$user_id_1;
-      // $friends->user_id_2=$user_id_2;
-      // $friends->isAccepted = false;
-      // $friends->save();
-
-      //return response()->json("Successfuly uploaded friendship", 200);
+      return response()->json("Successfuly uploaded friendship", 200);
   }
 
   public function update(Request $request)
@@ -79,19 +79,14 @@ class FriendsController extends Controller
           'id' => 'required|numeric',
       ]);
 
-      var_dump($request->id);
+      $user_id_2 = $request->id;
+      $user_id_1= 1;
 
+      $friend = Friends::getFriendsbyUsersId($user_id_1,$user_id_2);
+      $friends->isAccepted = true;
+      $friends->update();
 
-
-      // $user_id_1 = $request->user_id_1;
-      // $user_id_2 = $request->user_id_2;
-      // $friends = new Friends();
-      // $friends->user_id_1 = $user_id_1;
-      // $friends->user_id_2 = $user_id_2;
-      // $friends->isAccepted = true;
-      // $friends->update();
-      //
-      // return response()->json("Successfuly update friendship", 200);
+      return response()->json("Successfuly update friendship", 200);
   }
 
   public function destroy(Request $request)
@@ -100,17 +95,20 @@ class FriendsController extends Controller
           'id' => 'required|numeric',
       ]);
 
-      var_dump($request->id);
+      //var_dump($request->id);
 
-      // $user_id_1 = $request->user_id_1;
-      // $user_id_2 = $request->user_id_2;
-      // $isAccepted = $request->isAccepted;
-      // $friends = new Friends();
-      // $friends->user_id_1 = $user_id_1;
-      // $friends->user_id_2 = $user_id_2;
-      // $friends->isAccepted = $isAccepted;
-      // $friends->destroy();
-      //
-      // return response()->json("Successfuly delete friendship", 200);
+      $user_id_2 = $request->id;
+      $user_id_1= 1;
+
+      $friend = Friends::getFriendsbyUsersId($user_id_1,$user_id_2);
+      $friends->destroy();
+
+      return response()->json("Successfuly delete friendship", 200);
   }
+
+  public function show()
+  {
+
+  }
+
 }

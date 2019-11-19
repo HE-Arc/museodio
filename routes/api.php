@@ -29,3 +29,6 @@ Route::get('/audio-notes/download/{file_name}', 'AudioNoteController@download');
 Route::get('/audio-notes/{longitude}/{latitude}/{outer_radius}', 'AudioNoteController@showNearAudioNotes');
 
 Route::get('/logout', 'Auth\LoginController@logout')->middleware('auth:api');
+
+//TODO: a modifier ?
+Route::resource('/friends','FriendsController');

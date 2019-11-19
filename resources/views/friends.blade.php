@@ -8,8 +8,7 @@
                 {{$f->id}} - {{$f->firstname}} {{$f->lastname}}
                 -------
                 {!! Form::open(['route' => ['friends.destroy', $f->id], 'method' => 'DELETE']) !!}
-                <button type="submit" href={{ url('/friends/destroy', ['id' => $f->id]) }}>Supprimer</button>
-                {!! Form::submit('DELETE') !!}
+                {!! Form::submit('Suprrimer') !!}
                 {!! Form::close() !!}
             </div>
         @else
@@ -18,12 +17,12 @@
 
                 -------
                 {!! Form::open(['route' => ['friends.update', $f->id], 'method' => 'PUT']) !!}
-                {!!Form::submit('Click Me!')!!}
-                <button type="submit" href={{ url('/friends/update', ['id' => $f->id]) }}>Accepter</button>
-                {!! Form::submit('PUT') !!}
+                {!! Form::submit('Accepter')!!}
                 {!! Form::close() !!}
 
-                <button href={{ url('/friends/destroy', ['id' => $f->id]) }}>Refuser</button>  {{ method_field('DELETE') }}
+                {!! Form::open(['route' => ['friends.destroy', $f->id], 'method' => 'DELETE']) !!}
+                {!! Form::submit('Refuser')!!}
+                {!! Form::close() !!}
             </div>
         @endif
     @endforeach
@@ -34,7 +33,10 @@
     @foreach ($nofriends as $f)
         <div>
             {{$f->id}} - {{$f->firstname}} {{$f->lastname}}
-            ------- <button href={{ url('/friends/store', ['id' => $f->id]) }}>Demander</button>
+            -------
+            {!! Form::open(['route' => ['friends.store', $f->id], 'method' => 'POST']) !!}
+            {!! Form::submit('Demander')!!}
+            {!! Form::close() !!}
         </div>
     @endforeach
 </div>
