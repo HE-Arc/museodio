@@ -106,9 +106,9 @@ class FriendsController extends Controller
       return response()->json("Successfuly delete friendship", 200);
   }
 
-  public function show()
+  public function show(Request $request)
   {
-
+      $this->index();
   }
 
 }
