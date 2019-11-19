@@ -15,7 +15,6 @@ class FriendsController extends Controller
       //TODO
       //return view('friends')->with('users', User::all())->with('friends',Friends::all());
       // $idUser = Auth::id();
-
       $idUser = 1;
 
       //TODO a changer
@@ -50,62 +49,68 @@ class FriendsController extends Controller
       return view('friends')->with('friends',$usersFriends)->with('nofriends',$usersNoFriends);
   }
 
-  public function save(Request $request)
+  public function store(Request $request)
   {
+
       //TODO : Check validate and test this function
       $validatedData = $request->validate([
-          'user_id_1' => 'required|numeric',
-          'user_id_2' => 'required|numeric',
-          'isAccepted' => 'required|boolean'
+          'id' => 'required|numeric',
       ]);
 
-      $user_id_1 = $request->user_id_1;
-      $user_id_2 = $request->user_id_2;
-      $friends = new Friends();
-      $friends->user_id_1=$user_id_1;
-      $friends->user_id_2=$user_id_2;
-      $friends->isAccepted = false;
-      $friends->save();
+     // var_dump($request->id);
 
-      return response()->json("Successfuly uploaded friendship", 200);
+
+
+
+      // $user_id_1 = $request->user_id_1;
+      // $user_id_2 = $request->user_id_2;
+      // $friends = new Friends();
+      // $friends->user_id_1=$user_id_1;
+      // $friends->user_id_2=$user_id_2;
+      // $friends->isAccepted = false;
+      // $friends->save();
+
+      //return response()->json("Successfuly uploaded friendship", 200);
   }
 
   public function update(Request $request)
   {
       $validatedData = $request->validate([
-          'user_id_1' => 'required|numeric',
-          'user_id_2' => 'required|numeric',
-          'isAccepted' => 'required|boolean'
+          'id' => 'required|numeric',
       ]);
 
-      $user_id_1 = $request->user_id_1;
-      $user_id_2 = $request->user_id_2;
-      $friends = new Friends();
-      $friends->user_id_1 = $user_id_1;
-      $friends->user_id_2 = $user_id_2;
-      $friends->isAccepted = true;
-      $friends->update();
+      var_dump($request->id);
 
-      return response()->json("Successfuly update friendship", 200);
+
+
+      // $user_id_1 = $request->user_id_1;
+      // $user_id_2 = $request->user_id_2;
+      // $friends = new Friends();
+      // $friends->user_id_1 = $user_id_1;
+      // $friends->user_id_2 = $user_id_2;
+      // $friends->isAccepted = true;
+      // $friends->update();
+      //
+      // return response()->json("Successfuly update friendship", 200);
   }
 
   public function destroy(Request $request)
   {
       $validatedData = $request->validate([
-          'user_id_1' => 'required|numeric',
-          'user_id_2' => 'required|numeric',
-          'isAccepted' => 'required|boolean'
+          'id' => 'required|numeric',
       ]);
 
-      $user_id_1 = $request->user_id_1;
-      $user_id_2 = $request->user_id_2;
-      $isAccepted = $request->isAccepted;
-      $friends = new Friends();
-      $friends->user_id_1 = $user_id_1;
-      $friends->user_id_2 = $user_id_2;
-      $friends->isAccepted = $isAccepted;
-      $friends->destroy();
+      var_dump($request->id);
 
-      return response()->json("Successfuly delete friendship", 200);
+      // $user_id_1 = $request->user_id_1;
+      // $user_id_2 = $request->user_id_2;
+      // $isAccepted = $request->isAccepted;
+      // $friends = new Friends();
+      // $friends->user_id_1 = $user_id_1;
+      // $friends->user_id_2 = $user_id_2;
+      // $friends->isAccepted = $isAccepted;
+      // $friends->destroy();
+      //
+      // return response()->json("Successfuly delete friendship", 200);
   }
 }
