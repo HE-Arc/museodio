@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use App\AudioNote;
+use Auth;
 
 class AudioNoteController extends Controller
 {
   private $INNER_RADIUS = 0;
-  private $UPLOAD_FOLDER = "/uploads/";
 
   public function index()
   {
@@ -19,55 +20,62 @@ class AudioNoteController extends Controller
 
   public function save(Request $request)
   {
-    // TODO : validate parameters
-    $latitude = $request->latitude;
-    $longitude = $request->longitude;
-    $audio = $request->file('audio');
+      $validatedData = $request->validate([
+      'longitude' => 'required|numeric',
+      'latitude' => 'required|numeric',
+      'audio' => 'required|mimes:mpga,wav'
+      ]);
 
-    // TODO : AUTH::user
-    $username = "jonas";
-    $fileName = $username . "_" . date("Y_m_d_H_i_s") . "." . $audio->getClientOriginalExtension();
+      $latitude = $request->latitude;
+      $longitude = $request->longitude;
+      $audio = $request->file('audio');
 
-    $audio->move(base_path($this->UPLOAD_FOLDER), $fileName);
+      $userid = Auth::user()->id;
+      $fileName = $userid . "_" . date("Y_m_d_H_i_s") . "." . $audio->getClientOriginalExtension();
 
-    $audioNote = new AudioNote();
-    $audioNote->user_id = 1; // TODO : Get user ID
-    $audioNote->latitude = $latitude;
-    $audioNote->longitude = $longitude;
-    $audioNote->file_name = $fileName;
+      $request->audio->storeAs("audio", $fileName);
 
-    $audioNote->save();
+      $audioNote = new AudioNote();
+      $audioNote->user_id = Auth::id();
+      $audioNote->latitude = $latitude;
+      $audioNote->longitude = $longitude;
+      $audioNote->file_name = $fileName;
 
-    return response()->json("Successfuly uploaded file", 200);
-  }
+      $audioNote->save();
 
-  public function showNearAudioNotes(Request $request)
-  {
-    $validatedData = $request->validate([
-      'longitude' => 'numeric',
-      'latitude' => 'numeric',
-      'outer_radius' => 'numeric'
-    ]);
+      return response()->json("Successfuly uploaded file", 200);
+    }
 
-    $query = AudioNote::geofence(
-      $request->latitude,
-      $request->longitude,
-      $this->INNER_RADIUS,
-      $request->outer_radius
-    );
+    public function showNearAudioNotes(Request $request)
+    {
+      $validatedData = $request->validate([
+        'longitude' => 'required|numeric',
+        'latitude' => 'required|numeric',
+        'outer_radius' => 'numeric' // TODO we should define it
+      ]);
 
-    return $query->join('users', 'audio_notes.user_id', '=', 'users.id')
-      ->addSelect('users.firstName', 'users.lastName', 'audio_notes.longitude', 'audio_notes.latitude', 'audio_notes.file_name')
-      ->get();
-  }
+      $query = AudioNote::geofence(
+        $request->latitude,
+        $request->longitude,
+        $this->INNER_RADIUS,
+        $request->outer_radius
+      );
+
+      return $query->join('users', 'audio_notes.user_id', '=', 'users.id')
+        ->addSelect('users.firstName', 'users.lastName', 'audio_notes.longitude', 'audio_notes.latitude', 'audio_notes.file_name')
+        ->get();
+    }
 
   public function download(Request $request)
   {
     // TODO validate access rights
-    $fileName = $request->file_name;
-    $filePath = base_path(substr($this->UPLOAD_FOLDER, 1) . $fileName);
 
-    return response()->download($filePath);
+    $fileName = $request->file_name;
+    $filePath = storage_path('app/audio/' . $fileName);
+    $response = new BinaryFileResponse($filePath);
+
+    BinaryFileResponse::trustXSendfileTypeHeader();
+    return $response;
   }
 
 }
