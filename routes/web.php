@@ -33,3 +33,6 @@ Route::get('/', function (Request $request) {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+//TODO: a modifier ?
+Route::resource('/friends','FriendsController');

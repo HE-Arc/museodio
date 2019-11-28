@@ -26,7 +26,6 @@
             </div>
         @endif
     @endforeach
-
 </div>
 <br>
 <div>
@@ -37,6 +36,14 @@
             {!! Form::open(['route' => ['friends.store', $f->id], 'method' => 'POST']) !!}
             {!! Form::submit('Demander')!!}
             {!! Form::close() !!}
+        </div>
+    @endforeach
+</div>
+
+<div>
+    @foreach ($audio as $a)
+        <div>
+            {{ $a }}
         </div>
     @endforeach
 </div>

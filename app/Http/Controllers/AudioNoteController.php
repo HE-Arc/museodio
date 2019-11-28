@@ -61,6 +61,8 @@ class AudioNoteController extends Controller
         $request->outer_radius
       );
 
+    // $userEx=1;
+    // $audioOfEx=$userEx->audioNotes;
       return $query->join('users', 'audio_notes.user_id', '=', 'users.id')
         ->addSelect('users.firstName', 'users.lastName', 'audio_notes.longitude', 'audio_notes.latitude', 'audio_notes.file_name')
         ->get();

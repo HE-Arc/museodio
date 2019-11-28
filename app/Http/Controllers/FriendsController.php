@@ -16,43 +16,25 @@ class FriendsController extends Controller
       // $idUser = Auth::id();
       $idUser = 1;
 
-      //TODO a changer
-      $friends=Friends::all();
-      $users = User::all();
-      $usersFriends=[];
+      //TODO a changer;
+      //$usersNoFriends =User::findOrFail($idUser)->nofriends;
       $usersNoFriends=[];
-      foreach ($users as $keyUser => $valueUser) {
 
-          if ($valueUser->id != $idUser) {
-              $i =0;
-              foreach ($friends as $keyFriend => $valueFriend) {
+      $friends = User::findOrFail($idUser)->friends;
 
-                 if($valueFriend->user_id_1 == $idUser && $valueFriend->user_id_2 ==$valueUser->id ){
-                     //$usersFriends.add()
-                     array_push($usersFriends,User::getUserById($valueFriend->user_id_2));
-                     $i=$i+1;
-                 }
-                 elseif ($valueFriend->user_id_2 == $idUser && $valueFriend->user_id_1 == $valueUser->id) {
-                     array_push($usersFriends,User::getUserById($valueFriend->user_id_1));
-                     $i=$i+1;
-                 }
-              }
-              if($i <= 0)
-              {
-                      array_push($usersNoFriends,User::getUserById($valueUser->id));
-              }
-          }
+      $audio = [];
+      // foreach ($friends as $f) {
+      //     array_push($audio, $f->audioNotes);
+      // }
 
-      }
-
-      //return view('friends')->with('friends',$usersFriends)->with('nofriends',$usersNoFriends);
-      return response()->json([
-          "success" => [
-              "friends" => $usersFriends,
-              "noFriends" => $usersNoFriends
-          ]
-      ]
-  );
+      return view('friends')->with('nofriends',$usersNoFriends)->with('friends',$friends)->with('audio',$audio);
+  //     return response()->json([
+  //         "success" => [
+  //             "friends" => $usersFriends,
+  //             "noFriends" => $usersNoFriends
+  //         ]
+  //     ]
+  // );
   }
 
   public function store(Request $request)
