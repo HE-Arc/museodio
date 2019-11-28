@@ -31,6 +31,12 @@
 
   @unless (!Auth::check())
     @include('sidenav')
+
+    <div class="fixed-action-btn">
+      <a class="btn-floating btn-large action-buttons-color waves-effect waves-circle waves-light modal-trigger" href="#addAudioNoteModal">
+        <i class="large material-icons">add</i>
+      </a>
+    </div>
   @endunless
 
   <div id="map"></div>
@@ -38,12 +44,6 @@
   @include('modals.register')
   @include('modals.signin')
   @include('modals.addnotes')
-
-  <div class="fixed-action-btn">
-  <a class="btn-floating btn-large action-buttons-color waves-effect waves-circle waves-light modal-trigger" href="#addAudioNoteModal">
-    <i class="large material-icons">add</i>
-  </a>
-</div>
 
   <script type="text/javascript">
   var mainMap = null;

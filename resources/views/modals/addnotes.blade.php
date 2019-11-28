@@ -13,7 +13,7 @@
           <div class="file-field input-field">
             <div class="btn">
               <span>Audio</span>
-              <input type="file">
+              <input id="note_file" type="file">
             </div>
             <div class="file-path-wrapper">
               <input class="file-path validate" type="text">
@@ -22,8 +22,15 @@
         </div>
       </div>
     </div>
+    <div class="header-container">
+      <div  class="header-container">
+        <div id="noteProgressBar" style="width: 97%;">
+          <p></p>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="modal-footer modal-color">
-    <a href="#!" id="uploadButton" class="waves-effect waves-green btn action-buttons-color" onclick="uploadNote();">Upload</a>
+    <a href="#!" id="noteButton" class="waves-effect waves-green btn action-buttons-color" onclick="submitAudioNote();">Upload</a>
   </div>
 </div>

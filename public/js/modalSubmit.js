@@ -5,6 +5,7 @@ let headers = {
 
 var registerProgressBar;
 var loginProgressBar;
+var noteProgressBar;
 
 function modalSubmitAutoInit(){
   registerProgressBar = new Mprogress({
@@ -15,6 +16,11 @@ function modalSubmitAutoInit(){
   loginProgressBar = new Mprogress({
     template: 4,
     parent: "#loginProgressBar"
+  })
+
+  noteProgressBar = new Mprogress({
+    template: 4,
+    parent: "#noteProgressBar"
   })
 }
 
@@ -47,6 +53,59 @@ async function submitLogin(){
       toggleButton("loginButton");
       toggleLoginProgressBar();
   });
+}
+
+async function submitAudioNote(){
+  toggleButton("noteButton");
+  toggleNoteProgressBar();
+
+  payload = {
+    longitude:             7.0913,
+    latitude:              49.9325,
+    audio:            $("#note_file").get(0).files[0]
+  };
+
+
+  sendFileData(payload, "/api/audio-notes/save", async function(response){
+      if(response.ok){
+        response.json().then(async function(json){
+          if(json.hasOwnProperty('error')){
+            displayErrors(json);
+          }
+          else{
+            M.toast({html: "Audio note uploaded successfully.", classes: "toast-success"});
+            toggleNoteProgressBar();
+            await sleep(2000);
+            location.reload();
+          }
+        })
+      }
+      else{
+        M.toast({html: 'An error occured while trying to perform this action. Please try again.', classes: 'toast-error'});
+      }
+      toggleButton("noteButton");
+      toggleNoteProgressBar();
+  });
+}
+
+async function sendFileData(payload, route, callback){
+
+  const formData = new FormData();
+
+  for (opt in payload){
+    formData.append(opt, payload[opt])
+  }
+
+  let options = {
+    method: "POST",
+    credentials: "same-origin",
+    body: formData
+  }
+
+  fetch(APP_URL + route, options)
+  .then(function(response){
+    callback(response);
+  })
 }
 
 
@@ -100,25 +159,6 @@ async function displayErrors(json){
   }
 }
 
-
-async function test(){
-  let options = {
-    method: "GET",
-    credentials: "same-origin",
-    headers: { 'Accept': 'application/json' },
-  }
-
-  fetch(APP_URL + "/api/user", options)
-  .then(function(response){
-    if(response.ok){
-
-    }
-    else{
-
-    }
-  })
-}
-
 async function sendData(payload, route, callback){
 
   let options = {
@@ -161,6 +201,15 @@ function toggleLoginProgressBar(){
   }
   else{
     loginProgressBar.start();
+  }
+}
+
+function toggleNoteProgressBar(){
+  if(noteProgressBar.status == 0.08){
+    noteProgressBar.end();
+  }
+  else{
+    noteProgressBar.start();
   }
 }
 
