@@ -44,6 +44,8 @@ async function submitLogin(){
       else{
         M.toast({html: 'An error occured while trying to perform this action. Please try again.', classes: 'toast-error'});
       }
+      toggleButton("loginButton");
+      toggleLoginProgressBar();
   });
 }
 
@@ -68,6 +70,8 @@ async function submitRegistration(){
 
         if(json.hasOwnProperty('error')){
           displayErrors(json);
+          toggleButton("registerButton");
+          toggleRegisterProgressBar();
         }
         else{
           M.toast({html: "Successfully registered.", classes: 'toast-success'});
@@ -80,7 +84,6 @@ async function submitRegistration(){
     else{
       M.toast({html: 'An error occured while trying to perform this action. Please try again.', classes: 'toast-error'});
     }
-
     toggleButton("registerButton");
     toggleRegisterProgressBar();
   });

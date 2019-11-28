@@ -14,11 +14,24 @@
   <link rel="stylesheet" href="{{asset('css/MProgress.css')}}">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+  <script src="{{asset('js/jQuery.js')}}" charset="utf-8"></script>
+  <script src="{{asset('vendor\leaflet\leaflet\leaflet.js')}}" charset="utf-8"></script>
+  <script src="{{asset('js/materialize-css/materialize.js')}}" charset="utf-8"></script>
+  <script type="text/javascript">
+    let APP_URL = "{{ env('APP_URL') }}";
+  </script>
+  <script src="{{asset('js/fetchUtil.js')}}" charset="utf-8"></script>
+  <script src="{{asset('js/modalSubmit.js')}}" charset="utf-8"></script>
+  <script src="{{asset('js/MProgress.js')}}" charset="utf-8"></script>
+
 </head>
 <body>
 
   @include('header')
 
+  @unless (!Auth::check())
+    @include('sidenav')
+  @endunless
 
   <div id="map"></div>
 
@@ -92,22 +105,28 @@
     }
   }
 
+  function toggleMainSlide(){
+    if(mainSlide.isOpen == false){
+      mainSlide.open();
+    }
+    else{
+      mainSlide.close();
+    }
+  }
+
   window.onload = function(){
     initMap();
     M.AutoInit();
     modalSubmitAutoInit();
     displayAudioNotes();
   };
+
+  document.addEventListener('DOMContentLoaded', function() {
+   var elems = document.querySelectorAll('.sidenav');
+   var instances = M.Sidenav.init(elems, {edge: 'right'});
+
+ });
 </script>
 
-<script src="{{asset('vendor\leaflet\leaflet\leaflet.js')}}" charset="utf-8"></script>
-<script src="{{asset('js/materialize-css/materialize.js')}}" charset="utf-8"></script>
-<script type="text/javascript">
-  let APP_URL = "{{ env('APP_URL') }}";
-</script>
-<script src="{{asset('js/fetchUtil.js')}}" charset="utf-8"></script>
-<script src="{{asset('js/modalSubmit.js')}}" charset="utf-8"></script>
-<script src="{{asset('js/jQuery.js')}}" charset="utf-8"></script>
-<script src="{{asset('js/MProgress.js')}}" charset="utf-8"></script>
 </body>
 </html>
