@@ -64,13 +64,25 @@ class AudioNoteController extends Controller
       return $query->join('users', 'audio_notes.user_id', '=', 'users.id')
         ->addSelect('users.firstName', 'users.lastName', 'audio_notes.longitude', 'audio_notes.latitude', 'audio_notes.file_name')
         ->get();
+
+
+        // return $query->whereIn('user_id', // TODO friends id and current user id)
+        //     ->join('users', 'audio_notes.user_id', '=', 'users.id')
+        //     ->addSelect('users.firstName', 'users.lastName', 'audio_notes.longitude', 'audio_notes.latitude', 'audio_notes.file_name')
+        //     ->get();
     }
 
   public function download(Request $request)
   {
-    // TODO validate access rights
+    // TODO validate access rights -> by checking if friends
 
     $fileName = $request->file_name;
+
+    // $fileOwnerUid = AudioNote::where('file_name', '=', $fileName)
+    //         ->select('user_id')->get();
+
+    // TODO check current user and fileowner are friends
+
     $filePath = storage_path('app/audio/' . $fileName);
     $response = new BinaryFileResponse($filePath);
 
