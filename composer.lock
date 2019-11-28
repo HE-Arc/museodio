@@ -104,16 +104,16 @@
         },
         {
             "name": "doctrine/cache",
-            "version": "1.9.0",
+            "version": "v1.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/cache.git",
-                "reference": "c15dcd24b756f9e52ea7c3ae8227354f3628f11a"
+                "reference": "d4374ae95b36062d02ef310100ed33d78738d76c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/cache/zipball/c15dcd24b756f9e52ea7c3ae8227354f3628f11a",
-                "reference": "c15dcd24b756f9e52ea7c3ae8227354f3628f11a",
+                "url": "https://api.github.com/repos/doctrine/cache/zipball/d4374ae95b36062d02ef310100ed33d78738d76c",
+                "reference": "d4374ae95b36062d02ef310100ed33d78738d76c",
                 "shasum": ""
             },
             "require": {
@@ -183,7 +183,11 @@
                 "riak",
                 "xcache"
             ],
+<<<<<<< HEAD
             "time": "2019-11-11T10:31:52+00:00"
+=======
+            "time": "2019-10-28T09:31:32+00:00"
+>>>>>>> master
         },
         {
             "name": "doctrine/dbal",
@@ -1073,6 +1077,7 @@
         },
         {
             "name": "laravel/framework",
+<<<<<<< HEAD
             "version": "v6.5.1",
             "source": {
                 "type": "git",
@@ -1083,6 +1088,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/laravel/framework/zipball/e47180500498cf8aa2a8ffb59a3b4daa007fa13d",
                 "reference": "e47180500498cf8aa2a8ffb59a3b4daa007fa13d",
+=======
+            "version": "v6.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/framework.git",
+                "reference": "bbaf5e956cb24512c48fc31129a5e357a09a8ea1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/bbaf5e956cb24512c48fc31129a5e357a09a8ea1",
+                "reference": "bbaf5e956cb24512c48fc31129a5e357a09a8ea1",
+>>>>>>> master
                 "shasum": ""
             },
             "require": {
@@ -1215,7 +1232,11 @@
                 "framework",
                 "laravel"
             ],
+<<<<<<< HEAD
             "time": "2019-11-12T15:20:18+00:00"
+=======
+            "time": "2019-10-23T13:29:43+00:00"
+>>>>>>> master
         },
         {
             "name": "laravel/passport",
@@ -1407,6 +1428,7 @@
                 "ui"
             ],
             "time": "2019-10-11T12:16:52+00:00"
+<<<<<<< HEAD
         },
         {
             "name": "laravelcollective/html",
@@ -1475,6 +1497,8 @@
             "description": "HTML and Form Builders for the Laravel Framework",
             "homepage": "https://laravelcollective.com",
             "time": "2019-10-02T00:37:39+00:00"
+=======
+>>>>>>> master
         },
         {
             "name": "lcobucci/jwt",
@@ -1847,6 +1871,7 @@
         },
         {
             "name": "nesbot/carbon",
+<<<<<<< HEAD
             "version": "2.26.0",
             "source": {
                 "type": "git",
@@ -1857,6 +1882,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/e01ecc0b71168febb52ae1fdc1cfcc95428e604e",
                 "reference": "e01ecc0b71168febb52ae1fdc1cfcc95428e604e",
+=======
+            "version": "2.25.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/briannesbitt/Carbon.git",
+                "reference": "d07636581795383e2fea2d711212d30f941f2039"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/d07636581795383e2fea2d711212d30f941f2039",
+                "reference": "d07636581795383e2fea2d711212d30f941f2039",
+>>>>>>> master
                 "shasum": ""
             },
             "require": {
@@ -1910,6 +1947,7 @@
                 "datetime",
                 "time"
             ],
+<<<<<<< HEAD
             "time": "2019-10-21T21:32:25+00:00"
         },
         {
@@ -1924,6 +1962,22 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/9a9981c347c5c49d6dfe5cf826bb882b824080dc",
                 "reference": "9a9981c347c5c49d6dfe5cf826bb882b824080dc",
+=======
+            "time": "2019-10-20T11:05:44+00:00"
+        },
+        {
+            "name": "nikic/php-parser",
+            "version": "v4.2.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nikic/PHP-Parser.git",
+                "reference": "b76bbc3c51f22c570648de48e8c2d941ed5e2cf2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/b76bbc3c51f22c570648de48e8c2d941ed5e2cf2",
+                "reference": "b76bbc3c51f22c570648de48e8c2d941ed5e2cf2",
+>>>>>>> master
                 "shasum": ""
             },
             "require": {
@@ -1931,7 +1985,11 @@
                 "php": ">=7.0"
             },
             "require-dev": {
+<<<<<<< HEAD
                 "ircmaxell/php-yacc": "0.0.5",
+=======
+                "ircmaxell/php-yacc": "0.0.4",
+>>>>>>> master
                 "phpunit/phpunit": "^6.5 || ^7.0 || ^8.0"
             },
             "bin": [
@@ -1962,7 +2020,11 @@
                 "parser",
                 "php"
             ],
+<<<<<<< HEAD
             "time": "2019-11-08T13:50:10+00:00"
+=======
+            "time": "2019-10-25T18:33:07+00:00"
+>>>>>>> master
         },
         {
             "name": "opis/closure",
@@ -2365,6 +2427,7 @@
         },
         {
             "name": "psr/log",
+<<<<<<< HEAD
             "version": "1.1.2",
             "source": {
                 "type": "git",
@@ -2375,6 +2438,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/php-fig/log/zipball/446d54b4cb6bf489fc9d75f55843658e6f25d801",
                 "reference": "446d54b4cb6bf489fc9d75f55843658e6f25d801",
+=======
+            "version": "1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/log.git",
+                "reference": "bf73deb2b3b896a9d9c75f3f0d88185d2faa27e2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/bf73deb2b3b896a9d9c75f3f0d88185d2faa27e2",
+                "reference": "bf73deb2b3b896a9d9c75f3f0d88185d2faa27e2",
+>>>>>>> master
                 "shasum": ""
             },
             "require": {
@@ -2408,7 +2483,11 @@
                 "psr",
                 "psr-3"
             ],
+<<<<<<< HEAD
             "time": "2019-11-01T11:05:21+00:00"
+=======
+            "time": "2019-10-25T08:06:51+00:00"
+>>>>>>> master
         },
         {
             "name": "psr/simple-cache",
@@ -5396,6 +5475,7 @@
         },
         {
             "name": "phpunit/phpunit",
+<<<<<<< HEAD
             "version": "8.4.3",
             "source": {
                 "type": "git",
@@ -5406,6 +5486,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/67f9e35bffc0dd52d55d565ddbe4230454fd6a4e",
                 "reference": "67f9e35bffc0dd52d55d565ddbe4230454fd6a4e",
+=======
+            "version": "8.4.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/phpunit.git",
+                "reference": "a142a7e66c0ea7b5b6c04ee27f08d10d1137cd9b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/a142a7e66c0ea7b5b6c04ee27f08d10d1137cd9b",
+                "reference": "a142a7e66c0ea7b5b6c04ee27f08d10d1137cd9b",
+>>>>>>> master
                 "shasum": ""
             },
             "require": {
@@ -5475,7 +5567,11 @@
                 "testing",
                 "xunit"
             ],
+<<<<<<< HEAD
             "time": "2019-11-06T09:42:23+00:00"
+=======
+            "time": "2019-10-28T10:39:51+00:00"
+>>>>>>> master
         },
         {
             "name": "scrivo/highlight.php",

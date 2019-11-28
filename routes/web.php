@@ -13,6 +13,10 @@ use Illuminate\Http\Request;
 |
 */
 
+if (App::environment('production')) {
+    URL::forceScheme('https');
+}
+
 Route::get('/dashboard', function () {
   $user = Auth::user();
   return view('index', ['user'=> $user]);
