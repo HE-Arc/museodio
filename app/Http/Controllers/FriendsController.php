@@ -23,9 +23,9 @@ class FriendsController extends Controller
       $friends = User::findOrFail($idUser)->friends;
 
       $audio = [];
-      // foreach ($friends as $f) {
-      //     array_push($audio, $f->audioNotes);
-      // }
+      foreach ($friends as $f) {
+          array_push($audio, $f->audioNotes);
+      }
 
       return view('friends')->with('nofriends',$usersNoFriends)->with('friends',$friends)->with('audio',$audio);
   //     return response()->json([
