@@ -19,6 +19,7 @@ class FriendsController extends Controller
       $noFriends = User::findOrFail($idUser)->nofriends();
       $friends = User::findOrFail($idUser)->friends;
 
+
       //just for testing
       return view('friends')->with('nofriends',$noFriends)->with('friends',$friends);
 
@@ -34,51 +35,72 @@ class FriendsController extends Controller
 
   public function store(Request $request)
   {
+      // TODO
+      // $validatedData = $request->validate([
+      //     'id' => 'required|numeric',
+      // ]);
+      // $user1 =User::findOrFail(Auth::id());
+      // $user2 =User::findOrFail($request->id);
 
-      //TODO : Check validate and test this function
-      $validatedData = $request->validate([
-          'id' => 'required|numeric',
-      ]);
+      //just for testing
+      $user_id_1 =User::findOrFail(1);
+      $user_id_2 =User::findOrFail(4);
 
-     $friend=new Friends();
+      $user_id_1->addFriend($user_id_2);
 
-      $friends->user_id_1=1;
-      $friends->user_id_2=$id;
-      $friends->isAccepted = false;
-      $friends->save();
-
-      return response()->json("Successfuly uploaded friendship", 200);
+      //just for testing
+      return $this->index();
+      
+      //TODO
+      //return response()->json("Successfuly uploaded friendship", 200);
   }
 
   public function update(Request $request)
   {
-      $validatedData = $request->validate([
-          'id' => 'required|numeric',
-      ]);
+      //TODO
+      // $validatedData = $request->validate([
+      //     'id' => 'required|numeric',
+      // ]);
+      //
+      // $user_id_2 = User::find($request->id);
+      // $user_id_1 = User::find(Auth::id);
 
-      $user_id_2 = $request->id;
-      $user_id_1= 1;
+      //just for testing
+      $user_id_2 = 2;
+      $user_id_1 = 1;
 
-      $friend = Friends::getFriendsbyUsersId($user_id_1,$user_id_2);
-      $friends->isAccepted = true;
-      $friends->update();
+      $friendId = Friends::getFriendsbyUsersId($user_id_1,$user_id_2);
 
-      return response()->json("Successfuly update friendship", 200);
+      $friendId=1;
+
+      Friends::find($friendId)->update(['isAccepted' => 1]);
+
+      //just for testing
+      return $this->index();
+      //TODO
+     // return response()->json("Successfuly update friendship", 200);
   }
 
   public function destroy(Request $request)
   {
-      $validatedData = $request->validate([
-          'id' => 'required|numeric',
-      ]);
+      //TODO
+      // $validatedData = $request->validate([
+      //     'id' => 'required|numeric',
+      // ]);
+      //
+      // $user_id_2 = User::findOrFail($request->id);
+      // $user_id_1=  User::findOrFail(Auth::id);
 
-      $user_id_2 = $request->id;
-      $user_id_1= 1;
+      //just for testing
+      $user_id_2 = User::findOrFail(4);
+      $user_id_1= User::findOrFail(1);
 
-      $friend = Friends::getFriendsbyUsersId($user_id_1,$user_id_2);
-      $friends->destroy();
+      $user_id_1->removeFriend($user_id_2);
 
-      return response()->json("Successfuly delete friendship", 200);
+      //just for testing
+      return $this->index();
+      //TODO
+      //return response()->json("Successfuly delete friendship", 200);
   }
 
   public function show(Request $request)
