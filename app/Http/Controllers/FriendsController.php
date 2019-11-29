@@ -16,18 +16,13 @@ class FriendsController extends Controller
       // $idUser = Auth::id();
       $idUser = 1;
 
-      //TODO a changer;
-      //$usersNoFriends =User::findOrFail($idUser)->nofriends;
-      $usersNoFriends=[];
-
+      $noFriends = User::findOrFail($idUser)->nofriends();
       $friends = User::findOrFail($idUser)->friends;
 
-      $audio = [];
-      foreach ($friends as $f) {
-          array_push($audio, $f->audioNotes);
-      }
+      //just for testing
+      return view('friends')->with('nofriends',$noFriends)->with('friends',$friends);
 
-      return view('friends')->with('nofriends',$usersNoFriends)->with('friends',$friends)->with('audio',$audio);
+      //TODO
   //     return response()->json([
   //         "success" => [
   //             "friends" => $usersFriends,
@@ -76,8 +71,6 @@ class FriendsController extends Controller
       $validatedData = $request->validate([
           'id' => 'required|numeric',
       ]);
-
-      //var_dump($request->id);
 
       $user_id_2 = $request->id;
       $user_id_1= 1;

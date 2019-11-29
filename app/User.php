@@ -45,7 +45,6 @@ class User extends Authenticatable
         return $this->hasMany('App\AudioNote');
     }
 
-
 	public function friends()
 	{
 		return $this->belongsToMany('App\User', 'App\Friends', 'user_id_1', 'user_id_2');
@@ -54,33 +53,14 @@ class User extends Authenticatable
     public function nofriends()
     {
         //TODO
-        // var_dump("hey");
-        // $idUser=1;
-        // $userCurrent=User::findOrFail($idUser);
-        //
-        // $users=User::all();
-        // $friends = $userCurrent->friends;
-        //
-        // $nofriends = [];
-        //
-        // //TODO a changer
-        // foreach ($users as $user) {
-        //    if ($user->id != $idUser) {
-        //        foreach ($friends as $friend) {
-        //           if(!($friend->user_id_1 == $idUser &&
-        //             $friend->user_id_2 == $user->id ||
-        //             $friend->user_id_2 == $idUser &&
-        //             $friend->user_id_1 == $user->id)){
-        //               array_push($nofriends,User::findOrFail($friend->user_id_2));
-        //           }
-        //        }
-        //    }
-        // }
+        $idUser=1;
+        $userCurrent=User::findOrFail($idUser);
 
-        // $users=User::all()->diff($userCurrent->belongsToMany('App\User', 'App\Friends', 'user_id_1', 'user_id_2'));
-        // $friends = $userCurrent->friends;
-        
-        //return User::all()->diff($this->belongsToMany('App\User', 'App\Friends', 'user_id_1', 'user_id_2'));
+        $users = $users = User::all()->except($idUser);;
+        $friends = $userCurrent->friends;
+
+        $diff = $users->diff($friends);
+        return $diff;
     }
 
 	public function addFriend(User $user)
