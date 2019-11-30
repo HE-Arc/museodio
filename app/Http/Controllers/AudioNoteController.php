@@ -61,6 +61,11 @@ class AudioNoteController extends Controller
         $request->outer_radius
       );
 
+        //Pour recuperer toutes les audio notes de ces amis !attention ne comprend pas ces propres audios!
+        // $audio = [];
+        // foreach ($friends as $f) {
+        //     array_push($audio, $f->audioNotes);
+        // }
       return $query->join('users', 'audio_notes.user_id', '=', 'users.id')
         ->addSelect('users.firstName', 'users.lastName', 'audio_notes.longitude', 'audio_notes.latitude', 'audio_notes.file_name')
         ->get();

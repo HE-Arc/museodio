@@ -27,10 +27,12 @@ Route::get('/', function (Request $request) {
     return redirect('/dashboard');
   }
   return view('index');
-
 })->name("/");
 
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+//TODO: a modifier ?
+Route::resource('/friends','FriendsController');
