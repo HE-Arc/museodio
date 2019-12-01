@@ -50,36 +50,36 @@ class FriendsController extends Controller
 
       //just for testing
       return $this->index();
-      
+
       //TODO
       //return response()->json("Successfuly uploaded friendship", 200);
   }
 
-  public function update(Request $request)
-  {
-      //TODO
-      // $validatedData = $request->validate([
-      //     'id' => 'required|numeric',
-      // ]);
-      //
-      // $user_id_2 = User::find($request->id);
-      // $user_id_1 = User::find(Auth::id);
-
-      //just for testing
-      $user_id_2 = 2;
-      $user_id_1 = 1;
-
-      $friendId = Friends::getFriendsbyUsersId($user_id_1,$user_id_2);
-
-      $friendId=1;
-
-      Friends::find($friendId)->update(['isAccepted' => 1]);
-
-      //just for testing
-      return $this->index();
-      //TODO
-     // return response()->json("Successfuly update friendship", 200);
-  }
+  // public function update(Request $request)
+  // {
+  //     //TODO
+  //     // $validatedData = $request->validate([
+  //     //     'id' => 'required|numeric',
+  //     // ]);
+  //     //
+  //     // $user_id_2 = User::find($request->id);
+  //     // $user_id_1 = User::find(Auth::id);
+  // 
+  //     //just for testing
+  //     $user_id_2 = 2;
+  //     $user_id_1 = 1;
+  //
+  //     $friendId = Friends::getFriendsbyUsersId($user_id_1,$user_id_2);
+  //
+  //     $friendId=1;
+  //
+  //     Friends::find($friendId)->update(['isAccepted' => 1]);
+  //
+  //     //just for testing
+  //     return $this->index();
+  //     //TODO
+  //    // return response()->json("Successfuly update friendship", 200);
+  // }
 
   public function destroy(Request $request)
   {
