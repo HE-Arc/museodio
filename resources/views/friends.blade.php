@@ -14,8 +14,25 @@
     @endforeach
 </div>
 <br>
-<div>No Friends</div>
+<div>Ask Friends</div>
+<div>
+    @foreach ($askfriends as $f)
+            <div>
+                {{$f->id}} - {{$f->firstname}} {{$f->lastname}}
+
+                {!! Form::open(['route' => ['friends.update', $f->id], 'method' => 'PUT']) !!}
+                {!! Form::submit('Accepter') !!}
+                {!! Form::close() !!}
+                {!! Form::open(['route' => ['friends.destroy', $f->id], 'method' => 'DELETE']) !!}
+                {!! Form::submit('Refuser') !!}
+                {!! Form::close() !!}
+                -------
+            </div>
+    @endforeach
+</div>
 <br>
+<div>No Friends</div>
+
 <div>
     @foreach ($nofriends as $f)
         <div>

@@ -49,6 +49,10 @@ class User extends Authenticatable
 	{
 		return $this->belongsToMany('App\User', 'App\Friends', 'user_id_1', 'user_id_2');
 	}
+    public function askfriends()
+	{
+		return $this->belongsToMany('App\User', 'App\Friends', 'user_id_2', 'user_id_1');
+	}
 
     public function nofriends()
     {
@@ -56,10 +60,11 @@ class User extends Authenticatable
         $idUser=1;
         $userCurrent=User::findOrFail($idUser);
 
-        $users = $users = User::all()->except($idUser);;
+        $users = User::all()->except($idUser);
         $friends = $userCurrent->friends;
+        $askfriends= $userCurrent->askfriends;
 
-        $diff = $users->diff($friends);
+        $diff = $users->diff($friends)->diff($askfriends);
         return $diff;
     }
 

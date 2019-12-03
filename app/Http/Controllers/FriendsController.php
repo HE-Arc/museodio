@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Friends;
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class FriendsController extends Controller
 {
@@ -18,10 +19,11 @@ class FriendsController extends Controller
 
       $noFriends = User::findOrFail($idUser)->nofriends();
       $friends = User::findOrFail($idUser)->friends;
+      $askfriends = User::findOrFail($idUser)->askfriends;
 
 
       //just for testing
-      return view('friends')->with('nofriends',$noFriends)->with('friends',$friends);
+      return view('friends')->with('nofriends',$noFriends)->with('friends',$friends)->with('askfriends',$askfriends);
 
       //TODO
   //     return response()->json([
@@ -55,31 +57,43 @@ class FriendsController extends Controller
       //return response()->json("Successfuly uploaded friendship", 200);
   }
 
-  // public function update(Request $request)
-  // {
-  //     //TODO
-  //     // $validatedData = $request->validate([
-  //     //     'id' => 'required|numeric',
-  //     // ]);
-  //     //
-  //     // $user_id_2 = User::find($request->id);
-  //     // $user_id_1 = User::find(Auth::id);
-  // 
-  //     //just for testing
-  //     $user_id_2 = 2;
-  //     $user_id_1 = 1;
-  //
-  //     $friendId = Friends::getFriendsbyUsersId($user_id_1,$user_id_2);
-  //
-  //     $friendId=1;
-  //
-  //     Friends::find($friendId)->update(['isAccepted' => 1]);
-  //
-  //     //just for testing
-  //     return $this->index();
-  //     //TODO
-  //    // return response()->json("Successfuly update friendship", 200);
-  // }
+  public function update(Request $request)
+  {
+      //TODO
+      // $validatedData = $request->validate([
+      //     'id' => 'required|numeric',
+      // ]);
+      //
+      // $user_id_2 = User::find($request->id);
+      // $user_id_1 = User::find(Auth::id);
+
+      //just for testing
+      $user2 = 1;
+      $user1 = 2;
+
+
+      // $friend=Friends::where('user_id_1','=',$user1)->where('user_id_2','=',$user2)->orWhere(function($q) use ($user1,$user2){   $q->where('user_id_2','=',$user1)
+      //       ->where('user_id_1','=',$user2);})->firstOrFail();
+      //
+      // //$friendId = Friends::getFriendsbyUsersId($user_id_1, $user_id_2);
+      //
+      // //$friendId=1;
+      //
+      // $friend->isAccepted = 1;
+      // //dd($friend);
+      //
+      // dd($friend->save());
+      $r = DB::update('update friends
+      set isAccepted = 1
+      where
+      (user_id_1 = :u1 and  user_id_2 = :u2)
+       or (user_id_1 = :u3 and  user_id_2 = :u4)',['u1'=>$user1,'u2'=>$user2,'u3'=>$user2,'u4'=>$user1]);
+      //just for testing
+
+      return $this->index();
+      //TODO
+     // return response()->json("Successfuly update friendship", 200);
+  }
 
   public function destroy(Request $request)
   {
@@ -92,10 +106,12 @@ class FriendsController extends Controller
       // $user_id_1=  User::findOrFail(Auth::id);
 
       //just for testing
-      $user_id_2 = User::findOrFail(4);
-      $user_id_1= User::findOrFail(1);
+      $user_id_1 = User::findOrFail(1);
+      $user_id_2= User::findOrFail(4);
 
       $user_id_1->removeFriend($user_id_2);
+      $user_id_2->removeFriend($user_id_1);
+
 
       //just for testing
       return $this->index();
