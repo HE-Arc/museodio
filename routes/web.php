@@ -34,5 +34,5 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-//TODO: a modifier ?
+//TODO: a enlever
 Route::resource('/friends','FriendsController');
