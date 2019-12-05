@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\DB;
 
 class Friends extends Model
 {
-    protected $primaryKey = ['user_id', 'stock_id'];
     /**
      * The attributes that are mass assignable.
      *
