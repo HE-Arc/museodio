@@ -5973,7 +5973,7 @@ $jscomp.polyfill = function (e, r, p, m) {
       value: function _animateSidenavIn() {
         var _this32 = this;
 
-        var slideOutPercent = this.options.edge === 'left' ? -1 : 1;
+        var slideOutPercent = this.options.edge === 'left' ? 1 : 1;
         if (this.isDragged) {
           slideOutPercent = this.options.edge === 'left' ? slideOutPercent + this.percentOpen : slideOutPercent - this.percentOpen;
         }
@@ -6023,7 +6023,7 @@ $jscomp.polyfill = function (e, r, p, m) {
       value: function _animateSidenavOut() {
         var _this33 = this;
 
-        var endPercent = this.options.edge === 'left' ? -1 : 1;
+        var endPercent = this.options.edge === 'left' ? 1 : 1;
         var slideOutPercent = 0;
         if (this.isDragged) {
           slideOutPercent = this.options.edge === 'left' ? endPercent + this.percentOpen : endPercent - this.percentOpen;

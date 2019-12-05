@@ -14,23 +14,37 @@
   <link rel="stylesheet" href="{{asset('css/MProgress.css')}}">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+  <script src="{{asset('js/jQuery.js')}}" charset="utf-8"></script>
+  <script src="{{asset('vendor\leaflet\leaflet\leaflet.js')}}" charset="utf-8"></script>
+  <script src="{{asset('js/materialize-css/materialize.js')}}" charset="utf-8"></script>
+  <script type="text/javascript">
+    let APP_URL = "{{ env('APP_URL') }}";
+    let RECORDED_AUDIO;
+  </script>
+  <script src="{{asset('js/fetchUtil.js')}}" charset="utf-8"></script>
+  <script src="{{asset('js/modalSubmit.js')}}" charset="utf-8"></script>
+  <script src="{{asset('js/MProgress.js')}}" charset="utf-8"></script>
+
 </head>
 <body>
 
   @include('header')
 
+  @unless (!Auth::check())
+    @include('sidenav')
+
+    <div class="fixed-action-btn">
+      <a class="btn-floating btn-large action-buttons-color waves-effect waves-circle waves-light modal-trigger" href="#addAudioNoteModal">
+        <i class="large material-icons">add</i>
+      </a>
+    </div>
+  @endunless
 
   <div id="map"></div>
 
   @include('modals.register')
   @include('modals.signin')
   @include('modals.addnotes')
-
-  <div class="fixed-action-btn">
-  <a class="btn-floating btn-large action-buttons-color waves-effect waves-circle waves-light modal-trigger" href="#addAudioNoteModal">
-    <i class="large material-icons">add</i>
-  </a>
-</div>
 
   <script type="text/javascript">
   var mainMap = null;
@@ -58,15 +72,20 @@
 
   function displayCurrentUserPosition(){
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(getPosition);
+      var LOCATION = navigator.geolocation.getCurrentPosition(getPosition);
     }
   }
 
   function getPosition(position){
-    var userLat = position.coords.latitude;
-    var userLon = position.coords.longitude;
+    userLat = position.coords.latitude;
+    userLong = position.coords.longitude;
 
-    mainMap.setView(new L.LatLng(userLat, userLon), 13);
+    mainMap.setView(new L.LatLng(userLat, userLong), 13);
+
+    $('#note_lat').val(userLat);
+    $('#note_long').val(userLong);
+
+    M.updateTextFields();
   }
 
   async function displayAudioNotes() {
@@ -92,22 +111,29 @@
     }
   }
 
+  function toggleMainSlide(){
+    if(mainSlide.isOpen == false){
+      mainSlide.open();
+    }
+    else{
+      mainSlide.close();
+    }
+  }
+
   window.onload = function(){
     initMap();
     M.AutoInit();
     modalSubmitAutoInit();
     displayAudioNotes();
   };
-</script>
 
-<script src="{{asset('vendor\leaflet\leaflet\leaflet.js')}}" charset="utf-8"></script>
-<script src="{{asset('js/materialize-css/materialize.js')}}" charset="utf-8"></script>
-<script type="text/javascript">
-  let APP_URL = "{{ env('APP_URL') }}";
+  document.addEventListener('DOMContentLoaded', function() {
+   var elems = document.querySelectorAll('.sidenav');
+   var instances = M.Sidenav.init(elems, {edge: 'right'});
+
+ });
 </script>
-<script src="{{asset('js/fetchUtil.js')}}" charset="utf-8"></script>
-<script src="{{asset('js/modalSubmit.js')}}" charset="utf-8"></script>
-<script src="{{asset('js/jQuery.js')}}" charset="utf-8"></script>
-<script src="{{asset('js/MProgress.js')}}" charset="utf-8"></script>
+<!-- <script src="{{asset('js/recordAudioUtils.js')}}" charset="utf-8"></script> -->
+<script src="{{asset('js/polyfill.js')}}" charset="utf-8"></script>
 </body>
 </html>
