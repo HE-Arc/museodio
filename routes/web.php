@@ -13,6 +13,10 @@ use Illuminate\Http\Request;
 |
 */
 
+if (App::environment('production')) {
+    URL::forceScheme('https');
+}
+
 Route::get('/dashboard', function () {
   $user = Auth::user();
   return view('index', ['user'=> $user]);
@@ -23,10 +27,12 @@ Route::get('/', function (Request $request) {
     return redirect('/dashboard');
   }
   return view('index');
-
 })->name("/");
 
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+//TODO: a enlever
+Route::resource('/friends','FriendsController');
