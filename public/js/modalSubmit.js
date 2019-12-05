@@ -34,24 +34,24 @@ async function submitLogin(){
   };
 
   sendData(payload, "/api/login", async function(response){
-      if(response.ok){
-        response.json().then(async function(json){
-          if(json.hasOwnProperty('error')){
-            displayErrors(json);
-          }
-          else{
-            M.toast({html: "Successfully logged in.", classes: "toast-success"});
-            toggleLoginProgressBar();
-            await sleep(2000);
-            location.reload();
-          }
-        })
-      }
-      else{
-        M.toast({html: 'An error occured while trying to perform this action. Please try again.', classes: 'toast-error'});
-      }
-      toggleButton("loginButton");
-      toggleLoginProgressBar();
+    if(response.ok){
+      response.json().then(async function(json){
+        if(json.hasOwnProperty('error')){
+          displayErrors(json);
+        }
+        else{
+          M.toast({html: "Successfully logged in.", classes: "toast-success"});
+          toggleLoginProgressBar();
+          await sleep(2000);
+          location.reload();
+        }
+      })
+    }
+    else{
+      M.toast({html: 'An error occured while trying to perform this action. Please try again.', classes: 'toast-error'});
+    }
+    toggleButton("loginButton");
+    toggleLoginProgressBar();
   });
 }
 
@@ -59,32 +59,44 @@ async function submitAudioNote(){
   toggleButton("noteButton");
   toggleNoteProgressBar();
 
+  let fileToUpload = null;
+
+  if(RECORDED_AUDIO != null){
+    //Audio has been manually recorded, not a file
+    fileToUpload = RECORDED_AUDIO;
+    console.log("RECORDED AUDIO");
+  }
+  else{
+    fileToUpload = $("#note_file").get(0).files[0];
+    console.log("FILE UPLOADA");
+  }
+
   payload = {
-    longitude:             7.0913,
-    latitude:              49.9325,
-    audio:            $("#note_file").get(0).files[0]
+    latitude:             $("#note_lat").val(),
+    longitude:            $("#note_long").val(),
+    audio:                fileToUpload
   };
 
-
   sendFileData(payload, "/api/audio-notes/save", async function(response){
-      if(response.ok){
-        response.json().then(async function(json){
-          if(json.hasOwnProperty('error')){
-            displayErrors(json);
-          }
-          else{
-            M.toast({html: "Audio note uploaded successfully.", classes: "toast-success"});
-            toggleNoteProgressBar();
-            await sleep(2000);
-            location.reload();
-          }
-        })
-      }
-      else{
-        M.toast({html: 'An error occured while trying to perform this action. Please try again.', classes: 'toast-error'});
-      }
-      toggleButton("noteButton");
-      toggleNoteProgressBar();
+    if(response.ok){
+      response.json().then(async function(json){
+        if(json.hasOwnProperty('error')){
+          displayErrors(json);
+          console.log(json);
+        }
+        else{
+          M.toast({html: "Audio note uploaded successfully.", classes: "toast-success"});
+          toggleNoteProgressBar();
+          await sleep(2000);
+          location.reload();
+        }
+      });
+    }
+    else{
+      M.toast({html: 'An error occured while trying to perform this action. Please try again.', classes: 'toast-error'});
+    }
+    toggleButton("noteButton");
+    toggleNoteProgressBar();
   });
 }
 
@@ -101,6 +113,8 @@ async function sendFileData(payload, route, callback){
     credentials: "same-origin",
     body: formData
   }
+
+  console.log(options);
 
   fetch(APP_URL + route, options)
   .then(function(response){
@@ -123,7 +137,6 @@ async function submitRegistration(){
   };
 
   sendData(payload, "/api/register", async function(response){
-
     if(response.ok){
       response.json().then(async function(json){
 

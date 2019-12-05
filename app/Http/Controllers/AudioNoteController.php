@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use App\AudioNote;
+use Illuminate\Support\Facades\Validator;
 use Auth;
 
 class AudioNoteController extends Controller
@@ -20,11 +21,15 @@ class AudioNoteController extends Controller
 
   public function save(Request $request)
   {
-      $validatedData = $request->validate([
+      $validator = Validator::make($request->all(), [
       'longitude' => 'required|numeric',
       'latitude' => 'required|numeric',
       'audio' => 'required|mimes:mpga,wav'
       ]);
+
+      if($validator->fails()){
+        return response()->json(['error' => $validator->errors(), 'test' => $request], 200);
+      }
 
       $latitude = $request->latitude;
       $longitude = $request->longitude;

@@ -4,10 +4,36 @@
     <div class="row">
       <div class="col s12">
         <div class="row">
-          <div class="input-field col s12">
-            <input id="note_name" type="text" class="validate">
-            <label for="note_name">Name</label>
+          <div class="input-field col s6">
+            <input id="note_lat" type="number" class="validate" step=any>
+            <label for="note_lat">Latitude</label>
           </div>
+          <div class="input-field col s6">
+            <input id="note_long" type="number" class="validate" step=any>
+            <label for="note_long">Longitude</label>
+          </div>
+        </div>
+        <div class="row">
+          <br>
+          <h4>Record audio</h4>
+        </div>
+        <div class="row">
+          <div class="col s6 center">
+            <button class="waves-effect waves-green btn action-buttons-color" id="note_record">Record</button>
+          </div>
+          <div class="col s6 center">
+            <button class="waves-effect waves-green btn action-buttons-color" id="note_stop" disabled>Stop</button>
+          </div>
+        </div>
+        <div class="row">
+          <div id="audioPlayerContainer" class="col s12 center" style="display: none; width: 100%;">
+            <audio controls src="" id="audioPlayer" preload="none"></audio>
+          </div>
+        </div>
+        <div class="row">
+          <br>
+          <h4>Otherwise</h4>
+          <p>Upload a file</p>
         </div>
         <div class="row">
           <div class="file-field input-field">

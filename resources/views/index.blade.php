@@ -19,6 +19,7 @@
   <script src="{{asset('js/materialize-css/materialize.js')}}" charset="utf-8"></script>
   <script type="text/javascript">
     let APP_URL = "{{ env('APP_URL') }}";
+    let RECORDED_AUDIO;
   </script>
   <script src="{{asset('js/fetchUtil.js')}}" charset="utf-8"></script>
   <script src="{{asset('js/modalSubmit.js')}}" charset="utf-8"></script>
@@ -71,15 +72,20 @@
 
   function displayCurrentUserPosition(){
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(getPosition);
+      var LOCATION = navigator.geolocation.getCurrentPosition(getPosition);
     }
   }
 
   function getPosition(position){
-    var userLat = position.coords.latitude;
-    var userLon = position.coords.longitude;
+    userLat = position.coords.latitude;
+    userLong = position.coords.longitude;
 
-    mainMap.setView(new L.LatLng(userLat, userLon), 13);
+    mainMap.setView(new L.LatLng(userLat, userLong), 13);
+
+    $('#note_lat').val(userLat);
+    $('#note_long').val(userLong);
+
+    M.updateTextFields();
   }
 
   async function displayAudioNotes() {
@@ -127,6 +133,7 @@
 
  });
 </script>
-
+<!-- <script src="{{asset('js/recordAudioUtils.js')}}" charset="utf-8"></script> -->
+<script src="{{asset('js/polyfill.js')}}" charset="utf-8"></script>
 </body>
 </html>
