@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use Illuminate\Support\Facades\DB;
 use App\AudioNote;
 use App\Friends;
 
@@ -47,11 +48,11 @@ class User extends Authenticatable
 
 	public function friends()
 	{
-		return $this->belongsToMany('App\User', 'App\Friends', 'user_id_1', 'user_id_2');
+		return $this->belongsToMany('App\User', 'App\Friends', 'user_id_1', 'user_id_2')->withPivot('isAccepted');
 	}
     public function askfriends()
 	{
-		return $this->belongsToMany('App\User', 'App\Friends', 'user_id_2', 'user_id_1');
+		return $this->belongsToMany('App\User', 'App\Friends', 'user_id_2', 'user_id_1')->withPivot('isAccepted');
 	}
 
     public function nofriends()

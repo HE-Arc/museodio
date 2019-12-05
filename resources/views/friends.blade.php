@@ -3,6 +3,7 @@
 <br>
 <div>
     @foreach ($friends as $f)
+
             <div>
                 {{$f->id}} - {{$f->firstname}} {{$f->lastname}}
 
@@ -17,8 +18,18 @@
 <div>Ask Friends</div>
 <div>
     @foreach ($askfriends as $f)
+        @if($f->pivot->isAccepted==1)
             <div>
                 {{$f->id}} - {{$f->firstname}} {{$f->lastname}}
+
+                {!! Form::open(['route' => ['friends.destroy', $f->id], 'method' => 'DELETE']) !!}
+                {!! Form::submit('Suprrimer') !!}
+                {!! Form::close() !!}
+                -------
+            </div>
+        @else
+            <div>
+                {{$f->id}} - {{$f->firstname}} {{$f->lastname}} {{$f->isAccepted}}
 
                 {!! Form::open(['route' => ['friends.update', $f->id], 'method' => 'PUT']) !!}
                 {!! Form::submit('Accepter') !!}
@@ -28,6 +39,7 @@
                 {!! Form::close() !!}
                 -------
             </div>
+        @endif
     @endforeach
 </div>
 <br>
