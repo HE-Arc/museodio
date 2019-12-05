@@ -16,11 +16,13 @@ class FriendsTableSeeder extends Seeder
         [
             [
                 'user_id_1'=>1,
-                'user_id_2'=>2
+                'user_id_2'=>2,
+                'isAccepted'=>0
             ],
             [
                 'user_id_1'=>1,
-                'user_id_2'=>3
+                'user_id_2'=>3,
+                'isAccepted'=>1
             ]
         ];
 
