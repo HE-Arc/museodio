@@ -10,7 +10,4 @@
     <li><a href="#!">Change password</a></li>
     <li><div class="divider"></div></li>
     <li><a href="{{route('api/logout')}}"><i class="material-icons icon-white">exit_to_app</i>Logout</a></li>
-    @php
-      //var_dump($user);
-    @endphp
   </ul>
