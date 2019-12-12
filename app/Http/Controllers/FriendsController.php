@@ -13,22 +13,25 @@ class FriendsController extends Controller
 
   public function index()
   {
-      $idUser = Auth::id();
+
+      $idUser=1;
+     // $idUser = Auth::id();
       $usersNoFriends = User::findOrFail($idUser)->nofriends();
       $usersFriends = User::findOrFail($idUser)->friends;
       $usersAskFriends = User::findOrFail($idUser)->askfriends;
 
+     // dd($idUser);
       //just for testing
-      //return view('friends')->with('nofriends',$usersNoFriends)->with('friends',$usersFriends)->with('askfriends',$usersAskFriends);
+      return view('friends')->with('nofriends',$usersNoFriends)->with('friends',$usersFriends)->with('askfriends',$usersAskFriends);
 
-      return response()->json([
-          "success" => [
-              "friends" => $usersFriends,
-              "noFriends" => $usersNoFriends,
-               "askfriends" => $usersAskFriends
-          ]
-      ]
-    );
+    //   return response()->json([
+    //       "success" => [
+    //           "friends" => $usersFriends,
+    //           "noFriends" => $usersNoFriends,
+    //            "askfriends" => $usersAskFriends
+    //       ]
+    //   ]
+    // );
   }
 
   public function store(Request $request)
