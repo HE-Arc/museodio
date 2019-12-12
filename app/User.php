@@ -9,6 +9,7 @@ use Laravel\Passport\HasApiTokens;
 use Illuminate\Support\Facades\DB;
 use App\AudioNote;
 use App\Friends;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable
 {
@@ -57,7 +58,8 @@ class User extends Authenticatable
 
     public function nofriends()
     {
-        $idUser=Auth::id();
+        //$idUser=Auth::id();
+        $idUser=1;
         $userCurrent=User::findOrFail($idUser);
 
         $users = User::all()->except($idUser);
