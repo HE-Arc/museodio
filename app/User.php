@@ -52,6 +52,7 @@ class User extends Authenticatable
 	}
     public function askfriends()
 	{
+        // TODO : Delete todo
 		return $this->belongsToMany('App\User', 'App\Friends', 'user_id_2', 'user_id_1')->withPivot('isAccepted');
 	}
 

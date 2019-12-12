@@ -55,7 +55,7 @@ class AudioNoteController extends Controller
       $validator = $request->validate([
         'longitude' => 'required|numeric',
         'latitude' => 'required|numeric',
-        'outer_radius' => 'numeric' // TODO we should define it
+        'outer_radius' => 'numeric'
       ]);
 
       if($validator->fails()){
