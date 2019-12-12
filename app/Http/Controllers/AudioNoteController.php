@@ -20,23 +20,27 @@ class AudioNoteController extends Controller
 
   public function save(Request $request)
   {
-      $validatedData = $request->validate([
-      'longitude' => 'required|numeric',
-      'latitude' => 'required|numeric',
-      'audio' => 'required|mimes:mpga,wav'
+      $validator = $request->validate([
+          'longitude' => 'required|numeric',
+          'latitude' => 'required|numeric',
+          'audio' => 'required|mimes:mpga,wav'
       ]);
+
+      if($validator->fails()){
+        return response()->json(['error' => $validator->errors()], 200);
+      }
 
       $latitude = $request->latitude;
       $longitude = $request->longitude;
       $audio = $request->file('audio');
 
-      $userid = Auth::user()->id;
+      $userid = Auth::id();
       $fileName = $userid . "_" . date("Y_m_d_H_i_s") . "." . $audio->getClientOriginalExtension();
 
       $request->audio->storeAs("audio", $fileName);
 
       $audioNote = new AudioNote();
-      $audioNote->user_id = Auth::id();
+      $audioNote->user_id = $userid;
       $audioNote->latitude = $latitude;
       $audioNote->longitude = $longitude;
       $audioNote->file_name = $fileName;
@@ -48,11 +52,15 @@ class AudioNoteController extends Controller
 
     public function showNearAudioNotes(Request $request)
     {
-      $validatedData = $request->validate([
+      $validator = $request->validate([
         'longitude' => 'required|numeric',
         'latitude' => 'required|numeric',
         'outer_radius' => 'numeric' // TODO we should define it
       ]);
+
+      if($validator->fails()){
+        return response()->json(['error' => $validator->errors()], 200);
+      }
 
       $query = AudioNote::geofence(
         $request->latitude,
@@ -61,38 +69,47 @@ class AudioNoteController extends Controller
         $request->outer_radius
       );
 
-        //Pour recuperer toutes les audio notes de ces amis !attention ne comprend pas ces propres audios!
-        // $audio = [];
-        // foreach ($friends as $f) {
-        //     array_push($audio, $f->audioNotes);
-        // }
-      return $query->join('users', 'audio_notes.user_id', '=', 'users.id')
+      $friends = Auth::user()->friends;
+
+      $friends_id = [];
+      foreach($friend as $friends)
+      {
+          array_push($friends_id, $friend->id);
+      }
+
+      $friends = Auth::user()->askfriends;
+      foreach($friend as $friends)
+      {
+          if($friend->isAccepted)
+            array_push($friends_id, $friend->id);
+      }
+
+
+      return $query->whereIn('user_id',  $friends_id)
+        ->join('users', 'audio_notes.user_id', '=', 'users.id')
         ->addSelect('users.firstName', 'users.lastName', 'audio_notes.longitude', 'audio_notes.latitude', 'audio_notes.file_name')
         ->get();
-
-
-        // return $query->whereIn('user_id', // TODO friends id and current user id)
-        //     ->join('users', 'audio_notes.user_id', '=', 'users.id')
-        //     ->addSelect('users.firstName', 'users.lastName', 'audio_notes.longitude', 'audio_notes.latitude', 'audio_notes.file_name')
-        //     ->get();
     }
 
-  public function download(Request $request)
-  {
-    // TODO validate access rights -> by checking if friends
+    public function download(Request $request)
+    {
+        $fileName = $request->file_name;
 
-    $fileName = $request->file_name;
+        $fileOwnerUid = AudioNote::where('file_name', '=', $fileName)
+        ->select('user_id')->get();
 
-    // $fileOwnerUid = AudioNote::where('file_name', '=', $fileName)
-    //         ->select('user_id')->get();
+        $userCurrent = Auth::id();
 
-    // TODO check current user and fileowner are friends
+        if(!Friends::isFriend($userCurrent, $fileOwnerUid))
+        {
+        return response()->json(["error"=>'audio notes not shared with you'],200);
+        }
 
-    $filePath = storage_path('app/audio/' . $fileName);
-    $response = new BinaryFileResponse($filePath);
+        $filePath = storage_path('app/audio/' . $fileName);
+        $response = new BinaryFileResponse($filePath);
 
-    BinaryFileResponse::trustXSendfileTypeHeader();
-    return $response;
-  }
+        BinaryFileResponse::trustXSendfileTypeHeader();
+        return $response;
+    }
 
 }
