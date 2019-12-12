@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Illuminate\Support\Facades\Validator;
 use App\AudioNote;
+use App\User;
 use Auth;
 
 class AudioNoteController extends Controller
@@ -20,7 +22,7 @@ class AudioNoteController extends Controller
 
   public function save(Request $request)
   {
-      $validator = $request->validate([
+      $validator = Validator::make($request->all(),[
           'longitude' => 'required|numeric',
           'latitude' => 'required|numeric',
           'audio' => 'required|mimes:mpga,wav'
@@ -52,11 +54,13 @@ class AudioNoteController extends Controller
 
     public function showNearAudioNotes(Request $request)
     {
-      $validator = $request->validate([
-        'longitude' => 'required|numeric',
-        'latitude' => 'required|numeric',
+
+      $validator = Validator::make($request->all(),[
+        'longitude' => 'numeric',
+        'latitude' => 'numeric',
         'outer_radius' => 'numeric'
       ]);
+
 
       if($validator->fails()){
         return response()->json(['error' => $validator->errors()], 200);
@@ -69,26 +73,30 @@ class AudioNoteController extends Controller
         $request->outer_radius
       );
 
-      $friends = Auth::user()->friends;
+      $id= Auth::id();
+
+      $friends = User::findOrFail($id)->friends;
 
       $friends_id = [];
-      foreach($friend as $friends)
+      foreach($friends as $friend)
       {
           array_push($friends_id, $friend->id);
       }
 
-      $friends = Auth::user()->askfriends;
-      foreach($friend as $friends)
+      $friends = User::findOrFail($id)->askfriends;
+
+      foreach($friends as $friend)
       {
-          if($friend->isAccepted)
+          if($friend->pivot->isAccepted)
+          {
             array_push($friends_id, $friend->id);
+        }
       }
-
-
       return $query->whereIn('user_id',  $friends_id)
         ->join('users', 'audio_notes.user_id', '=', 'users.id')
         ->addSelect('users.firstName', 'users.lastName', 'audio_notes.longitude', 'audio_notes.latitude', 'audio_notes.file_name')
         ->get();
+;
     }
 
     public function download(Request $request)
