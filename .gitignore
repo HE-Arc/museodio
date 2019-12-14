@@ -13,4 +13,4 @@ npm-debug.log
 yarn-error.log
 .
 .DS_Store
-/uploads/*
+/storage/app/audio/*.mp3
