@@ -15,7 +15,6 @@ class LoginController extends Controller
   * @return \Illuminate\Http\Response
   */
   public function login(){
-
     if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){
       $user = Auth::user();
       $success['token'] =  $user->createToken('Museodio')->accessToken;
@@ -59,10 +58,9 @@ class LoginController extends Controller
   /**
   * Get all the informations of the cookie
   *
-  * @return 
+  * @return
   */
-  private function getCookieDetails($token)
-  {
+  private function getCookieDetails($token){
     return [
       'name' => '_token',
       'value' => $token,

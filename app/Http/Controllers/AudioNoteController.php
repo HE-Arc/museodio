@@ -17,20 +17,23 @@ class AudioNoteController extends Controller
   */
   private $INNER_RADIUS = 0;
 
-/**
- * Create a new controller instance.
+  /**
+ * Index function of the AudioNotesCOntroller
  *
- * @return void
+ * @return App\AudioNote
  */
-  public function index()
-  {
+  public function index(){
     return AudioNote::join('users', 'audio_notes.user_id', '=', 'users.id')
       ->select('users.firstName', 'users.lastName', 'audio_notes.longitude', 'audio_notes.latitude', 'audio_notes.file_name')
       ->get();
   }
 
-  public function save(Request $request)
-  {
+  /**
+ * Method to save an audioNote
+ *
+ * @return
+ */
+  public function save(Request $request){
       $validator = Validator::make($request->all(), [
       'longitude' => 'required|numeric',
       'latitude' => 'required|numeric',
@@ -45,13 +48,13 @@ class AudioNoteController extends Controller
       $longitude = $request->longitude;
       $audio = $request->file('audio');
 
-      $userid = Auth::user()->id;
+      $userid = Auth::id();
       $fileName = $userid . "_" . date("Y_m_d_H_i_s") . "." . $audio->getClientOriginalExtension();
 
       $request->audio->storeAs("audio", $fileName);
 
       $audioNote = new AudioNote();
-      $audioNote->user_id = Auth::id();
+      $audioNote->user_id = $userid;
       $audioNote->latitude = $latitude;
       $audioNote->longitude = $longitude;
       $audioNote->file_name = $fileName;
@@ -61,8 +64,12 @@ class AudioNoteController extends Controller
       return response()->json("Successfuly uploaded file", 200);
     }
 
-    public function showNearAudioNotes(Request $request)
-    {
+    /**
+   * Method to select all the audioNotes from the friends of the current user and near the position of the current user
+   *
+   * @return App\AudioNote
+   */
+    public function showNearAudioNotes(Request $request){
       $validatedData = $request->validate([
         'longitude' => 'required|numeric',
         'latitude' => 'required|numeric',
@@ -86,8 +93,12 @@ class AudioNoteController extends Controller
         ->get();
     }
 
-  public function download(Request $request)
-  {
+  /**
+  * Method to download the audioNote from it fileName
+  *
+  * @return Symfony\Component\HttpFoundation\BinaryFileResponse
+  */
+  public function download(Request $request){
     // TODO validate access rights
 
     $fileName = $request->file_name;
