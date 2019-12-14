@@ -42,7 +42,13 @@ class LoginController extends Controller
     $user->revoke();
     $cookie = \Cookie::forget('_token');
 
-    return response()->json(["success"=>"Successfully logged out."])->withCookie($cookie);
+    if($request->expectsJson()){
+      return response()->json(["success"=>"Successfully logged out."])->withCookie($cookie);
+    }
+    else{
+      return redirect('/');
+    }
+
   }
 
 

@@ -18,7 +18,7 @@ html, body {
 
 .header{
   position: absolute;
-  z-index: 9999999;
+  z-index: 401;
   margin-top: 10px;
   width: 97%;
 }
@@ -61,10 +61,19 @@ html, body {
   background-color: var(--success-color) !important;
 }
 
+.main-sidenav{
+  background-color: var(--main-bg-color) !important;
+}
+
+i.icon-white{
+  color: var(--main-text-color) !important;
+}
+
+
 input{
   color: var(--main-text-color)
 }
 
 h1, h2, h3, h4, h5, h6, p, a {
- color: var(--main-text-color);
+ color: var(--main-text-color) !important;
 }

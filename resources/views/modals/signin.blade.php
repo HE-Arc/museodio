@@ -24,6 +24,6 @@
     </div>
   </div>
   <div class="modal-footer modal-color">
-    <a href="#!" id="loginButton" class="waves-effect waves-green btn action-buttons-color" onclick="submitLogin();">Register</a>
+    <a href="#!" id="loginButton" class="waves-effect waves-green btn action-buttons-color" onclick="submitLogin();">Sign In</a>
   </div>
 </div>
