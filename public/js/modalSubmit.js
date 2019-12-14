@@ -78,6 +78,7 @@ async function submitSearch(){
           toggleSearchUserProgressBar();
           let mainSearchResults = document.getElementById('mainSearchResults');
           mainSearchResults.innerHTML = "";
+          mainSearchResults.style.visibility = "visible"
 
           jQuery.each(json["success"], function() {
             mainSearchResults.innerHTML += '<li data-userID="'+ $(this)[0]["id"] +'" class="collection-item search-results">'+ $(this)[0]["firstname"] + ' ' + $(this)[0]["lastname"] + '</li>';
@@ -240,17 +241,36 @@ async function getFriends(){
         else{
           M.toast({html: "Successfully retrieved friends.", classes: 'toast-success'});
 
+          let friendRequests = 0;
+
           console.log(json);
 
-          jQuery.each(json["askfriends"], function() {
-            document.getElementById('friendsDropdown').innerHTML += '<li><a href="#!">'+ $(this)[0]['firstname'] +'UUU'+ $(this)[0]['lastname'] +'</a></li>';
+          jQuery.each(json['success']["askfriends"], function() {
+            document.getElementById('friendsDropdown').innerHTML +=
+            '<li>\
+              <div class="right friend-requests-buttons-container">\
+                <a href="#!" onclick="acceptFriendRequest('+$(this)[0]['id']+');" class="btn-raised waves-effect btn friend-requests-button friend-requests-buttons"><i class="material-icons friend-requests-icons">done</i></a>\
+                <a href="#!" onclick="denyFriendRequest('+$(this)[0]['id']+');" class="btn-raised waves-effect btn friend-requests-button friend-requests-buttons friend-deny-request"><i class="material-icons friend-requests-icons">clear</i></a>\
+              </div>\
+              <a href="#!">'+ $(this)[0]['firstname'] +' '+ $(this)[0]['lastname'] +'</a>\
+            </li>';
+
+            friendRequests += 1;
           });
+
+          document.getElementById('friendsDropdown').innerHTML += '<li class="divider"></li>';
 
           jQuery.each(json['success']["friends"], function() {
             document.getElementById('friendsDropdown').innerHTML += '<li><a href="#!">'+ $(this)[0]['firstname'] +' '+ $(this)[0]['lastname'] +'</a></li>';
           });
 
+          console.log(friendRequests);
 
+          if(friendRequests > 0){
+            let badge = document.getElementById('friendRequestsBadge');
+            badge.style.visibility = "visible";
+            badge.innerHTML = friendRequests;
+          }
 
         }
       })
@@ -260,7 +280,61 @@ async function getFriends(){
     }
   });
 
+}
 
+async function acceptFriendRequest(userID){
+  payload = {
+    id: userID
+  }
+
+  putData(payload, "/api/friends/"+userID, async function(response){
+    if(response.ok){
+      response.json().then(async function(json){
+
+        if(json.hasOwnProperty('error')){
+          displayErrors(json);
+        }
+        else{
+          M.toast({html: "Request accepted", classes: 'toast-success'});
+          console.log(json);
+        }
+      })
+    }
+    else{
+      M.toast({html: 'An error occured while trying to perform this action. Please try again.', classes: 'toast-error'});
+
+      response.text().then(async function(text){
+        console.log(text);
+      });
+    }
+  });
+}
+
+async function denyFriendRequest(userID){
+  payload = {
+    id: userID
+  }
+
+  deleteData(payload, "/api/friends/"+userID, async function(response){
+    if(response.ok){
+      response.json().then(async function(json){
+
+        if(json.hasOwnProperty('error')){
+          displayErrors(json);
+        }
+        else{
+          M.toast({html: "Request denied", classes: 'toast-success'});
+        }
+      })
+    }
+    else{
+      M.toast({html: 'An error occured while trying to perform this action. Please try again.', classes: 'toast-error'});
+
+      response.text().then(async function(text){
+        console.log(text);
+      });
+    }
+  });
 }
 
 async function displayErrors(json){
@@ -293,6 +367,21 @@ async function putData(payload, route, callback){
 
   let options = {
     method: "PUT",
+    credentials: "same-origin",
+    headers: { 'Content-type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams(payload).toString()
+  }
+
+  fetch(APP_URL + route, options)
+  .then(function(response){
+    callback(response);
+  })
+}
+
+async function deleteData(payload, route, callback){
+
+  let options = {
+    method: "DELETE",
     credentials: "same-origin",
     headers: { 'Content-type': 'application/x-www-form-urlencoded' },
     body: new URLSearchParams(payload).toString()

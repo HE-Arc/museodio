@@ -14,7 +14,11 @@
 
   <ul class="collapsible collapsible-accordion main-sidenav">
     <li>
-      <a style="margin-left: 5%;" class="waves-effect waves-light collapsible-header">Friends<i class="material-icons icon-white">supervisor_account</i><span class="new badge">1</span></a>
+      <a style="margin-left: 5%;" class="waves-effect waves-light collapsible-header">
+        Friends
+        <i class="material-icons icon-white">supervisor_account</i>
+        <span style="visibility: hidden;" id="friendRequestsBadge" class="new badge"></span>
+      </a>
       <div class="collapsible-body main-friends-dropdown">
         <ul id="friendsDropdown">
         </ul>

@@ -102,6 +102,22 @@ i.icon-white{
   color: var(--main-text-color) !important;
 }
 
+.friend-deny-request{
+  background-color: #eb4d4b !important;
+}
+
+.friend-requests-buttons-container{
+  margin-right: 5px;
+}
+
+.friend-requests-buttons{
+  width: 20px;
+}
+
+.friend-requests-icons{
+  margin-left: -13px;
+}
+
 input{
   color: var(--main-text-color)
 }

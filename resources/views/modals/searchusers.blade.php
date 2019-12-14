@@ -11,9 +11,7 @@
           </div>
         </div>
         <div class="row">
-          <ul class="collection search-results mca-always-visible" id="mainSearchResults">
-            <li data-userID="1" class="collection-item search-results">Alvin</li>
-            <li data-userID="2" class="collection-item search-results">Alvin</li>
+          <ul style="visibility: hidden;" class="collection search-results mca-always-visible" id="mainSearchResults">
           </ul>
         </div>
       </div>

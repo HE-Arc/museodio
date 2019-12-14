@@ -20,7 +20,6 @@ class FriendsController extends Controller
 
   //  $idUser=1;
     $idUser = Auth::id();
-    $usersNoFriends = User::findOrFail($idUser)->nofriends();
     $usersFriends = User::findOrFail($idUser)->friends;
     $usersAskFriends = User::findOrFail($idUser)->askfriends;
 
@@ -31,8 +30,7 @@ class FriendsController extends Controller
     return response()->json([
         "success" => [
             "friends" => $usersFriends,
-            "noFriends" => $usersNoFriends,
-             "askfriends" => $usersAskFriends
+            "askfriends" => $usersAskFriends
         ]
     ]
   );
