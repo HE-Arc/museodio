@@ -18,8 +18,8 @@ class FriendsController extends Controller
  */
   public function index(){
 
-    $idUser=1;
-   // $idUser = Auth::id();
+  //  $idUser=1;
+    $idUser = Auth::id();
     $usersNoFriends = User::findOrFail($idUser)->nofriends();
     $usersFriends = User::findOrFail($idUser)->friends;
     $usersAskFriends = User::findOrFail($idUser)->askfriends;
