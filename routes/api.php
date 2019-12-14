@@ -24,7 +24,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::get('/users/search/{query_name}', 'UserController@searchUsers');
+Route::get('/users/search/{query_name}', 'UserController@searchUsers')->middleware('auth:api');
 
 
 Route::get('/audio-notes/', 'AudioNoteController@index');
@@ -36,4 +36,4 @@ Route::middleware('auth:api')->get('/audio-notes/download/{file_name}', 'AudioNo
 Route::middleware('auth:api')->get('/audio-notes/{longitude}/{latitude}/{outer_radius}', 'AudioNoteController@showNearAudioNotes');
 
 //TODO: a modifier ?
-Route::resource('/friends','FriendsController');
+Route::resource('/friends','FriendsController')->middleware('auth:api');

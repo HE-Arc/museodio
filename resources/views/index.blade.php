@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="{{asset('css/materialize-css/materialize.css')}}">
   <link rel="stylesheet" href="{{asset('css/MProgress.css')}}">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="{{asset('css/materialize-collection-actions-1.0.0.min.css')}}">
 
   <script src="{{asset('js/jQuery.js')}}" charset="utf-8"></script>
   <script src="{{asset('vendor\leaflet\leaflet\leaflet.js')}}" charset="utf-8"></script>
@@ -24,6 +25,7 @@
   <script src="{{asset('js/fetchUtil.js')}}" charset="utf-8"></script>
   <script src="{{asset('js/modalSubmit.js')}}" charset="utf-8"></script>
   <script src="{{asset('js/MProgress.js')}}" charset="utf-8"></script>
+  <script src="{{asset('js/materialize-collection-actions-1.0.0.min.js')}}" charset="utf-8"></script>
 
 </head>
 <body>
@@ -45,6 +47,7 @@
   @include('modals.register')
   @include('modals.signin')
   @include('modals.addnotes')
+  @include('modals.searchusers')
 
   <script type="text/javascript">
   var mainMap = null;
@@ -120,11 +123,25 @@
     }
   }
 
+  function initCollections(){
+    MaterializeCollectionActions.configureActions($('#mainSearchResults'), [
+        {
+            name: 'add',
+            callback: function (collectionItem, collection) {
+              let userID = collectionItem.getAttribute('data-userID');
+              submitFriendRequest(userID);
+            }
+        }
+    ]);
+  }
+
   window.onload = function(){
     initMap();
     M.AutoInit();
     modalSubmitAutoInit();
     displayAudioNotes();
+    getFriends();
+    initCollections();
   };
 
   document.addEventListener('DOMContentLoaded', function() {

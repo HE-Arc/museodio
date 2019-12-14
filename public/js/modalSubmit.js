@@ -6,6 +6,7 @@ let headers = {
 var registerProgressBar;
 var loginProgressBar;
 var noteProgressBar;
+var searchUserProgressBar;
 
 function modalSubmitAutoInit(){
   registerProgressBar = new Mprogress({
@@ -21,6 +22,11 @@ function modalSubmitAutoInit(){
   noteProgressBar = new Mprogress({
     template: 4,
     parent: "#noteProgressBar"
+  })
+
+  searchUserProgressBar = new Mprogress({
+    template: 4,
+    parent: "#searchUserProgressBar"
   })
 }
 
@@ -53,6 +59,67 @@ async function submitLogin(){
     toggleButton("loginButton");
     toggleLoginProgressBar();
   });
+}
+
+async function submitSearch(){
+  toggleButton("searchUserButton");
+  toggleSearchUserProgressBar();
+
+  let search = $("#searchuser_search").val();
+  let searchURL = "/api/users/search/" + search;
+
+  getData(searchURL, async function(response){
+    if(response.ok){
+      response.json().then(async function(json){
+        if(json.hasOwnProperty('error')){
+          displayErrors(json);
+        }
+        else{
+          toggleSearchUserProgressBar();
+          let mainSearchResults = document.getElementById('mainSearchResults');
+          mainSearchResults.innerHTML = "";
+
+          jQuery.each(json["success"], function() {
+            mainSearchResults.innerHTML += '<li data-userID="'+ $(this)[0]["id"] +'" class="collection-item search-results">'+ $(this)[0]["firstname"] + ' ' + $(this)[0]["lastname"] + '</li>';
+          });
+        }
+      })
+    }
+    else{
+      M.toast({html: 'An error occured while trying to perform this action. Please try again.', classes: 'toast-error'});
+    }
+    toggleButton("searchUserButton");
+    toggleSearchUserProgressBar();
+  });
+}
+
+async function submitFriendRequest(userID){
+  console.log(userID);
+
+  payload = {
+    id:                   userID
+  }
+
+  putData(payload, "/api/friends/store", async function(response){
+    if(response.ok){
+      response.json().then(async function(json){
+        if(json.hasOwnProperty('error')){
+          displayErrors(json);
+        }
+        else{
+          console.log(json);
+        }
+      });
+    }
+    else{
+      M.toast({html: 'An error occured while trying to perform this action. Please try again.', classes: 'toast-error'});
+
+      response.text().then(async function(text){
+        console.log(text);
+      });
+    }
+  });
+
 }
 
 async function submitAudioNote(){
@@ -161,6 +228,39 @@ async function submitRegistration(){
   });
 }
 
+async function getFriends(){
+
+  getData("/api/friends", async function(response){
+    if(response.ok){
+      response.json().then(async function(json){
+
+        if(json.hasOwnProperty('error')){
+          displayErrors(json);
+        }
+        else{
+          M.toast({html: "Successfully retrieved friends.", classes: 'toast-success'});
+
+          console.log(json);
+          //Friends successfully retrieved
+          jQuery.each(json["friends"], function() {
+            document.getElementById('friendsDropdown').innerHTML += '<li><a href="#!">JSSS</a></li>';
+          });
+
+          jQuery.each(json["askfriends"], function() {
+            document.getElementById('friendsDropdown').innerHTML += '<li><a href="#!">JSSS</a></li>';
+          });
+
+        }
+      })
+    }
+    else{
+      M.toast({html: 'An error occured while trying to perform this action. Please try again.', classes: 'toast-error'});
+    }
+  });
+
+
+}
+
 async function displayErrors(json){
   jsonErrors = json['error'];
   console.log(jsonErrors);
@@ -179,6 +279,34 @@ async function sendData(payload, route, callback){
     credentials: "same-origin",
     headers: { 'Content-type': 'application/x-www-form-urlencoded' },
     body: new URLSearchParams(payload).toString()
+  }
+
+  fetch(APP_URL + route, options)
+  .then(function(response){
+    callback(response);
+  })
+}
+
+async function putData(payload, route, callback){
+
+  let options = {
+    method: "PUT",
+    credentials: "same-origin",
+    headers: { 'Content-type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams(payload).toString()
+  }
+
+  fetch(APP_URL + route, options)
+  .then(function(response){
+    callback(response);
+  })
+}
+
+async function getData(route, callback){
+  let options = {
+    method: "GET",
+    credentials: "same-origin",
+    headers: { 'Content-type': 'application/x-www-form-urlencoded' },
   }
 
   fetch(APP_URL + route, options)
@@ -223,6 +351,15 @@ function toggleNoteProgressBar(){
   }
   else{
     noteProgressBar.start();
+  }
+}
+
+function toggleSearchUserProgressBar(){
+  if(searchUserProgressBar.status == 0.08){
+    searchUserProgressBar.end();
+  }
+  else{
+    searchUserProgressBar.start();
   }
 }
 

@@ -14,24 +14,22 @@ class FriendsController extends Controller
   public function index()
   {
 
-      $idUser=1;
-     // $idUser = Auth::id();
-      $usersNoFriends = User::findOrFail($idUser)->nofriends();
+      //$idUser=1;
+      $idUser = Auth::id();
       $usersFriends = User::findOrFail($idUser)->friends;
       $usersAskFriends = User::findOrFail($idUser)->askfriends;
 
-     // dd($idUser);
+      //dd($idUser);
       //just for testing
-      return view('friends')->with('nofriends',$usersNoFriends)->with('friends',$usersFriends)->with('askfriends',$usersAskFriends);
+      //return view('friends')->with('nofriends',$usersNoFriends)->with('friends',$usersFriends)->with('askfriends',$usersAskFriends);
 
-    //   return response()->json([
-    //       "success" => [
-    //           "friends" => $usersFriends,
-    //           "noFriends" => $usersNoFriends,
-    //            "askfriends" => $usersAskFriends
-    //       ]
-    //   ]
-    // );
+      return response()->json([
+          "success" => [
+              "friends" => $usersFriends,
+               "askfriends" => $usersAskFriends,
+          ]
+      ]
+    );
   }
 
   public function store(Request $request)
@@ -56,9 +54,9 @@ class FriendsController extends Controller
       $user_id_1 = User::find($request->id);
       $user_id_2 = User::find(Auth::id());
 
-      $response = DB::update('update friends set isAccepted = 1 where user_id_1 = :u1 and user_id_2 = :u2 ', ['u1' => $user1, 'u2' => $user2]);
+      $response = DB::update('update friends set isAccepted = 1 where user_id_1 = :u1 and user_id_2 = :u2 ', ['u1' => $user_id_1, 'u2' => $user_id_2]);
 
-      return response()->json("Successfuly update friendship", 200);
+      return response()->json("Successfuly updated friendship", 200);
   }
 
   public function destroy(Request $request)
@@ -73,7 +71,7 @@ class FriendsController extends Controller
       $user_id_1->removeFriend($user_id_2);
       $user_id_2->removeFriend($user_id_1);
 
-      return response()->json("Successfuly delete friendship", 200);
+      return response()->json("Successfuly deleted friendship", 200);
   }
 
   public function show(Request $request)
