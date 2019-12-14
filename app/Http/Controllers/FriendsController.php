@@ -26,16 +26,16 @@ class FriendsController extends Controller
 
    // dd($idUser);
     //just for testing
-    return view('friends')->with('nofriends',$usersNoFriends)->with('friends',$usersFriends)->with('askfriends',$usersAskFriends);
+    //return view('friends')->with('nofriends',$usersNoFriends)->with('friends',$usersFriends)->with('askfriends',$usersAskFriends);
 
-  //   return response()->json([
-  //       "success" => [
-  //           "friends" => $usersFriends,
-  //           "noFriends" => $usersNoFriends,
-  //            "askfriends" => $usersAskFriends
-  //       ]
-  //   ]
-  // );
+    return response()->json([
+        "success" => [
+            "friends" => $usersFriends,
+            "noFriends" => $usersNoFriends,
+             "askfriends" => $usersAskFriends
+        ]
+    ]
+  );
   }
 
   /**
@@ -51,9 +51,9 @@ class FriendsController extends Controller
     $user1 =User::findOrFail(Auth::id());
     $user2 =User::findOrFail($request->id);
 
-    $user_id_1->addFriend($user_id_2);
+    $user1->addFriend($user2);
 
-    return response()->json("Successfuly uploaded friendship", 200);
+    return response()->json("Successfuly requested friendship", 200);
   }
 
   /**

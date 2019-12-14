@@ -17,7 +17,6 @@
       <a style="margin-left: 5%;" class="waves-effect waves-light collapsible-header">Friends<i class="material-icons icon-white">supervisor_account</i><span class="new badge">1</span></a>
       <div class="collapsible-body main-friends-dropdown">
         <ul id="friendsDropdown">
-          <li><a href="#!">First</a></li>
         </ul>
       </div>
     </li>

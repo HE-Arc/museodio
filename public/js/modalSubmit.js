@@ -100,7 +100,7 @@ async function submitFriendRequest(userID){
     id:                   userID
   }
 
-  putData(payload, "/api/friends/store", async function(response){
+  sendData(payload, "/api/friends", async function(response){
     if(response.ok){
       response.json().then(async function(json){
         if(json.hasOwnProperty('error')){
@@ -241,14 +241,16 @@ async function getFriends(){
           M.toast({html: "Successfully retrieved friends.", classes: 'toast-success'});
 
           console.log(json);
-          //Friends successfully retrieved
-          jQuery.each(json["friends"], function() {
-            document.getElementById('friendsDropdown').innerHTML += '<li><a href="#!">JSSS</a></li>';
-          });
 
           jQuery.each(json["askfriends"], function() {
-            document.getElementById('friendsDropdown').innerHTML += '<li><a href="#!">JSSS</a></li>';
+            document.getElementById('friendsDropdown').innerHTML += '<li><a href="#!">'+ $(this)[0]['firstname'] +'UUU'+ $(this)[0]['lastname'] +'</a></li>';
           });
+
+          jQuery.each(json['success']["friends"], function() {
+            document.getElementById('friendsDropdown').innerHTML += '<li><a href="#!">'+ $(this)[0]['firstname'] +' '+ $(this)[0]['lastname'] +'</a></li>';
+          });
+
+
 
         }
       })
