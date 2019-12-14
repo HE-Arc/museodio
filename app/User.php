@@ -76,8 +76,7 @@ class User extends Authenticatable
  * @return App\User
  */
   public function nofriends(){
-      //$idUser=Auth::id();
-      $idUser=1;
+      $idUser=Auth::id();
       $userCurrent=User::findOrFail($idUser);
 
       $users = User::all()->except($idUser);
