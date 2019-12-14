@@ -21,21 +21,26 @@ class LoginController extends Controller
       $success['token'] =  $user->createToken('Museodio')->accessToken;
       $cookie = $this->getCookieDetails($success['token']);
 
-
-      return response()->json(['success' => $success], 200)->cookie($cookie['name'],
-      $cookie['value'],
-      $cookie['minutes'],
-      $cookie['path'],
-      $cookie['domain'],
-      $cookie['secure'],
-      $cookie['httponly'],
-      $cookie['samesite']);;
+      return response()->json(['success' => $success], 200)
+        ->cookie($cookie['name'],
+          $cookie['value'],
+          $cookie['minutes'],
+          $cookie['path'],
+          $cookie['domain'],
+          $cookie['secure'],
+          $cookie['httponly'],
+          $cookie['samesite']);
     }
     else{
       return response()->json(['error'=>['error' => 'Sorry, unknown username or password.']], 200);
     }
   }
 
+  /**
+  * Logout for API
+  *
+  * @return \Illuminate\Http\Response
+  */
   public function logout(Request $request){
 
     $user = $request->user()->token();
@@ -51,7 +56,11 @@ class LoginController extends Controller
 
   }
 
-
+  /**
+  * Get all the informations of the cookie
+  *
+  * @return 
+  */
   private function getCookieDetails($token)
   {
     return [

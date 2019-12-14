@@ -4,14 +4,24 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use App\AudioNote;
 use Illuminate\Support\Facades\Validator;
-use Auth;
+use Illuminate\Support\Facades\Auth;
+use App\AudioNote;
 
 class AudioNoteController extends Controller
 {
+  /**
+  * Size of the inner radius
+  *
+  * @var int
+  */
   private $INNER_RADIUS = 0;
 
+/**
+ * Create a new controller instance.
+ *
+ * @return void
+ */
   public function index()
   {
     return AudioNote::join('users', 'audio_notes.user_id', '=', 'users.id')
