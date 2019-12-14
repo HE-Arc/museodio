@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
 
+  /**
+ * Seach user by firstname
+ *
+ * @return App\User
+ */
   public function searchUsers(Request $request) {
     $queryName = $request->query_name;
 
@@ -22,5 +27,4 @@ class UserController extends Controller
 
     return response()->json(["success" => $searchResults], 200);
   }
-
 }
