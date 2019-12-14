@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use App\AudioNote;
 
+/**
+ * @group Audio note manager
+ *
+ * APIs for managing audio notes
+ */
 class AudioNoteController extends Controller
 {
   /**
@@ -18,21 +23,24 @@ class AudioNoteController extends Controller
   private $INNER_RADIUS = 0;
 
   /**
- * Index function of the AudioNotesCOntroller
- *
- * @return App\AudioNote
- */
+  * Returns all the audio notes
+  *
+  * [Returns all created audio notes recorded around the world]
+  *
+  */
   public function index(){
     return AudioNote::join('users', 'audio_notes.user_id', '=', 'users.id')
       ->select('users.firstName', 'users.lastName', 'audio_notes.longitude', 'audio_notes.latitude', 'audio_notes.file_name')
       ->get();
   }
 
+
   /**
- * Method to save an audioNote
- *
- * @return
- */
+  * Saves an audio note
+  *
+  * [Returns a success message if the audio note was successfully saved]
+  *
+  */
   public function save(Request $request){
       $validator = Validator::make($request->all(), [
       'longitude' => 'required|numeric',
@@ -64,11 +72,13 @@ class AudioNoteController extends Controller
       return response()->json("Successfuly uploaded file", 200);
     }
 
+
     /**
-   * Method to select all the audioNotes from the friends of the current user and near the position of the current user
-   *
-   * @return App\AudioNote
-   */
+    * Returns all the audio notes from the friends of the current user and near to the position of the current user
+    *
+    * [Returns the available audio notes]
+    *
+    */
     public function showNearAudioNotes(Request $request){
       $validatedData = $request->validate([
         'longitude' => 'required|numeric',
@@ -94,9 +104,10 @@ class AudioNoteController extends Controller
     }
 
   /**
-  * Method to download the audioNote from it fileName
+  * Download an audio note matching to filename
   *
-  * @return Symfony\Component\HttpFoundation\BinaryFileResponse
+  * [Returns the audio note as an audio playable file]
+  *
   */
   public function download(Request $request){
     // TODO validate access rights
