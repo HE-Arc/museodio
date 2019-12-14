@@ -11,8 +11,7 @@ class HomeController extends Controller
   *
   * @return void
   */
-  public function __construct()
-  {
+  public function __construct(){
     $this->middleware('auth');
   }
 
@@ -21,13 +20,16 @@ class HomeController extends Controller
   *
   * @return \Illuminate\Contracts\Support\Renderable
   */
-  public function index()
-  {
+  public function index(){
     return view('index');
   }
 
-  protected function redirectTo($request)
-  {
+  /**
+  * Redirect to /
+  *
+  * @return route
+  */
+  protected function redirectTo($request){
     return route('/');
   }
 }

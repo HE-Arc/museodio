@@ -12,10 +12,8 @@ class BroadcastServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
-    {
+    public function boot(){
         Broadcast::routes();
-
         require base_path('routes/channels.php');
     }
 }
