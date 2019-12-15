@@ -11,11 +11,9 @@
           @unless (!Auth::check())
           <div class="">
             <a href="#" data-target="slide-out" class="sidenav-trigger show-on-large right"><i class="material-icons">menu</i></a>
-
-
             <a class='dropdown-trigger btn-flat notifications-button' href='#' data-target='notifcationsDropdown'>
               <i class="material-icons white-text notif">notifications</i>
-              <small class="notification-badge">5</small>
+              <small id="notificationBell" class="notification-badge">0</small>
             </a>
 
             <!-- Notifications Dropdown Structure -->

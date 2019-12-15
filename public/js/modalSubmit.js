@@ -278,7 +278,8 @@ async function acceptFriendRequest(userID){
           displayErrors(json);
         }
         else{
-          M.toast({html: "Request accepted", classes: 'toast-success'});
+          M.toast({html: "Friendship accepted", classes: 'toast-success'});
+          getFriends();
         }
       })
     }
@@ -301,7 +302,8 @@ async function denyFriendRequest(userID){
           displayErrors(json);
         }
         else{
-          M.toast({html: "Request denied", classes: 'toast-success'});
+          M.toast({html: "Friendship denied", classes: 'toast-success'});
+          getFriends();
         }
       })
     }

@@ -51,26 +51,6 @@ class User extends Authenticatable
   }
 
   /**
-  * Eloquent relation to select friendship create by the user
-  * Pivot to select column isAccepted
-  *
-  * @return App\User
-  */
-  // public function friends(){
-  //   return $this->belongsToMany('App\User', 'App\Friends', 'user_id_1', 'user_id_2')->wherePivot('isAccepted', 1)->withPivot('isAccepted');
-  // }
-
-  /**
-  * Eloquent relation to  select friendship create by another user
-  * Pivot to select column isAccepted
-  *
-  * @return App\User
-  */
-  // public function askfriends(){
-  //   return $this->belongsToMany('App\User', 'App\Friends', 'user_id_1', 'user_id_2')->wherePivot('isAccepted', 0)->withPivot('isAccepted');
-  // }
-
-  /**
   * Method to create a friendship between two users
   *
   * @return void
@@ -96,14 +76,14 @@ class User extends Authenticatable
   }
 
   // friendship that I started and was accepted
-  function friendsOfMine()
+  public function friendsOfMine()
   {
     return $this->belongsToMany('App\User', 'App\Friends', 'user_id_1', 'user_id_2')
     ->wherePivot('isAccepted', 1);
   }
 
   // friendship that I was invited to and accepted
-  function friendOf()
+  public function friendOf()
   {
     return $this->belongsToMany('App\User', 'App\Friends', 'user_id_2', 'user_id_1')
     ->wherePivot('isAccepted', 1);
