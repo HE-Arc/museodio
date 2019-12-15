@@ -19,8 +19,8 @@
   <script src="{{asset('vendor\leaflet\leaflet\leaflet.js')}}" charset="utf-8"></script>
   <script src="{{asset('js/materialize-css/materialize.js')}}" charset="utf-8"></script>
   <script type="text/javascript">
-    let APP_URL = "{{ env('APP_URL') }}";
-    let RECORDED_AUDIO;
+  let APP_URL = "{{ env('APP_URL') }}";
+  let RECORDED_AUDIO;
   </script>
   <script src="{{asset('js/fetchUtil.js')}}" charset="utf-8"></script>
   <script src="{{asset('js/modalSubmit.js')}}" charset="utf-8"></script>
@@ -33,13 +33,13 @@
   @include('header')
 
   @unless (!Auth::check())
-    @include('sidenav')
+  @include('sidenav')
 
-    <div class="fixed-action-btn">
-      <a class="btn-floating btn-large action-buttons-color waves-effect waves-circle waves-light modal-trigger" href="#addAudioNoteModal">
-        <i class="large material-icons">add</i>
-      </a>
-    </div>
+  <div class="fixed-action-btn">
+    <a class="btn-floating btn-large action-buttons-color waves-effect waves-circle waves-light modal-trigger" href="#addAudioNoteModal">
+      <i class="large material-icons">add</i>
+    </a>
+  </div>
   @endunless
 
   <div id="map"></div>
@@ -109,8 +109,8 @@
       customPopup += `<audio controls src="api/audio-notes/download/${encodeURI(audioNote.file_name)}" preload="none"></audio>`;
 
       L.marker([audioNote.latitude, audioNote.longitude], {icon: playIcon})
-        .addTo(mainMap)
-        .bindPopup(customPopup)
+      .addTo(mainMap)
+      .bindPopup(customPopup)
     }
   }
 
@@ -124,21 +124,50 @@
   }
 
   function setFocus(field){
-       window.setTimeout(() => {
-           $(`#${field}`).focus();
-       }, 500);
-   }
+    window.setTimeout(() => {
+      $(`#${field}`).focus();
+    }, 500);
+  }
 
   function initCollections(){
     MaterializeCollectionActions.configureActions($('#mainSearchResults'), [
-        {
-            name: 'add',
-            callback: function (collectionItem, collection) {
-              let userID = collectionItem.getAttribute('data-userID');
-              submitFriendRequest(userID);
-            }
+      {
+        name: 'add',
+        callback: function (collectionItem, collection) {
+          let userID = collectionItem.getAttribute('data-userID');
+          submitFriendRequest(userID);
         }
+      }
     ]);
+  }
+
+  function initEnterDetectors(){
+
+    let elements = {"searchUserModal": "searchUserButton", "registerModal": "registerButton", "loginModal": "loginButton", "addAudioNoteModal": "noteButton"};
+
+    document.getElementById("searchUserModal").addEventListener("keyup", function(event){
+      enterDetector(event, "searchUserButton")
+    });
+
+    document.getElementById("registerModal").addEventListener("keyup", function(event){
+      enterDetector(event, "registerButton")
+    });
+
+    document.getElementById("loginModal").addEventListener("keyup", function(event){
+      enterDetector(event, "loginButton")
+    });
+
+    document.getElementById("addAudioNoteModal").addEventListener("keyup", function(event){
+      enterDetector(event, "noteButton")
+    });
+  }
+
+  function enterDetector(e, button){
+    if (e.keyCode === 13) {
+      e.preventDefault();
+      console.log(button);
+      document.getElementById(button).click();
+    }
   }
 
   window.onload = function(){
@@ -148,13 +177,14 @@
     displayAudioNotes();
     getFriends();
     initCollections();
+    initEnterDetectors();
   };
 
   document.addEventListener('DOMContentLoaded', function() {
-   var elems = document.querySelectorAll('.sidenav');
-   var instances = M.Sidenav.init(elems, {edge: 'right'});
+    var elems = document.querySelectorAll('.sidenav');
+    var instances = M.Sidenav.init(elems, {edge: 'right'});
 
- });
+  });
 </script>
 <!-- <script src="{{asset('js/recordAudioUtils.js')}}" charset="utf-8"></script> -->
 <script src="{{asset('js/polyfill.js')}}" charset="utf-8"></script>
