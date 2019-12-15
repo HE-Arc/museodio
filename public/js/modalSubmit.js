@@ -95,8 +95,6 @@ async function submitSearch(){
 }
 
 async function submitFriendRequest(userID){
-  console.log(userID);
-
   payload = {
     id:                   userID
   }
@@ -108,16 +106,12 @@ async function submitFriendRequest(userID){
           displayErrors(json);
         }
         else{
-          console.log(json);
+          M.toast({html: 'Successfully sent friendship request', classes: 'toast-success'});
         }
       });
     }
     else{
       M.toast({html: 'An error occured while trying to perform this action. Please try again.', classes: 'toast-error'});
-
-      response.text().then(async function(text){
-        console.log(text);
-      });
     }
   });
 
@@ -132,11 +126,9 @@ async function submitAudioNote(){
   if(RECORDED_AUDIO != null){
     //Audio has been manually recorded, not a file
     fileToUpload = RECORDED_AUDIO;
-    console.log("RECORDED AUDIO");
   }
   else{
     fileToUpload = $("#note_file").get(0).files[0];
-    console.log("FILE UPLOADA");
   }
 
   payload = {
@@ -150,7 +142,6 @@ async function submitAudioNote(){
       response.json().then(async function(json){
         if(json.hasOwnProperty('error')){
           displayErrors(json);
-          console.log(json);
         }
         else{
           M.toast({html: "Audio note uploaded successfully.", classes: "toast-success"});
@@ -181,8 +172,6 @@ async function sendFileData(payload, route, callback){
     credentials: "same-origin",
     body: formData
   }
-
-  console.log(options);
 
   fetch(APP_URL + route, options)
   .then(function(response){
@@ -239,13 +228,10 @@ async function getFriends(){
           displayErrors(json);
         }
         else{
-          M.toast({html: "Successfully retrieved friends.", classes: 'toast-success'});
-
           let friendRequests = 0;
+          document.getElementById('friendsDropdown').innerHTML = "";
 
-          console.log(json);
-
-          jQuery.each(json['success']["askfriends"], function() {
+          jQuery.each(json['success']["invitationsToAnswer"], function() {
             document.getElementById('friendsDropdown').innerHTML +=
             '<li>\
               <div class="right friend-requests-buttons-container">\
@@ -259,12 +245,9 @@ async function getFriends(){
           });
 
           document.getElementById('friendsDropdown').innerHTML += '<li class="divider"></li>';
-
           jQuery.each(json['success']["friends"], function() {
             document.getElementById('friendsDropdown').innerHTML += '<li><a href="#!">'+ $(this)[0]['firstname'] +' '+ $(this)[0]['lastname'] +'</a></li>';
           });
-
-          console.log(friendRequests);
 
           if(friendRequests > 0){
             let badge = document.getElementById('friendRequestsBadge');
@@ -296,16 +279,11 @@ async function acceptFriendRequest(userID){
         }
         else{
           M.toast({html: "Request accepted", classes: 'toast-success'});
-          console.log(json);
         }
       })
     }
     else{
       M.toast({html: 'An error occured while trying to perform this action. Please try again.', classes: 'toast-error'});
-
-      response.text().then(async function(text){
-        console.log(text);
-      });
     }
   });
 }
@@ -329,20 +307,14 @@ async function denyFriendRequest(userID){
     }
     else{
       M.toast({html: 'An error occured while trying to perform this action. Please try again.', classes: 'toast-error'});
-
-      response.text().then(async function(text){
-        console.log(text);
-      });
     }
   });
 }
 
 async function displayErrors(json){
   jsonErrors = json['error'];
-  console.log(jsonErrors);
   for (var key in jsonErrors) {
     if (jsonErrors.hasOwnProperty(key)) {
-      console.log(key + " -> " + jsonErrors[key]);
       M.toast({html: jsonErrors[key], classes: 'toast-error'});
     }
   }

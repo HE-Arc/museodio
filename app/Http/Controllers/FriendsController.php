@@ -18,19 +18,15 @@ class FriendsController extends Controller
  */
   public function index(){
 
-  //  $idUser=1;
-    $idUser = Auth::id();
-    $usersFriends = User::findOrFail($idUser)->friends;
-    $usersAskFriends = User::findOrFail($idUser)->askfriends;
-
-   // dd($idUser);
-    //just for testing
-    //return view('friends')->with('nofriends',$usersNoFriends)->with('friends',$usersFriends)->with('askfriends',$usersAskFriends);
+    $userFriends = Auth::user()->friends;
+    $userInvitationsWaitingForAnswer = Auth::user()->invitationsWaitingForAnswer;
+    $userInvitationsToAnswer = Auth::user()->invitationsToAnswer;
 
     return response()->json([
         "success" => [
-            "friends" => $usersFriends,
-            "askfriends" => $usersAskFriends
+            "friends" => $userFriends,
+            "invitationsWaitingForAnswer" => $userInvitationsWaitingForAnswer,
+            "invitationsToAnswer" => $userInvitationsToAnswer
         ]
     ]
   );
@@ -46,10 +42,23 @@ class FriendsController extends Controller
         'id' => 'required|numeric',
     ]);
 
-    $user1 =User::findOrFail(Auth::id());
-    $user2 =User::findOrFail($request->id);
+    $user1 = Auth::user();
+    $user2 = User::findOrFail($request->id);
 
-    $user1->addFriend($user2);
+    if($user1->invitationsToAnswer->contains($user2)){
+      $response = DB::update('update friends set isAccepted = 1 where user_id_1 = :u1 and user_id_2 = :u2 ', ['u1' => $user2->id, 'u2' => $user1->id]);
+    }
+    else if($user1->friends->contains($user2)){
+      $errorMessage = "You already are friend with " . $user2->firstname;
+      return response()->json(["error" => ["error" => $errorMessage]]);
+    }
+    else if($user1->invitationsWaitingForAnswer->contains($user2)){
+      $errorMessage = "You already requested friendship with " . $user2->firstname;
+      return response()->json(["error" => ["error" => $errorMessage]]);
+    }
+    else{
+      $user1->addFriend($user2);
+    }
 
     return response()->json("Successfuly requested friendship", 200);
   }
@@ -64,12 +73,12 @@ class FriendsController extends Controller
         'id' => 'required|numeric',
     ]);
 
-    $user_id_1 = User::find($request->id);
-    $user_id_2 = User::find(Auth::id());
+    $user1 = User::find($request->id);
+    $user2 = Auth::user();
 
-      $response = DB::update('update friends set isAccepted = 1 where user_id_1 = :u1 and user_id_2 = :u2 ', ['u1' => $user_id_1, 'u2' => $user_id_2]);
+    $response = DB::update('update friends set isAccepted = 1 where user_id_1 = :u1 and user_id_2 = :u2 ', ['u1' => $user1->id, 'u2' => $user2->id]);
 
-      return response()->json("Successfuly updated friendship", 200);
+    return response()->json("Successfuly updated friendship", 200);
   }
 
   /**
@@ -83,7 +92,7 @@ class FriendsController extends Controller
     ]);
 
     $user_id_2 = User::findOrFail($request->id);
-    $user_id_1=  User::findOrFail(Auth::id());
+    $user_id_1=  Auth::user();
 
     $user_id_1->removeFriend($user_id_2);
     $user_id_2->removeFriend($user_id_1);
