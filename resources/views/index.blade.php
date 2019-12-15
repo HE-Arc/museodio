@@ -123,6 +123,12 @@
     }
   }
 
+  function setFocus(field){
+       window.setTimeout(() => {
+           $(`#${field}`).focus();
+       }, 500);
+   }
+
   function initCollections(){
     MaterializeCollectionActions.configureActions($('#mainSearchResults'), [
         {

@@ -26,7 +26,7 @@
     </li>
   </ul>
 
-<li><a class="waves-effect waves-light modal-trigger" onclick="closeAllModals();" href="#searchUserModal"><i class="material-icons icon-white">search</i>Search user</a></li>
+<li><a class="waves-effect waves-light modal-trigger" onclick="closeAllModals(); setFocus('searchuser_search');" href="#searchUserModal"><i class="material-icons icon-white">search</i>Search user</a></li>
 
 <li><a href="{{route('api/logout')}}"><i class="material-icons icon-white">exit_to_app</i>Logout</a></li>
 </ul>
