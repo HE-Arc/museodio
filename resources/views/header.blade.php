@@ -8,7 +8,11 @@
           <li><a class="waves-effect waves-light btn modal-trigger action-buttons-color" onclick="closeAllModals();" href="#registerModal">Register <i class="material-icons right">person_add</i></a></li>
           <li><a class="waves-effect waves-light btn modal-trigger action-buttons-color" onclick="closeAllModals();" href="#loginModal">Sign in <i class="material-icons right">input</i></a></li>
           @endunless
+          @unless (!Auth::check())
+          <a href="#" data-target="slide-out" class="sidenav-trigger show-on-large"><i class="material-icons">menu</i></a>
+          @endunless
         </ul>
+
       </div>
     </nav>
   </div>

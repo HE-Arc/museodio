@@ -3,8 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\User;
 use Illuminate\Support\Facades\DB;
+use App\User;
 
 class Friends extends Model
 {
