@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Auth;
 use App\AudioNote;
+use App\User;
+use Auth;
 
 /**
  * @group Audio note manager
@@ -72,7 +73,6 @@ class AudioNoteController extends Controller
       return response()->json("Successfuly uploaded file", 200);
     }
 
-
     /**
     * Returns all the audio notes from the friends of the current user and near to the position of the current user
     *
@@ -86,6 +86,11 @@ class AudioNoteController extends Controller
         'outer_radius' => 'numeric' // TODO we should define it
       ]);
 
+
+      if($validator->fails()){
+        return response()->json(['error' => $validator->errors()], 200);
+      }
+
       $query = AudioNote::geofence(
         $request->latitude,
         $request->longitude,
@@ -93,14 +98,30 @@ class AudioNoteController extends Controller
         $request->outer_radius
       );
 
-        //Pour recuperer toutes les audio notes de ces amis !attention ne comprend pas ces propres audios!
-        // $audio = [];
-        // foreach ($friends as $f) {
-        //     array_push($audio, $f->audioNotes);
-        // }
-      return $query->join('users', 'audio_notes.user_id', '=', 'users.id')
+      $id= Auth::id();
+
+      $friends = User::findOrFail($id)->friends;
+
+      $friends_id = [];
+      foreach($friends as $friend)
+      {
+          array_push($friends_id, $friend->id);
+      }
+
+      $friends = User::findOrFail($id)->askfriends;
+
+      foreach($friends as $friend)
+      {
+          if($friend->pivot->isAccepted)
+          {
+            array_push($friends_id, $friend->id);
+        }
+      }
+      return $query->whereIn('user_id',  $friends_id)
+        ->join('users', 'audio_notes.user_id', '=', 'users.id')
         ->addSelect('users.firstName', 'users.lastName', 'audio_notes.longitude', 'audio_notes.latitude', 'audio_notes.file_name')
         ->get();
+;
     }
 
   /**
@@ -112,12 +133,21 @@ class AudioNoteController extends Controller
   public function download(Request $request){
     // TODO validate access rights
 
-    $fileName = $request->file_name;
-    $filePath = storage_path('app/audio/' . $fileName);
-    $response = new BinaryFileResponse($filePath);
+        $fileOwnerUid = AudioNote::where('file_name', '=', $fileName)
+        ->select('user_id')->get();
 
-    BinaryFileResponse::trustXSendfileTypeHeader();
-    return $response;
-  }
+        $userCurrent = Auth::id();
+
+        if(!Friends::isFriend($userCurrent, $fileOwnerUid))
+        {
+        return response()->json(["error"=>'audio notes not shared with you'],200);
+        }
+
+        $filePath = storage_path('app/audio/' . $fileName);
+        $response = new BinaryFileResponse($filePath);
+
+        BinaryFileResponse::trustXSendfileTypeHeader();
+        return $response;
+    }
 
 }
