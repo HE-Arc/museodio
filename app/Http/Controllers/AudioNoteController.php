@@ -39,7 +39,9 @@ class AudioNoteController extends Controller
 
   /**
   * Saves an audio note
-  *
+  * @urlParam longitude required The id of the location. Example: 7.0
+  * @urlParam latitude required The id of the location. Example: 7.0
+  * @urlParam audio required The audio file name. Example: test.mp3
   * [Returns a success message if the audio note was successfully saved]
   *
   */
@@ -76,7 +78,9 @@ class AudioNoteController extends Controller
 
     /**
     * Returns all the audio notes from the friends of the current user and near to the position of the current user
-    *
+    * @urlParam longitude numeric required The latitude. Example: 7.0
+    * @urlParam latitude numeric required The longitude. Example: 46.0
+    * @urlParam outer_radius numeric required The outer radius. Example: 1000
     * [Returns the available audio notes]
     *
     */
@@ -84,7 +88,7 @@ class AudioNoteController extends Controller
       $validatedData = $request->validate([
         'longitude' => 'required|numeric',
         'latitude' => 'required|numeric',
-        'outer_radius' => 'numeric' // TODO we should define it
+        'outer_radius' => 'numeric'
       ]);
 
 
@@ -117,7 +121,7 @@ class AudioNoteController extends Controller
 
   /**
   * Download an audio note matching to filename
-  *
+  * @urlParam file_name string required The file name. Example: 11_2019_12_16_20_23_30.mp3
   * [Returns the audio note as an audio playable file]
   *
   */
@@ -139,6 +143,13 @@ class AudioNoteController extends Controller
         }
     }
 
+
+    /**
+    * Checks if a user has access to an audio note
+    * @urlParam file_name string required The file name. Example: 11_2019_12_16_20_23_30.mp3
+    * [Returns the authorization to access an audio note]
+    *
+    */
     public function check(Request $request){
       $fileName = $request->file_name;
       $fileOwnerUid = AudioNote::where('file_name', '=', $fileName)->select('user_id')->get();
