@@ -7,6 +7,7 @@ body{
   --main-button-color: #686de0;
   --main-modal-color: #130f40;
   --main-text-color: white;
+  --main-dropdown-color: #686de0;
   --error-color: #eb4d4b;
   --success-color: #6ab04c;
 }
@@ -65,10 +66,62 @@ html, body {
   background-color: var(--main-bg-color) !important;
 }
 
+.main-dropdown{
+  background-color: var(--main-dropdown-color) !important;
+}
+
 i.icon-white{
   color: var(--main-text-color) !important;
 }
 
+.notification-badge {
+    position: relative;
+    right: -20px;
+    top: -20px;
+    color: #941e1e;
+    background-color: #f5f1f2;
+    margin: 0 -.8em;
+    border-radius: 20%;
+    padding: 5px 10px;
+}
+
+.notif{
+  position: absolute;
+}
+
+.notifications-button{
+  background-color: transparent !important;
+}
+
+.main-friends-dropdown{
+  background-color: var(--main-dropdown-color) !important;
+}
+
+.search-results{
+  background-color: var(--main-bg-color) !important;
+  color: var(--main-text-color) !important;
+  transition: color 2s ease 0s;
+}
+
+.friend-deny-request{
+  background-color: #eb4d4b !important;
+}
+
+.friend-requests-buttons-container{
+  margin-right: 5px;
+}
+
+.friend-requests-buttons{
+  width: 20px;
+}
+
+.friend-requests-icons{
+  margin-left: -13px;
+}
+
+nav ul a:hover {
+   background-color: rgba(0, 0, 0, 0.1) !important;
+}
 
 input{
   color: var(--main-text-color)

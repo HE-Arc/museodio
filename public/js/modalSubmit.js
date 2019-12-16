@@ -6,6 +6,7 @@ let headers = {
 var registerProgressBar;
 var loginProgressBar;
 var noteProgressBar;
+var searchUserProgressBar;
 
 function modalSubmitAutoInit(){
   registerProgressBar = new Mprogress({
@@ -21,6 +22,11 @@ function modalSubmitAutoInit(){
   noteProgressBar = new Mprogress({
     template: 4,
     parent: "#noteProgressBar"
+  })
+
+  searchUserProgressBar = new Mprogress({
+    template: 4,
+    parent: "#searchUserProgressBar"
   })
 }
 
@@ -55,6 +61,62 @@ async function submitLogin(){
   });
 }
 
+async function submitSearch(){
+  toggleButton("searchUserButton");
+  toggleSearchUserProgressBar();
+
+  let search = $("#searchuser_search").val();
+  let searchURL = "/api/users/search/" + search;
+
+  getData(searchURL, async function(response){
+    if(response.ok){
+      response.json().then(async function(json){
+        if(json.hasOwnProperty('error')){
+          displayErrors(json);
+        }
+        else{
+          toggleSearchUserProgressBar();
+          let mainSearchResults = document.getElementById('mainSearchResults');
+          mainSearchResults.innerHTML = "";
+          mainSearchResults.style.visibility = "visible"
+
+          jQuery.each(json["success"], function() {
+            mainSearchResults.innerHTML += '<li data-userID="'+ $(this)[0]["id"] +'" class="collection-item search-results">'+ $(this)[0]["firstname"] + ' ' + $(this)[0]["lastname"] + '</li>';
+          });
+        }
+      })
+    }
+    else{
+      M.toast({html: 'An error occured while trying to perform this action. Please try again.', classes: 'toast-error'});
+    }
+    toggleButton("searchUserButton");
+    toggleSearchUserProgressBar();
+  });
+}
+
+async function submitFriendRequest(userID){
+  payload = {
+    id:                   userID
+  }
+
+  sendData(payload, "/api/friends", async function(response){
+    if(response.ok){
+      response.json().then(async function(json){
+        if(json.hasOwnProperty('error')){
+          displayErrors(json);
+        }
+        else{
+          M.toast({html: 'Successfully sent friendship request', classes: 'toast-success'});
+        }
+      });
+    }
+    else{
+      M.toast({html: 'An error occured while trying to perform this action. Please try again.', classes: 'toast-error'});
+    }
+  });
+
+}
+
 async function submitAudioNote(){
   toggleButton("noteButton");
   toggleNoteProgressBar();
@@ -64,11 +126,9 @@ async function submitAudioNote(){
   if(RECORDED_AUDIO != null){
     //Audio has been manually recorded, not a file
     fileToUpload = RECORDED_AUDIO;
-    console.log("RECORDED AUDIO");
   }
   else{
     fileToUpload = $("#note_file").get(0).files[0];
-    console.log("FILE UPLOADA");
   }
 
   payload = {
@@ -82,7 +142,6 @@ async function submitAudioNote(){
       response.json().then(async function(json){
         if(json.hasOwnProperty('error')){
           displayErrors(json);
-          console.log(json);
         }
         else{
           M.toast({html: "Audio note uploaded successfully.", classes: "toast-success"});
@@ -113,8 +172,6 @@ async function sendFileData(payload, route, callback){
     credentials: "same-origin",
     body: formData
   }
-
-  console.log(options);
 
   fetch(APP_URL + route, options)
   .then(function(response){
@@ -161,12 +218,137 @@ async function submitRegistration(){
   });
 }
 
+async function getFriends(){
+
+  getData("/api/friends", async function(response){
+    if(response.ok){
+      response.json().then(async function(json){
+        if(json.hasOwnProperty('error')){
+          displayErrors(json);
+        }
+        else{
+          let friendRequests = 0;
+          var friendsDropdown = document.getElementById('friendsDropdown');
+          var notificationsDropdown = document.getElementById('notificationsDropdown');
+
+          friendsDropdown.innerHTML = "";
+          notificationsDropdown.innerHTML = '';
+
+          jQuery.each(json['success']["invitationsToAnswer"], function() {
+            document.getElementById('friendsDropdown').innerHTML +=
+            '<li>\
+              <div class="right friend-requests-buttons-container">\
+                <a href="#!" onclick="acceptFriendRequest('+$(this)[0]['id']+');" class="btn-raised waves-effect btn friend-requests-button friend-requests-buttons"><i class="material-icons friend-requests-icons">done</i></a>\
+                <a href="#!" onclick="denyFriendRequest('+$(this)[0]['id']+');" class="btn-raised waves-effect btn friend-requests-button friend-requests-buttons friend-deny-request"><i class="material-icons friend-requests-icons">clear</i></a>\
+              </div>\
+              <a href="#!">'+ $(this)[0]['firstname'] +' '+ $(this)[0]['lastname'] +'</a>\
+            </li>';
+
+            document.getElementById('notificationsDropdown').innerHTML += '<li><a onclick="openFriends();" href="#!">New friend request from '+ $(this)[0]['firstname'] +'</a></li>';
+
+            friendRequests += 1;
+          });
+
+          friendsDropdown.innerHTML += '<li class="divider"></li>';
+          jQuery.each(json['success']["friends"], function() {
+            document.getElementById('friendsDropdown').innerHTML +=
+            '<li>\
+              <div class="right friend-requests-buttons-container">\
+                <a href="#!" onclick="denyFriendRequest('+$(this)[0]['id']+');" class="btn-raised waves-effect btn friend-requests-button friend-requests-buttons friend-deny-request"><i class="material-icons friend-requests-icons">clear</i></a>\
+              </div>\
+              <a href="#!">'+ $(this)[0]['firstname'] +' '+ $(this)[0]['lastname'] +'</a>\
+            </li>';
+          });
+
+
+          let badge = document.getElementById('friendRequestsBadge');
+          let notificationBell = document.getElementById('notificationBell');
+
+          if(friendRequests > 0){
+            badge.style.visibility = "visible";
+            badge.innerHTML = friendRequests;
+
+            notificationBell.style.visibility = "visible";
+            notificationBell.innerHTML = friendRequests;
+          }
+          else{
+            badge.style.visibility = "hidden";
+            badge.innerHTML = "";
+
+            notificationBell.style.visibility = "hidden";
+            notificationBell.innerHTML = "";
+            notificationsDropdown.innerHTML = '<li><a href="#!">No new notifications</a></li>';
+          }
+        }
+      });
+    }
+    else{
+      M.toast({html: 'An error occured while trying to perform this action. Please try again.', classes: 'toast-error'});
+      response.text().then(async function(text){
+        console.log(text);
+      });
+    }
+  });
+
+}
+
+async function acceptFriendRequest(userID){
+  payload = {
+    id: userID
+  }
+
+  putData(payload, "/api/friends/"+userID, async function(response){
+    if(response.ok){
+      response.json().then(async function(json){
+
+        if(json.hasOwnProperty('error')){
+          displayErrors(json);
+        }
+        else{
+          M.toast({html: "Friendship accepted", classes: 'toast-success'});
+          getFriends();
+        }
+      })
+    }
+    else{
+      M.toast({html: 'An error occured while trying to perform this action. Please try again.', classes: 'toast-error'});
+    }
+  });
+}
+
+async function denyFriendRequest(userID){
+  payload = {
+    id: userID
+  }
+
+  deleteData(payload, "/api/friends/"+userID, async function(response){
+    if(response.ok){
+      response.json().then(async function(json){
+
+        if(json.hasOwnProperty('error')){
+          displayErrors(json);
+        }
+        else{
+          M.toast({html: "Friendship denied", classes: 'toast-success'});
+          console.log(json);
+          getFriends();
+
+        }
+      })
+    }
+    else{
+      M.toast({html: 'An error occured while trying to perform this action. Please try again.', classes: 'toast-error'});
+      response.text().then(async function(text){
+        console.log(text);
+      });
+    }
+  });
+}
+
 async function displayErrors(json){
   jsonErrors = json['error'];
-  console.log(jsonErrors);
   for (var key in jsonErrors) {
     if (jsonErrors.hasOwnProperty(key)) {
-      console.log(key + " -> " + jsonErrors[key]);
       M.toast({html: jsonErrors[key], classes: 'toast-error'});
     }
   }
@@ -179,6 +361,49 @@ async function sendData(payload, route, callback){
     credentials: "same-origin",
     headers: { 'Content-type': 'application/x-www-form-urlencoded' },
     body: new URLSearchParams(payload).toString()
+  }
+
+  fetch(APP_URL + route, options)
+  .then(function(response){
+    callback(response);
+  })
+}
+
+async function putData(payload, route, callback){
+
+  let options = {
+    method: "PUT",
+    credentials: "same-origin",
+    headers: { 'Content-type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams(payload).toString()
+  }
+
+  fetch(APP_URL + route, options)
+  .then(function(response){
+    callback(response);
+  })
+}
+
+async function deleteData(payload, route, callback){
+
+  let options = {
+    method: "DELETE",
+    credentials: "same-origin",
+    headers: { 'Content-type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams(payload).toString()
+  }
+
+  fetch(APP_URL + route, options)
+  .then(function(response){
+    callback(response);
+  })
+}
+
+async function getData(route, callback){
+  let options = {
+    method: "GET",
+    credentials: "same-origin",
+    headers: { 'Content-type': 'application/x-www-form-urlencoded' },
   }
 
   fetch(APP_URL + route, options)
@@ -223,6 +448,15 @@ function toggleNoteProgressBar(){
   }
   else{
     noteProgressBar.start();
+  }
+}
+
+function toggleSearchUserProgressBar(){
+  if(searchUserProgressBar.status == 0.08){
+    searchUserProgressBar.end();
+  }
+  else{
+    searchUserProgressBar.start();
   }
 }
 
