@@ -2,11 +2,12 @@
   <div class="header">
     <nav class="main-nav-bar">
       <div class="nav-wrapper">
-        <a href="#!" class="brand-logo mus-title">Museodio</a>
-        <ul class="right hide-on-med-and-down">
+        <a href="#!" class="brand-logo mus-title left">Museodio</a>
+        <ul class="right ">
           @unless (Auth::check())
-          <li><a class="waves-effect waves-light btn modal-trigger action-buttons-color" onclick="closeAllModals(); setFocus('reg_firstName');" href="#registerModal">Register <i class="material-icons right">person_add</i></a></li>
-          <li><a class="waves-effect waves-light btn modal-trigger action-buttons-color" onclick="closeAllModals(); setFocus('log_email');" href="#loginModal">Sign in <i class="material-icons right">input</i></a></li>
+          <li><a class="waves-effect waves-light btn modal-trigger action-buttons-color hide-on-small-only" onclick="closeAllModals(); setFocus('reg_firstName');" href="#registerModal">Register <i class="material-icons right">person_add</i></a></li>
+          <li><a class="waves-effect waves-light btn modal-trigger action-buttons-color hide-on-small-only" onclick="closeAllModals(); setFocus('log_email');" href="#loginModal">Sign in <i class="material-icons right">input</i></a></li>
+          <a href="#" data-target="sideNavLoginRegister" class="sidenav-trigger hide-on-med-and-up right"><i class="material-icons">menu</i></a>
           @endunless
           @unless (!Auth::check())
           <div class="">

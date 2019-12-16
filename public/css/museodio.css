@@ -119,13 +119,13 @@ i.icon-white{
   margin-left: -13px;
 }
 
-nav ul a:hover {
-   background-color: rgba(0, 0, 0, 0.1) !important;
-}
 
 input{
   color: var(--main-text-color)
 }
+
+.leaflet-control-zoom a { background-color: var(--main-bg-color) !important; }
+.leaflet-control-attribution a {color: var(--main-bg-color) !important;}
 
 h1, h2, h3, h4, h5, h6, p, a {
  color: var(--main-text-color) !important;

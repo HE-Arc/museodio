@@ -42,6 +42,10 @@
   </div>
   @endunless
 
+  @unless(Auth::check())
+    @include('sidenavLoginRegister')
+  @endunless
+
   <div id="map"></div>
 
   @include('modals.register')

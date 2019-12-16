@@ -35,7 +35,7 @@ jobs:
       run: vendor/bin/phpunit
   auto-deploy:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/add-continuous-deployment'
+    if: github.ref == 'refs/heads/master'
     needs: laravel-tests
     steps:
       - name: Trigger PHP script
