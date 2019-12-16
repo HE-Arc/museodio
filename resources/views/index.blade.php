@@ -203,8 +203,7 @@
     }
   }
 
-  function openFriends()
-  {
+  function openFriends(){
     document.getElementById('sideNavButton').click();
     M.Collapsible.getInstance(document.getElementById('friendsCollapsible')).open();
   }

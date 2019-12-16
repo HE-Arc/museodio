@@ -249,10 +249,17 @@ async function getFriends(){
             friendRequests += 1;
           });
 
-          document.getElementById('friendsDropdown').innerHTML += '<li class="divider"></li>';
+          friendsDropdown.innerHTML += '<li class="divider"></li>';
           jQuery.each(json['success']["friends"], function() {
-            document.getElementById('friendsDropdown').innerHTML += '<li><a href="#!">'+ $(this)[0]['firstname'] +' '+ $(this)[0]['lastname'] +'</a></li>';
+            document.getElementById('friendsDropdown').innerHTML +=
+            '<li>\
+              <div class="right friend-requests-buttons-container">\
+                <a href="#!" onclick="denyFriendRequest('+$(this)[0]['id']+');" class="btn-raised waves-effect btn friend-requests-button friend-requests-buttons friend-deny-request"><i class="material-icons friend-requests-icons">clear</i></a>\
+              </div>\
+              <a href="#!">'+ $(this)[0]['firstname'] +' '+ $(this)[0]['lastname'] +'</a>\
+            </li>';
           });
+
 
           let badge = document.getElementById('friendRequestsBadge');
           let notificationBell = document.getElementById('notificationBell');
