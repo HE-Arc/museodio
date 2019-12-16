@@ -22,6 +22,11 @@ class RegisterController extends Controller
     |
     */
 
+    /**
+    *  Register in the API
+    *
+    * @return
+    */
     public function register(Request $request){
       $validator = Validator::make($request->all(), [
         'firstname' => ['required', 'string', 'max:255'],

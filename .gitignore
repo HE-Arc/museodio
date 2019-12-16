@@ -4,7 +4,6 @@
 /storage/*.key
 /public/vendor
 /vendor
-/uploads
 .env
 .env.backup
 .phpunit.result.cache
@@ -14,3 +13,4 @@ npm-debug.log
 yarn-error.log
 .
 .DS_Store
+/storage/app/audio/*.mp3
