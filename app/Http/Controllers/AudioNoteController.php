@@ -114,8 +114,6 @@ class AudioNoteController extends Controller
           array_push($friends_id, $friend->id);
       }
 
-      return $friends_id;
-
       return $query->whereIn('user_id',  $friends_id)
         ->join('users', 'audio_notes.user_id', '=', 'users.id')
         ->addSelect('users.firstName', 'users.lastName', 'audio_notes.longitude', 'audio_notes.latitude', 'audio_notes.file_name')
