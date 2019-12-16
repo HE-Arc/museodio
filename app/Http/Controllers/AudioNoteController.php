@@ -81,7 +81,12 @@ class AudioNoteController extends Controller
     *
     */
     public function showNearAudioNotes(Request $request){
-      $validatedData = $request->validate([
+
+      $request['longitude'] = $request->route('longitude');
+      $request['latitude'] = $request->route('latitude');
+      $request['outer_radius'] = $request->route('outer_radius');
+
+      $validator = Validator::make($request->all(), [
         'longitude' => 'required|numeric',
         'latitude' => 'required|numeric',
         'outer_radius' => 'numeric' // TODO we should define it
@@ -99,15 +104,17 @@ class AudioNoteController extends Controller
         $request->outer_radius
       );
 
-      $id= Auth::id();
+      $id = Auth::id();
 
-      $friends = User::findOrFail($id)->friends;
+      $friends = Auth::user()->friends;
 
       $friends_id = [];
       foreach($friends as $friend)
       {
           array_push($friends_id, $friend->id);
       }
+
+      return $friends_id;
 
       return $query->whereIn('user_id',  $friends_id)
         ->join('users', 'audio_notes.user_id', '=', 'users.id')
