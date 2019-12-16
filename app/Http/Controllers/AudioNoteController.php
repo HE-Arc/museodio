@@ -78,8 +78,8 @@ class AudioNoteController extends Controller
 
     /**
     * Returns all the audio notes from the friends of the current user and near to the position of the current user
-    * @urlParam longitude numeric required The latitude. Example: 7.0
-    * @urlParam latitude numeric required The longitude. Example: 46.0
+    * @urlParam longitude numeric required The latitude. Example: 46.0
+    * @urlParam latitude numeric required The longitude. Example: 7.0
     * @urlParam outer_radius numeric required The outer radius. Example: 1000
     * [Returns the available audio notes]
     *
@@ -118,8 +118,6 @@ class AudioNoteController extends Controller
           array_push($friends_id, $friend->id);
       }
 
-      return $friends_id;
-
       return $query->whereIn('user_id',  $friends_id)
         ->join('users', 'audio_notes.user_id', '=', 'users.id')
         ->addSelect('users.firstName', 'users.lastName', 'audio_notes.longitude', 'audio_notes.latitude', 'audio_notes.file_name')
@@ -128,7 +126,7 @@ class AudioNoteController extends Controller
 
   /**
   * Download an audio note matching to filename
-  * @urlParam file_name string required The file name. Example: 11_2019_12_16_20_23_30.mp3
+  * @urlParam file_name string required The file name. Example: 11_2019_12_16_20_49_12.mp3
   * [Returns the audio note as an audio playable file]
   *
   */
@@ -153,7 +151,7 @@ class AudioNoteController extends Controller
 
     /**
     * Checks if a user has access to an audio note
-    * @urlParam file_name string required The file name. Example: 11_2019_12_16_20_23_30.mp3
+    * @urlParam file_name string required The file name. Example: 11_2019_12_16_20_49_12.mp3
     * [Returns the authorization to access an audio note]
     *
     */
