@@ -230,6 +230,7 @@ async function getFriends(){
         else{
           let friendRequests = 0;
           document.getElementById('friendsDropdown').innerHTML = "";
+          document.getElementById('notifcationsDropdown').innerHTML = '<li><a href="#!">No new notifications</a></li>';
 
           jQuery.each(json['success']["invitationsToAnswer"], function() {
             document.getElementById('friendsDropdown').innerHTML +=
@@ -241,6 +242,8 @@ async function getFriends(){
               <a href="#!">'+ $(this)[0]['firstname'] +' '+ $(this)[0]['lastname'] +'</a>\
             </li>';
 
+            document.getElementById('notifcationsDropdown').innerHTML += '<li><a href="#!">New friend request from '+ $(this)[0]['firstname'] +'</a></li>';
+
             friendRequests += 1;
           });
 
@@ -249,14 +252,25 @@ async function getFriends(){
             document.getElementById('friendsDropdown').innerHTML += '<li><a href="#!">'+ $(this)[0]['firstname'] +' '+ $(this)[0]['lastname'] +'</a></li>';
           });
 
+          let badge = document.getElementById('friendRequestsBadge');
+          let notificationBell = document.getElementById('notificationBell');
+
           if(friendRequests > 0){
-            let badge = document.getElementById('friendRequestsBadge');
             badge.style.visibility = "visible";
             badge.innerHTML = friendRequests;
-          }
 
+            notificationBell.style.visibility = "visible";
+            notificationBell.innerHTML = friendRequests;
+          }
+          else{
+            badge.style.visibility = "hidden";
+            badge.innerHTML = "";
+
+            notificationBell.style.visibility = "hidden";
+            notificationBell.innerHTML = "";
+          }
         }
-      })
+      });
     }
     else{
       M.toast({html: 'An error occured while trying to perform this action. Please try again.', classes: 'toast-error'});
@@ -303,12 +317,17 @@ async function denyFriendRequest(userID){
         }
         else{
           M.toast({html: "Friendship denied", classes: 'toast-success'});
+          console.log(json);
           getFriends();
+
         }
       })
     }
     else{
       M.toast({html: 'An error occured while trying to perform this action. Please try again.', classes: 'toast-error'});
+      response.text().then(async function(text){
+        console.log(text);
+      });
     }
   });
 }

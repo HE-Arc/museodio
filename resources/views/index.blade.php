@@ -160,12 +160,17 @@
     document.getElementById("addAudioNoteModal").addEventListener("keyup", function(event){
       enterDetector(event, "noteButton")
     });
+
+    document.getElementById("searchuser_search").addEventListener("keydown", function(event){
+      if(document.getElementById("searchuser_search").value != ""){
+        submitSearch();
+      }
+    });
   }
 
   function enterDetector(e, button){
     if (e.keyCode === 13) {
       e.preventDefault();
-      console.log(button);
       document.getElementById(button).click();
     }
   }
@@ -178,6 +183,8 @@
     getFriends();
     initCollections();
     initEnterDetectors();
+
+    
   };
 
   document.addEventListener('DOMContentLoaded', function() {

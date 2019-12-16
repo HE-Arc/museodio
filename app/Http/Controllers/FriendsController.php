@@ -91,13 +91,12 @@ class FriendsController extends Controller
         'id' => 'required|numeric',
     ]);
 
-    $user_id_2 = User::findOrFail($request->id);
-    $user_id_1=  Auth::user();
+    $user2 = User::findOrFail($request->id);
+    $user1 = Auth::user();
 
-    $user_id_1->removeFriend($user_id_2);
-    $user_id_2->removeFriend($user_id_1);
+    Friends::where('user_id_1', $request->id)->where('user_id_2', Auth::id())->delete();
 
-      return response()->json("Successfuly deleted friendship", 200);
+    return response()->json("Successfuly deleted friendship", 200);
   }
 
   /**

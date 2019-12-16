@@ -13,17 +13,12 @@
             <a href="#" data-target="slide-out" class="sidenav-trigger show-on-large right"><i class="material-icons">menu</i></a>
             <a class='dropdown-trigger btn-flat notifications-button' href='#' data-target='notifcationsDropdown'>
               <i class="material-icons white-text notif">notifications</i>
-              <small id="notificationBell" class="notification-badge">0</small>
+              <small style="visibility: hidden;" id="notificationBell" class="notification-badge">0</small>
             </a>
 
             <!-- Notifications Dropdown Structure -->
-            <ul id='notifcationsDropdown' class='dropdown-content main-dropdown'>
-              <li><a href="#!">one</a></li>
-              <li><a href="#!">two</a></li>
-              <li class="divider" tabindex="-1"></li>
-              <li><a href="#!">three</a></li>
-              <li><a href="#!"><i class="material-icons">view_module</i>four</a></li>
-              <li><a href="#!"><i class="material-icons">cloud</i>five</a></li>
+            <ul data-constrainwidth="false" style="width: 300px !important; height: 300px !important;" id='notifcationsDropdown' class='dropdown-content main-dropdown'>
+
             </ul>
           </div>
 
