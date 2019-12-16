@@ -104,13 +104,44 @@
     });
 
     for(let audioNote of audioNotes) {
-      // TODO src : set complete URL
-      let customPopup = `<h4>${audioNote.firstName} ${audioNote.lastName}</h4> <br>`;
-      customPopup += `<audio controls src="api/audio-notes/download/${encodeURI(audioNote.file_name)}" preload="none"></audio>`;
 
-      L.marker([audioNote.latitude, audioNote.longitude], {icon: playIcon})
-      .addTo(mainMap)
-      .bindPopup(customPopup)
+      let customPopup = `<h4>${audioNote.firstName} ${audioNote.lastName}</h4> <br>`;
+      let apiURL = "/api/audio-notes/"
+      let audioURL = apiURL + "check/" + encodeURI(audioNote.file_name) ;
+
+      let options = {
+        method: "GET",
+        credentials: "same-origin",
+        headers: { 'Content-type': 'application/x-www-form-urlencoded' },
+      }
+
+      console.log(APP_URL + audioURL);
+
+      fetch(APP_URL + audioURL, options)
+      .then(function(response){
+        if(response.ok){
+          response.json().then(async function(json){
+            console.log(json);
+            if(json.hasOwnProperty('success')){
+              customPopup += '<audio controls src="'+ APP_URL + apiURL + "download/" + encodeURI(audioNote.file_name) +'" preload="none"></audio>';
+            }
+            else{
+              customPopup += '<p>This audio note has not been shared with you.</p>'
+            }
+
+            L.marker([audioNote.latitude, audioNote.longitude], {icon: playIcon})
+            .addTo(mainMap)
+            .bindPopup(customPopup)
+          });
+        }
+        else{
+          M.toast({html: 'An error occured while trying to perform this action. Please try again.', classes: 'toast-error'});
+          response.text().then(async function(text){
+          });
+        }
+      });
+
+
     }
   }
 
@@ -180,11 +211,13 @@
     M.AutoInit();
     modalSubmitAutoInit();
     displayAudioNotes();
-    getFriends();
+
+    @unless (!Auth::check())
+      getFriends();
+    @endunless
+
     initCollections();
     initEnterDetectors();
-
-    
   };
 
   document.addEventListener('DOMContentLoaded', function() {

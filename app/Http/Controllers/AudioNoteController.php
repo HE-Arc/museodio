@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Illuminate\Support\Facades\Validator;
 use App\AudioNote;
 use App\User;
+use App\Friends;
 use Auth;
 
 /**
@@ -108,20 +109,10 @@ class AudioNoteController extends Controller
           array_push($friends_id, $friend->id);
       }
 
-      $friends = User::findOrFail($id)->askfriends;
-
-      foreach($friends as $friend)
-      {
-          if($friend->pivot->isAccepted)
-          {
-            array_push($friends_id, $friend->id);
-        }
-      }
       return $query->whereIn('user_id',  $friends_id)
         ->join('users', 'audio_notes.user_id', '=', 'users.id')
         ->addSelect('users.firstName', 'users.lastName', 'audio_notes.longitude', 'audio_notes.latitude', 'audio_notes.file_name')
         ->get();
-;
     }
 
   /**
@@ -131,23 +122,36 @@ class AudioNoteController extends Controller
   *
   */
   public function download(Request $request){
-    // TODO validate access rights
+        $fileName = $request->file_name;
+        $jsonFile = json_decode(AudioNoteController::check($request)->content(), true);
 
-        $fileOwnerUid = AudioNote::where('file_name', '=', $fileName)
-        ->select('user_id')->get();
 
-        $userCurrent = Auth::id();
-
-        if(!Friends::isFriend($userCurrent, $fileOwnerUid))
+        if(isset($jsonFile['success']))
         {
-        return response()->json(["error"=>'audio notes not shared with you'],200);
+          $filePath = storage_path('app/audio/' . $fileName);
+          $response = new BinaryFileResponse($filePath);
+
+          BinaryFileResponse::trustXSendfileTypeHeader();
+          return $response;
         }
+        else{
+          return response()->json(["error" => ["error" => "This audio notes is not shared with you."]], 200);
+        }
+    }
 
-        $filePath = storage_path('app/audio/' . $fileName);
-        $response = new BinaryFileResponse($filePath);
+    public function check(Request $request){
+      $fileName = $request->file_name;
+      $fileOwnerUid = AudioNote::where('file_name', '=', $fileName)->select('user_id')->get();
 
-        BinaryFileResponse::trustXSendfileTypeHeader();
-        return $response;
+      $userCurrent = Auth::id();
+      $fileOwnerUser = User::findOrFail($fileOwnerUid[0]['user_id']);
+
+      if(Auth::user()->friends->contains($fileOwnerUser) || Auth::user()->is($fileOwnerUser))
+      {
+        return response()->json(['success' => ['file' => $fileName]], 200);
+      }
+
+      return response()->json(["error" => ["error" => "This audio notes is not shared with you."]], 200);
     }
 
 }

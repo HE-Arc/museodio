@@ -32,6 +32,7 @@ Route::get('/audio-notes/', 'AudioNoteController@index');
 Route::middleware('auth:api')->post('/audio-notes/save', 'AudioNoteController@save');
 
 Route::middleware('auth:api')->get('/audio-notes/download/{file_name}', 'AudioNoteController@download');
+Route::middleware('auth:api')->get('/audio-notes/check/{file_name}', 'AudioNoteController@check');
 
 Route::middleware('auth:api')->get('/audio-notes/{longitude}/{latitude}/{outer_radius}', 'AudioNoteController@showNearAudioNotes');
 

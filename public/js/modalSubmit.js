@@ -223,7 +223,6 @@ async function getFriends(){
   getData("/api/friends", async function(response){
     if(response.ok){
       response.json().then(async function(json){
-
         if(json.hasOwnProperty('error')){
           displayErrors(json);
         }
@@ -274,6 +273,9 @@ async function getFriends(){
     }
     else{
       M.toast({html: 'An error occured while trying to perform this action. Please try again.', classes: 'toast-error'});
+      response.text().then(async function(text){
+        console.log(text);
+      });
     }
   });
 
