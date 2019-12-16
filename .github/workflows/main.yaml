@@ -39,4 +39,4 @@ jobs:
     needs: laravel-tests
     steps:
       - name: Trigger PHP script
-        run: wget "https://museodio.srvz-webapp.he-arc.ch/myLgzVOwTfV3qcHeMuBATMYD9BFGVwxNtNmfHncl7eOCXM/deploy.php"
+        run: curl "https://museodio.srvz-webapp.he-arc.ch/myLgzVOwTfV3qcHeMuBATMYD9BFGVwxNtNmfHncl7eOCXM/deploy.php"
