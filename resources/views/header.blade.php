@@ -10,18 +10,17 @@
           @endunless
           @unless (!Auth::check())
           <div class="">
-            <a href="#" data-target="slide-out" class="sidenav-trigger show-on-large right"><i class="material-icons">menu</i></a>
-            <a class='dropdown-trigger btn-flat notifications-button' href='#' data-target='notifcationsDropdown'>
+            <a href="#" id="sideNavButton" data-target="slide-out" class="sidenav-trigger show-on-large right"><i class="material-icons">menu</i></a>
+
+            <a class='btn-flat notifications-button' id="notificationsDropdownButton" href='#' data-target='notificationsDropdown' onclick="notificationsDropdown.open();">
               <i class="material-icons white-text notif">notifications</i>
               <small style="visibility: hidden;" id="notificationBell" class="notification-badge">0</small>
             </a>
-
             <!-- Notifications Dropdown Structure -->
-            <ul data-constrainwidth="false" style="width: 300px !important; height: 300px !important;" id='notifcationsDropdown' class='dropdown-content main-dropdown'>
+            <ul style="width: 300px;" id='notificationsDropdown' class='dropdown-content main-dropdown'>
 
             </ul>
           </div>
-
           @endunless
         </ul>
 

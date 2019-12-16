@@ -51,6 +51,8 @@
 
   <script type="text/javascript">
   var mainMap = null;
+  var notificationsDropdown;
+  var sideNav;
 
   function initMap(lat = 46.9973, lon = 6.9378) {
     mainMap = L.map('map').setView([lat, lon], 10);
@@ -115,13 +117,10 @@
         headers: { 'Content-type': 'application/x-www-form-urlencoded' },
       }
 
-      console.log(APP_URL + audioURL);
-
       fetch(APP_URL + audioURL, options)
       .then(function(response){
         if(response.ok){
           response.json().then(async function(json){
-            console.log(json);
             if(json.hasOwnProperty('success')){
               customPopup += '<audio controls src="'+ APP_URL + apiURL + "download/" + encodeURI(audioNote.file_name) +'" preload="none"></audio>';
             }
@@ -140,8 +139,6 @@
           });
         }
       });
-
-
     }
   }
 
@@ -206,6 +203,12 @@
     }
   }
 
+  function openFriends()
+  {
+    document.getElementById('sideNavButton').click();
+    M.Collapsible.getInstance(document.getElementById('friendsCollapsible')).open();
+  }
+
   window.onload = function(){
     initMap();
     M.AutoInit();
@@ -218,12 +221,19 @@
 
     initCollections();
     initEnterDetectors();
+
   };
 
   document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('.sidenav');
-    var instances = M.Sidenav.init(elems, {edge: 'right'});
+    var elems = document.querySelector('.sidenav');
+    sideNav = M.Sidenav.init(elems, {edge: 'right', preventScrolling: true});
 
+    var notificationsDropdownElem = document.querySelector('#notificationsDropdownButton');
+    var dropdownOptions = {
+        'hover':true,
+        'constrainWidth': false,
+    }
+    notificationsDropdown = M.Dropdown.init(notificationsDropdownElem, dropdownOptions);
   });
 </script>
 <!-- <script src="{{asset('js/recordAudioUtils.js')}}" charset="utf-8"></script> -->

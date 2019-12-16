@@ -119,6 +119,10 @@ i.icon-white{
   margin-left: -13px;
 }
 
+nav ul a:hover {
+   background-color: rgba(0, 0, 0, 0.1) !important;
+}
+
 input{
   color: var(--main-text-color)
 }

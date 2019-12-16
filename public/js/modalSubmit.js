@@ -228,8 +228,11 @@ async function getFriends(){
         }
         else{
           let friendRequests = 0;
-          document.getElementById('friendsDropdown').innerHTML = "";
-          document.getElementById('notifcationsDropdown').innerHTML = '<li><a href="#!">No new notifications</a></li>';
+          var friendsDropdown = document.getElementById('friendsDropdown');
+          var notificationsDropdown = document.getElementById('notificationsDropdown');
+
+          friendsDropdown.innerHTML = "";
+          notificationsDropdown.innerHTML = '';
 
           jQuery.each(json['success']["invitationsToAnswer"], function() {
             document.getElementById('friendsDropdown').innerHTML +=
@@ -241,7 +244,7 @@ async function getFriends(){
               <a href="#!">'+ $(this)[0]['firstname'] +' '+ $(this)[0]['lastname'] +'</a>\
             </li>';
 
-            document.getElementById('notifcationsDropdown').innerHTML += '<li><a href="#!">New friend request from '+ $(this)[0]['firstname'] +'</a></li>';
+            document.getElementById('notificationsDropdown').innerHTML += '<li><a onclick="openFriends();" href="#!">New friend request from '+ $(this)[0]['firstname'] +'</a></li>';
 
             friendRequests += 1;
           });
@@ -267,6 +270,7 @@ async function getFriends(){
 
             notificationBell.style.visibility = "hidden";
             notificationBell.innerHTML = "";
+            notificationsDropdown.innerHTML = '<li><a href="#!">No new notifications</a></li>';
           }
         }
       });

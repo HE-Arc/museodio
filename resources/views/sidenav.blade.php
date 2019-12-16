@@ -12,9 +12,9 @@
 
 
 
-  <ul class="collapsible collapsible-accordion main-sidenav">
+  <ul id="friendsCollapsible" class="collapsible collapsible-accordion main-sidenav">
     <li>
-      <a style="margin-left: 5%;" class="waves-effect waves-light collapsible-header">
+      <a id="friendsCollapsibleButton" style="margin-left: 5%;" class="waves-effect waves-light collapsible-header">
         Friends
         <i class="material-icons icon-white">supervisor_account</i>
         <span style="visibility: hidden;" id="friendRequestsBadge" class="new badge"></span>
