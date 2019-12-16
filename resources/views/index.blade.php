@@ -43,7 +43,7 @@
   @endunless
 
   @unless(Auth::check())
-    @include('sideNavLoginRegister')
+    @include('sidenavLoginRegister')
   @endunless
 
   <div id="map"></div>
