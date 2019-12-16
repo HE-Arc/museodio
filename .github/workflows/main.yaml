@@ -38,12 +38,5 @@ jobs:
     if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/add-continuous-deployment'
     needs: laravel-tests
     steps:
-      - name: Connection to SRVZ
-        uses: garygrossgarten/github-action-ssh@release
-        with:
-          command: ls -a
-          host: ${{ secrets.HOST }}
-          username: poweruser
-          passphrase: ${{ secrets.PASSPHRASE }}
-          privateKey: ${{ secrets.SRVZ_WEBAPP_DEPLOY_PRIVATE_KEY }}
-          port: ${{ secrets.SSH_PORT }}
+      - name: Trigger PHP script
+        run: wget "https://museodio.srvz-webapp.he-arc.ch/myLgzVOwTfV3qcHeMuBATMYD9BFGVwxNtNmfHncl7eOCXM/deploy.php"
