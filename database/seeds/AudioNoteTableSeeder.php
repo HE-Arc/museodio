@@ -22,7 +22,7 @@ class AudioNoteTableSeeder extends Seeder
           'user_id' => User::all()->random()->id,
           'latitude' => $faker->latitude(46.0000, 47.0000),
           'longitude' => $faker->longitude(6.000, 8.0000),
-          'file_name' => $faker->name() . ".mp3"
+          'file_name' => "11_2019_11_07_13_26_02.mp3"
         ]);
       }
     }

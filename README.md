@@ -37,6 +37,17 @@ php artisan serve
 
 Normally, you should be able to see your project at http://yourURL/public/
 
+## Generate documentation
+
+```
+php artisan apidoc:generate
+```
+
+The documentation generation requires a lot of parametrization such as the parameters to be send along with the request.
+This parametrization can be done in config/apidoc.php.
+
+The documentation is in ressources/docs/source/index.md.
+
 ## Small notes
 To publish a package from Composer in order to access it via a public link, add this code to app/Providers/AppServiceProvider in the boot() function
 
