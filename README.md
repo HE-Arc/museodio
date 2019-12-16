@@ -56,3 +56,7 @@ $this->publishes([
   'vendor/leaflet' => public_path('vendor/leaflet'),
 ], 'public');
 ```
+
+## More documentation
+
+![Wiki](https://github.com/HE-Arc/museodio/wiki)
