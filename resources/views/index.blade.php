@@ -197,7 +197,7 @@
       enterDetector(event, "noteButton")
     });
 
-    document.getElementById("searchuser_search").addEventListener("keydown", function(event){
+    document.getElementById("searchuser_search").addEventListener("keyup", function(event){
       if(document.getElementById("searchuser_search").value != ""){
         submitSearch();
       }
