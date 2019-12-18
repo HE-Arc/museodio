@@ -7,8 +7,8 @@
     <a href="#name"><span class="white-text name">{{$user->firstname}} {{$user->lastname}}</span></a>
     <a href="#email"><span class="white-text email">{{$user->email}}</span></a>
   </div></li>
-  <li><a href="#!">Change password</a></li>
-  <li><div class="divider"></div></li>
+  <!-- <li><a href="#!">Change password</a></li> -->
+  <!-- <li><div class="divider"></div></li> -->
 
 
 
