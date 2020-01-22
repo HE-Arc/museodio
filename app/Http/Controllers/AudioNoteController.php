@@ -49,7 +49,7 @@ class AudioNoteController extends Controller
       $validator = Validator::make($request->all(), [
       'longitude' => 'required|numeric',
       'latitude' => 'required|numeric',
-      'audio' => 'required|mimes:mpga,wav'
+      'audio' => 'required'
       ]);
 
       if($validator->fails()){
